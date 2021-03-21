@@ -1,0 +1,13 @@
+Hello,
+
+I found some exceptions in this mod, but you don't have Issues enabled, so I couldn't enter a bug report. Here they are;
+
+ 35   1619685021               MoveIt                           Move It 2.9.2                                             
+                   [ERR] Exceptions thrown: 4
+                   [ERR]   NullReferenceException at MoveIt.MoveItLoader.UninstallMod in D:\CSLMods\CS-MoveIt\Repo\MoveIt\MoveItLoader.cs:84: 2 times
+                   [ERR]   NullReferenceException at MoveIt.MoveItLoader.UninstallMod in D:\CSLMods\CS-MoveIt\Repo\MoveIt\MoveItLoader.cs:68: 2 times
+                   [ERR] Exceptions triggered: 4 incidents from 2 locations
+                   [ERR]   NullReferenceException: Object reference not set to an instance of an object from MoveIt.MoveItLoader.OnLevelUnloading in D:\CSLMods\CS-MoveIt\Repo\MoveIt\MoveItLoader.cs:22: 2 times
+                   [ERR]   NullReferenceException: Object reference not set to an instance of an object from MoveIt.ModInfo.OnDisabled in D:\CSLMods\CS-MoveIt\Repo\MoveIt\ModInfo.cs:230: 2 times
+
+Cheers
