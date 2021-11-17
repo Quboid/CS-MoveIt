@@ -247,7 +247,7 @@ namespace MoveIt
                         for (int j = gridMinX; j <= gridMaxX; j++)
                         {
                             uint tree = TreeManager.instance.m_treeGrid[i * 540 + j];
-                            int count = 0;
+                            //int count = 0;
                             while (tree != 0)
                             {
                                 if (stepOver.isValidT(tree) && treeBuffer[tree].RayCast(tree, ray, out float t, out float targetSqr) && t < smallestDist)
@@ -260,10 +260,10 @@ namespace MoveIt
                                 }
                                 tree = treeBuffer[tree].m_nextGridTree;
 
-                                if (++count > 262144)
-                                {
-                                    CODebugBase<LogChannel>.Error(LogChannel.Core, "Trees: Invalid list detected!\n" + Environment.StackTrace);
-                                }
+                                //if (++count > 262144)
+                                //{
+                                //    CODebugBase<LogChannel>.Error(LogChannel.Core, "Trees: Invalid list detected!\n" + Environment.StackTrace);
+                                //}
                             }
                         }
                     }

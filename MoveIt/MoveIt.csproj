@@ -74,8 +74,6 @@
     <Compile Include="Integration\PO_Logic.cs" />
     <Compile Include="Integration\PO_Manager.cs" />
     <Compile Include="Integration\NetworkSkins.cs" />
-    <Compile Include="PropInstance.cs" />
-    <Compile Include="PropLayer.cs" />
     <Compile Include="Selection.cs" />
     <Compile Include="GUI\UIFastList.cs" />
     <Compile Include="GUI\UISaveLoadFileRow.cs" />
@@ -193,24 +191,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(MangedDLLPath)\Assembly-CSharp.dll</HintPath>
+      <HintPath>H:\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ColossalManaged">
-      <HintPath>$(MangedDLLPath)\ColossalManaged.dll</HintPath>
+      <HintPath>H:\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="EManagersLib.API">
-      <HintPath>C:\Users\Rob\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\EML\EManagersLib.API.dll</HintPath>
+      <HintPath>C:\Users\Quistar\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\EManagersLib\EManagersLib.API.dll</HintPath>
     </Reference>
     <Reference Include="ICities">
-      <HintPath>$(MangedDLLPath)\ICities.dll</HintPath>
+      <HintPath>H:\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>$(MangedDLLPath)\UnityEngine.dll</HintPath>
+      <HintPath>H:\SteamLibrary\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
