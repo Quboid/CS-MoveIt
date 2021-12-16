@@ -126,39 +126,22 @@ namespace MoveIt
             float terrainHeight = Singleton<TerrainManager>.instance.SampleDetailHeight(newPosition);
 
             if(PropLayer.isEMLInstalled()) {
-                if (!manager.GetSnappingState()) {
-                    //path += "A";
-                    y = terrainHeight;
-                } else if (manager.GetFixedHeight(id)) { // If it's already fixed height, handle followTerrain
+                if (manager.GetFixedHeight(id)) { // If it's already fixed height, handle followTerrain
                                                          // If the state is being cloned, don't use the terrain-height offset
                                                          //path += "B";
                     y = newPosition.y + (isClone ? 0 : yTerrainOffset);
-                    if (followTerrain) {
-                        //path += "1";
-                        y += terrainHeight - state.terrainHeight;
-                    }
                 } else { // Snapping is on and it is not fixed height yet
-                         //path += "C";
                     if (deltaHeight != 0) {
-                        //path += "1";
                         manager.SetFixedHeight(id, true);
                         y = terrainHeight + deltaHeight;
                         yTerrainOffset = terrainHeight - state.terrainHeight;
                     } else {
-                        //path += "2";
                         y = terrainHeight;
                     }
                 }
                 return y;
             }
             return newPosition.y;
-
-            //Log.Debug($"{path}\nstate:{state.terrainHeight} tH-state:{terrainHeight - state.terrainHeight}, yTO:{yTerrainOffset}\n" +
-            //    $"ft:{followTerrain}, ts:{MoveItTool.treeSnapping}, fh:{trees[treeID].FixedHeight}, dh:{deltaHeight}\n" +
-            //    $"FRAME  - newY:{newPosition.y}, oldY:{position.y}, diff:{newPosition.y - position.y}\n" +
-            //    $"ADJUST - adjY:{y}, newY:{newPosition.y}, diff:{y - newPosition.y}\n" +
-            //    $"TOTAL  - adjY:{y}, oldY:{position.y}, diff:{y - position.y}\n" +
-            //    $"HEIGHT - adjY:{y}, terrainHeight:{terrainHeight}, diff:{y - terrainHeight}");
         }
 
         public override void Move(Vector3 location, float angle)
@@ -178,7 +161,7 @@ namespace MoveIt
 
             if (PropLayer.Manager.GetSnappingState()) {
                 float terrainHeight = Singleton<TerrainManager>.instance.SampleDetailHeight(newPosition);
-                if (height > terrainHeight + 0.075f || height < terrainHeight - 0.075f) {
+                if (height > terrainHeight + 0.01f || height < terrainHeight - 0.01f) {
                     PropLayer.Manager.SetFixedHeight(id, true);
                 } else {
                     PropLayer.Manager.SetFixedHeight(id, false);
