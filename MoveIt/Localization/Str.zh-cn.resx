@@ -286,7 +286,7 @@
     <value>网格视图开关</value>
   </data>
   <data name="key_ToggleNodeMerging" xml:space="preserve">
-    <value>自动连接复制的节点开关</value>
+    <value>自动连接复制后重叠的节点开关</value>
     <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
   </data>
   <data name="key_TogglePO" xml:space="preserve">
