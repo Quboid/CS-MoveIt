@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MoveIt.Tasks;
+using UnityEngine;
 
 namespace MoveIt
 {
@@ -25,6 +26,17 @@ namespace MoveIt
                     {
                         node.AutoCurve(segmentCurve);
                     }
+                    //new Task(this, Threads.Simulation, () => {
+                    //    Vector3 offset = (state.position - center) * magnitude;
+
+                    //    matrix4x.SetTRS(state.position + offset, Quaternion.AngleAxis(0f, Vector3.down), Vector3.one);
+                    //    state.instance.Transform(state, ref matrix4x, moveDelta.y, 0f, state.position, followTerrain);
+
+                    //    if (autoCurve && state.instance is MoveableNode node)
+                    //    {
+                    //        node.AutoCurve(segmentCurve);
+                    //    }
+                    //});
                 }
             }
 

@@ -110,7 +110,7 @@ namespace MoveIt
 
     public class CloneAction : CloneActionMain
     {
-        public CloneAction() : base() {}
+        public CloneAction() : base() { }
     }
 
     public class DuplicateAction : CloneActionMain
@@ -142,6 +142,21 @@ namespace MoveIt
         }
     }
 
+    public class CloneData
+    {
+        public Instance Original { get => _original ?? throw new NullReferenceException(); set => _original = value; }
+        private Instance _original = null;
+        public Instance Clone { get => _clone ?? throw new NullReferenceException(); set => _clone = value; }
+        private Instance _clone = null;
+        public InstanceState CloneState { get => _cloneState ?? throw new NullReferenceException(); set => _cloneState = value; }
+        private InstanceState _cloneState = null;
+        public InstanceState AdjustedState { get => _adjustedState ?? throw new NullReferenceException(); set => _adjustedState = value; }
+        private InstanceState _adjustedState = null;
+
+        public InstanceID OriginalIId => Original.id;
+        public InstanceID CloneIId => Clone.id;
+    }
+
     public class CloneActionBase : Action
     {
         public Vector3 moveDelta;
@@ -155,6 +170,11 @@ namespace MoveIt
         public HashSet<InstanceState> m_states = new HashSet<InstanceState>(); // the InstanceStates to be cloned
         internal HashSet<Instance> m_clones; // the resulting Instances
         internal HashSet<Instance> m_oldSelection; // The selection before cloning
+
+        /// <summary>
+        /// Maps of clones
+        /// </summary>
+        internal List<CloneData> m_cloneData = new List<CloneData>();
 
         /// <summary>
         /// Original -> Clone mapping for updating action queue on undo/redo 
@@ -388,6 +408,9 @@ namespace MoveIt
             }
 
             MoveItTool.instance.m_lastInstance = null;
+
+            m_cloneData = new List<CloneData>();
+
             m_clones = new HashSet<Instance>();
             m_origToCloneUpdate = new Dictionary<Instance, Instance>();
             m_nodeOrigToClone = new Dictionary<ushort, ushort>();
@@ -408,6 +431,13 @@ namespace MoveIt
                         Log.Info($"Failed to clone node {state}", "[M23]");
                         continue;
                     }
+
+                    m_cloneData.Add(new CloneData()
+                    {
+                        Original = state.instance,
+                        Clone = clone,
+                        CloneState = state
+                    });
 
                     m_clones.Add(clone);
                     m_stateToClone.Add(state, clone);

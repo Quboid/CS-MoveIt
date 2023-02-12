@@ -104,6 +104,8 @@
     <Compile Include="GUI\UIUtils.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StepOver.cs" />
+    <Compile Include="Tasks\Task.cs" />
+    <Compile Include="Tasks\TaskManager.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
