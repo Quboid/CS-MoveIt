@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using static RenderManager;
 
 namespace MoveIt
 {
@@ -10,6 +11,7 @@ namespace MoveIt
 
         public SelectAction(bool append = false)
         {
+            Log.Debug($"AAA04");
             m_oldSelection = selection;
 
             if (append && selection != null)
@@ -51,20 +53,21 @@ namespace MoveIt
             MoveItTool.m_debugPanel.UpdatePanel();
         }
 
-        public override void ReplaceInstances(Dictionary<Instance, Instance> toReplace)
+        public override void ReplaceInstances(List<CloneData> toReplace)
         {
-            foreach (Instance instance in toReplace.Keys)
+            // Update this action's state instances with the updated instances
+            foreach (CloneData data in toReplace)
             {
-                if (m_oldSelection.Remove(instance))
+                if (m_oldSelection.Remove(data.Original))
                 {
-                    DebugUtils.Log("SelectAction Replacing: " + instance.id.RawData + " -> " + toReplace[instance].id.RawData);
-                    m_oldSelection.Add(toReplace[instance]);
+                    DebugUtils.Log($"SelectAction Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.3]");
+                    m_oldSelection.Add(data.Clone);
                 }
 
-                if (m_newSelection.Remove(instance))
+                if (m_newSelection.Remove(data.Original))
                 {
-                    DebugUtils.Log("SelectAction Replacing: " + instance.id.RawData + " -> " + toReplace[instance].id.RawData);
-                    m_newSelection.Add(toReplace[instance]);
+                    DebugUtils.Log($"SelectAction Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.4]");
+                    m_newSelection.Add(data.Clone);
                 }
             }
         }

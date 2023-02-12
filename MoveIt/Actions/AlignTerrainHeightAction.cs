@@ -53,14 +53,16 @@ namespace MoveIt
             UpdateArea(GetTotalBounds(false));
         }
 
-        public override void ReplaceInstances(Dictionary<Instance, Instance> toReplace)
+        public override void ReplaceInstances(List<CloneData> toReplace)
         {
+            // Update this action's state instances with the updated instances
             foreach (InstanceState state in m_states)
             {
-                if (toReplace.ContainsKey(state.instance))
+                CloneData data = CloneData.GetFromOriginal(toReplace, state.instance);
+                if (data != null)
                 {
-                    DebugUtils.Log("AlignTerrainHeightAction Replacing: " + state.instance.id.RawData + " -> " + toReplace[state.instance].id.RawData);
-                    state.ReplaceInstance(toReplace[state.instance]);
+                    Log.Debug($"AlignTerrainHeightAction Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.5]");
+                    state.ReplaceInstance(data.Clone);
                 }
             }
         }

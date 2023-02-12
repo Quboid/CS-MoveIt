@@ -227,8 +227,16 @@ namespace MoveIt
             return new NodeMergeExisting()
             {
                 ChildId = newId,
-                ParentId = ParentId,
-                status = status
+                ParentId = ParentId
+            };
+        }
+
+        internal NodeMergeExisting ConvertToExisting(CloneData cloneData)
+        {
+            return new NodeMergeExisting()
+            {
+                ChildId = cloneData.StateIId.NetNode,
+                ParentId = ParentId
             };
         }
     }

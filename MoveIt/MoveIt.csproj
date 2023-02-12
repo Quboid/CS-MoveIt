@@ -43,6 +43,7 @@
     <Compile Include="Actions\AlignTerrainHeightAction.cs" />
     <Compile Include="Actions\BulldozeAction.cs" />
     <Compile Include="Actions\CloneAction.cs" />
+    <Compile Include="Actions\CloneData.cs" />
     <Compile Include="Actions\ConvertToPOAction.cs" />
     <Compile Include="Actions\AlignMirrorAction.cs" />
     <Compile Include="Actions\LineAction.cs" />

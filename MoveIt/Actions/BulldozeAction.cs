@@ -268,7 +268,7 @@ namespace MoveIt
         {
             if (m_states == null) return;
 
-            Dictionary<Instance, Instance> toReplace = new Dictionary<Instance, Instance>();
+            List<CloneData> toReplace = new List<CloneData>();
             Dictionary<ushort, ushort> clonedNodes = new Dictionary<ushort, ushort>();
 
             var stateToClone = new Dictionary<InstanceState, Instance>();
@@ -284,7 +284,7 @@ namespace MoveIt
                     if (state.instance.id.Type == InstanceType.NetNode)
                     {
                         Instance clone = state.instance.Clone(state, null);
-                        toReplace.Add(state.instance, clone);
+                        toReplace.Add(new CloneData() { Original = state.instance, Clone = clone });
                         stateToClone.Add(state, clone);
                         InstanceID_origToClone.Add(state.instance.id, clone.id);
                         clonedNodes.Add(state.instance.id.NetNode, clone.id.NetNode);
@@ -307,7 +307,7 @@ namespace MoveIt
                     if (state is ProcState) continue;
 
                     Instance clone = state.instance.Clone(state, clonedNodes);
-                    toReplace.Add(state.instance, clone);
+                    toReplace.Add(new CloneData() { Original = state.instance, Clone = clone });
                     stateToClone.Add(state, clone);
                     InstanceID_origToClone.Add(state.instance.id, clone.id);
 
@@ -414,7 +414,7 @@ namespace MoveIt
                         }
 
                         Instance clone = state.instance.Clone(state, clonedNodes);
-                        toReplace.Add(state.instance, clone);
+                        toReplace.Add(new CloneData() { Original = state.instance, Clone = clone });
                         stateToClone.Add(state, clone);
                         InstanceID_origToClone.Add(state.instance.id, clone.id);
                         MoveItTool.NS.SetSegmentModifiers(clone.id.NetSegment, segmentState);
@@ -493,27 +493,29 @@ namespace MoveIt
             }
         }
 
-        public override void ReplaceInstances(Dictionary<Instance, Instance> toReplace)
+        public override void ReplaceInstances(List<CloneData> toReplace)
         {
+            // Update this action's state instances with the updated instances
             foreach (InstanceState state in m_states)
             {
-                if (toReplace.ContainsKey(state.instance))
+                CloneData data = CloneData.GetFromOriginal(toReplace, state.instance);
+                if (data != null)
                 {
-                    DebugUtils.Log("BulldozeAction Replacing: " + state.instance.id.RawData + " -> " + toReplace[state.instance].id.RawData);
-                    state.ReplaceInstance(toReplace[state.instance]);
+                    Log.Debug($"BulldozeAction Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.6]");
+                    state.ReplaceInstance(data.Clone);
                 }
             }
 
-            if (m_oldSelection == null)
+            // Update the selected instances
+            if (m_oldSelection != null)
             {
-                return;
-            }
-            foreach (Instance instance in toReplace.Keys)
-            {
-                if (m_oldSelection.Remove(instance))
+                foreach (CloneData data in toReplace)
                 {
-                    DebugUtils.Log("BulldozeAction Replacing: " + instance.id.RawData + " -> " + toReplace[instance].id.RawData);
-                    m_oldSelection.Add(toReplace[instance]);
+                    if (m_oldSelection.Remove(data.Original))
+                    {
+                        Log.Debug($"BulldozeAction Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.2]");
+                        m_oldSelection.Add(data.Clone);
+                    }
                 }
             }
         }

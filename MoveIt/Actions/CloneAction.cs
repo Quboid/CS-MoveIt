@@ -142,21 +142,6 @@ namespace MoveIt
         }
     }
 
-    public class CloneData
-    {
-        public Instance Original { get => _original ?? throw new NullReferenceException(); set => _original = value; }
-        private Instance _original = null;
-        public Instance Clone { get => _clone ?? throw new NullReferenceException(); set => _clone = value; }
-        private Instance _clone = null;
-        public InstanceState CloneState { get => _cloneState ?? throw new NullReferenceException(); set => _cloneState = value; }
-        private InstanceState _cloneState = null;
-        public InstanceState AdjustedState { get => _adjustedState ?? throw new NullReferenceException(); set => _adjustedState = value; }
-        private InstanceState _adjustedState = null;
-
-        public InstanceID OriginalIId => Original.id;
-        public InstanceID CloneIId => Clone.id;
-    }
-
     public class CloneActionBase : Action
     {
         public Vector3 moveDelta;
@@ -168,31 +153,32 @@ namespace MoveIt
         internal List<NodeMergeClone> m_nodeMergeData = new List<NodeMergeClone>();
 
         public HashSet<InstanceState> m_states = new HashSet<InstanceState>(); // the InstanceStates to be cloned
-        internal HashSet<Instance> m_clones; // the resulting Instances
+        //internal HashSet<Instance> m_clones; // the resulting Instances
         internal HashSet<Instance> m_oldSelection; // The selection before cloning
 
         /// <summary>
         /// Maps of clones
         /// </summary>
         internal List<CloneData> m_cloneData = new List<CloneData>();
+        internal Dictionary<InstanceID, InstanceID> m_mapLanes;
 
         /// <summary>
         /// Original -> Clone mapping for updating action queue on undo/redo 
         /// </summary>
-        internal Dictionary<Instance, Instance> m_origToClone;
+        //internal Dictionary<Instance, Instance> m_origToClone;
         /// <summary>
         /// Buffer of m_origToClone, the Original -> Clone mapping mapping for undo/redo
         /// </summary>
-        internal Dictionary<Instance, Instance> m_origToCloneUpdate;
+        //internal Dictionary<Instance, Instance> m_origToCloneUpdate;
         /// <summary>
         /// Map of node clones, Original -> Clone to connect cloned segments
         /// </summary>
-        internal Dictionary<ushort, ushort> m_nodeOrigToClone;
+        internal Dictionary<ushort, ushort> m_mapNodes;
         /// <summary>
         /// Map of unplaced clone state to placed clone instance
         /// </summary>
-        protected Dictionary<InstanceState, Instance> m_stateToClone = new Dictionary<InstanceState, Instance>();
-        protected Dictionary<InstanceID, InstanceID> m_InstanceID_origToClone = new Dictionary<InstanceID, InstanceID>();
+        //protected Dictionary<InstanceState, Instance> m_stateToClone = new Dictionary<InstanceState, Instance>();
+        //protected Dictionary<InstanceID, InstanceID> m_InstanceID_origToClone = new Dictionary<InstanceID, InstanceID>();
         internal Dictionary<PO_Group, PO_Group> m_POGroupMap = new Dictionary<PO_Group, PO_Group>();
 
         protected Matrix4x4 matrix4x = default;
@@ -348,10 +334,8 @@ namespace MoveIt
         {
             DoProcess();
 
-            m_origToClone = m_origToCloneUpdate;
-
             // Select clones
-            selection = m_clones;
+            selection = CloneData.GetClones(m_cloneData);
             MoveItTool.m_debugPanel.UpdatePanel();
 
             UpdateArea(GetTotalBounds(false));
@@ -365,20 +349,26 @@ namespace MoveIt
                 DebugUtils.LogException(e);
             }
 
-            // Clone integrations
-            foreach (var item in m_stateToClone)
+            // Clone integrations, including lanes
+            Dictionary<InstanceID, InstanceID> mapOrigToClone = new Dictionary<InstanceID, InstanceID>(m_mapLanes);
+            foreach (CloneData cloneData in m_cloneData)
             {
-                foreach (var data in item.Key.IntegrationData)
+                mapOrigToClone.Add(cloneData.OriginalIId, cloneData.CloneIId);
+            }
+
+            foreach (CloneData cloneData in m_cloneData)
+            {
+                foreach (var data in cloneData.CloneState.IntegrationData)
                 {
                     try
                     {
                         //Debug.Log($"Integrated-Paste\n- {item.Value.id} {item.Value.id.Debug()}\n- {data.Value}");
-                        data.Key.Paste(item.Value.id, data.Value, m_InstanceID_origToClone);
+                        data.Key.Paste(cloneData.CloneIId, data.Value, mapOrigToClone);
                     }
                     catch (Exception e)
                     {
-                        InstanceID sourceInstanceID = item.Key.instance.id;
-                        InstanceID targetInstanceID = item.Value.id;
+                        InstanceID sourceInstanceID = cloneData.StateIId;
+                        InstanceID targetInstanceID = cloneData.CloneIId;
                         Log.Error($"integration {data.Key} Failed to paste from " +
                             $"{sourceInstanceID.Type}:{sourceInstanceID.Index} to {targetInstanceID.Type}:{targetInstanceID.Index}", "[M21]");
                         DebugUtils.LogException(e);
@@ -386,17 +376,17 @@ namespace MoveIt
                 }
             }
 
-            if (m_origToClone != null)
+            if (m_cloneData != null && m_cloneData.Count > 0)
             {
                 Dictionary<Instance, Instance> toReplace = new Dictionary<Instance, Instance>();
 
-                foreach (Instance key in m_origToClone.Keys)
+                //foreach (Instance key in m_origToClone.Keys)
+                foreach (CloneData cloneData in m_cloneData)
                 {
-                    toReplace.Add(m_origToClone[key], m_origToCloneUpdate[key]);
-                    Log.Debug("To replace: " + m_origToClone[key].id.RawData + " -> " + m_origToCloneUpdate[key].id.RawData, "[M22]");
+                    Log.Debug($"To replace: {cloneData.StateIId.Debug()} -> {cloneData.CloneIId.Debug()}.", "[M22]");
                 }
 
-                ActionQueue.instance.ReplaceInstancesForward(toReplace);
+                ActionQueue.instance.ReplaceInstancesForward(m_cloneData);
             }
         }
 
@@ -410,12 +400,13 @@ namespace MoveIt
             MoveItTool.instance.m_lastInstance = null;
 
             m_cloneData = new List<CloneData>();
+            m_mapLanes = new Dictionary<InstanceID, InstanceID>();
+            m_mapNodes = new Dictionary<ushort, ushort>();
 
-            m_clones = new HashSet<Instance>();
-            m_origToCloneUpdate = new Dictionary<Instance, Instance>();
-            m_nodeOrigToClone = new Dictionary<ushort, ushort>();
-            m_stateToClone = new Dictionary<InstanceState, Instance>();
-            m_InstanceID_origToClone = new Dictionary<InstanceID, InstanceID>();
+            //m_clones = new HashSet<Instance>();
+            //m_origToCloneUpdate = new Dictionary<Instance, Instance>();
+            //m_stateToClone = new Dictionary<InstanceState, Instance>();
+            //m_InstanceID_origToClone = new Dictionary<InstanceID, InstanceID>();
 
             matrix4x.SetTRS(center + moveDelta, Quaternion.AngleAxis(angleDelta * Mathf.Rad2Deg, Vector3.down), Vector3.one);
 
@@ -424,7 +415,7 @@ namespace MoveIt
             {
                 if (state is NodeState)
                 {
-                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_nodeOrigToClone, this);
+                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
 
                     if (clone == null)
                     {
@@ -439,11 +430,11 @@ namespace MoveIt
                         CloneState = state
                     });
 
-                    m_clones.Add(clone);
-                    m_stateToClone.Add(state, clone);
-                    m_InstanceID_origToClone.Add(state.instance.id, clone.id);
-                    m_origToCloneUpdate.Add(state.instance, clone);
-                    m_nodeOrigToClone.Add(state.instance.id.NetNode, clone.id.NetNode);
+                    //m_clones.Add(clone);
+                    //m_stateToClone.Add(state, clone);
+                    //m_InstanceID_origToClone.Add(state.instance.id, clone.id);
+                    //m_origToCloneUpdate.Add(state.instance, clone);
+                    m_mapNodes.Add(state.instance.id.NetNode, clone.id.NetNode);
                 }
             }
 
@@ -453,7 +444,7 @@ namespace MoveIt
             {
                 if (state is BuildingState)
                 {
-                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_nodeOrigToClone, this);
+                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
 
                     if (clone == null)
                     {
@@ -461,10 +452,17 @@ namespace MoveIt
                         continue;
                     }
 
-                    m_clones.Add(clone);
-                    m_stateToClone.Add(state, clone);
-                    m_InstanceID_origToClone.Add(state.instance.id, clone.id);
-                    m_origToCloneUpdate.Add(state.instance, clone);
+                    m_cloneData.Add(new CloneData()
+                    {
+                        Original = state.instance,
+                        Clone = clone,
+                        CloneState = state
+                    });
+
+                    //m_clones.Add(clone);
+                    //m_stateToClone.Add(state, clone);
+                    //m_InstanceID_origToClone.Add(state.instance.id, clone.id);
+                    //m_origToCloneUpdate.Add(state.instance, clone);
 
                     foreach (Instance inst in clone.subInstances)
                     {
@@ -482,7 +480,7 @@ namespace MoveIt
             {
                 if (!(state is NodeState || state is BuildingState || state is ProcState))
                 {
-                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_nodeOrigToClone, this);
+                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
 
                     if (clone == null)
                     {
@@ -490,10 +488,17 @@ namespace MoveIt
                         continue;
                     }
 
-                    m_clones.Add(clone);
-                    m_stateToClone.Add(state, clone);
-                    m_InstanceID_origToClone.Add(state.instance.id, clone.id);
-                    m_origToCloneUpdate.Add(state.instance, clone);
+                    m_cloneData.Add(new CloneData()
+                    {
+                        Original = state.instance,
+                        Clone = clone,
+                        CloneState = state
+                    });
+
+                    //m_clones.Add(clone);
+                    //m_stateToClone.Add(state, clone);
+                    //m_InstanceID_origToClone.Add(state.instance.id, clone.id);
+                    //m_origToCloneUpdate.Add(state.instance, clone);
 
                     if (state is SegmentState segmentState)
                     {
@@ -505,9 +510,9 @@ namespace MoveIt
                             DebugUtils.AssertEq(clonedLaneIds.Count, segmentState.LaneIDs.Count, "clonedLaneIds.Count, segmentState.LaneIDs.Count");
                             for (int i=0;i< clonedLaneIds.Count; ++i)
                             {
-                                var lane0 = new InstanceID { NetLane = segmentState.LaneIDs[i] };
-                                var lane = new InstanceID { NetLane = clonedLaneIds[i] };
-                                m_InstanceID_origToClone.Add(lane0, lane);
+                                var origLaneIId = new InstanceID { NetLane = segmentState.LaneIDs[i] };
+                                var cloneLaneIId = new InstanceID { NetLane = clonedLaneIds[i] };
+                                m_mapLanes.Add(origLaneIId, cloneLaneIId);
                             }
                         }
                     }
@@ -518,16 +523,19 @@ namespace MoveIt
             {
                 foreach (NodeMergeClone mergeClone in m_nodeMergeData)
                 {
-                    if (NodeMerging.MergeNodes(mergeClone.ConvertToExisting(m_stateToClone[mergeClone.nodeState].id.NetNode)))
+                    CloneData cloneData = CloneData.GetFromState(m_cloneData, mergeClone.nodeState);
+                    if (NodeMerging.MergeNodes(mergeClone.ConvertToExisting(cloneData)))
                     {
                         MoveableNode.UpdateSegments(mergeClone.ParentId, mergeClone.ParentNetNode.m_position);
-                        m_origToCloneUpdate.Remove(mergeClone.nodeState.instance);
-                        m_InstanceID_origToClone[mergeClone.nodeState.instance.id] = mergeClone.ParentInstanceId;
-                        m_nodeOrigToClone[mergeClone.nodeState.instance.id.NetNode] = mergeClone.ParentId;
+                        cloneData.Clone = mergeClone.ParentInstanceId;
+                        m_mapNodes[mergeClone.nodeState.instance.id.NetNode] = mergeClone.ParentId;
                     }
                     else
                     {
-                        Log.Info($"Failed node merge - virtual:{mergeClone.ChildId}, placed:{m_stateToClone[mergeClone.nodeState].id.NetNode} (parent:{mergeClone.ParentId})", "[M26]");
+                        if (cloneData == null)
+                            Log.Info($"Failed node merge - virtual:{mergeClone.ChildId}, placed:<null> (parent:{mergeClone.ParentId})", "[M26.1]");
+                        else
+                            Log.Info($"Failed node merge - virtual:{mergeClone.ChildId}, placed:{cloneData.StateIId.NetNode} (parent:{mergeClone.ParentId})", "[M26.2]");
                     }
                 }
             }
@@ -538,7 +546,7 @@ namespace MoveIt
             {
                 if (state is ProcState)
                 {
-                    _ = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_nodeOrigToClone, this);
+                    _ = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
                 }
             }
 
@@ -554,16 +562,17 @@ namespace MoveIt
         
         public override void Undo()
         {
-            if (m_clones == null) return;
+            if (m_cloneData == null || m_cloneData.Count == 0) return;
 
             Bounds bounds = GetTotalBounds(false);
 
-            foreach (Instance instance in m_clones)
+            foreach (CloneData data in m_cloneData)
             {
-                instance.Delete();
+                data.Clone.Delete();
             }
+            m_cloneData.Clear();
 
-            m_clones = null;
+            //m_clones = null;
 
             // Restore selection
             selection = m_oldSelection;
@@ -573,43 +582,57 @@ namespace MoveIt
             MoveItTool.UpdatePillarMap();
         }
 
-        public override void ReplaceInstances(Dictionary<Instance, Instance> toReplace)
+        /// <summary>
+        /// Update action when past/future actions change instances
+        /// </summary>
+        /// <param name="toReplace">The list of CloneData objects that need updated</param>
+        public override void ReplaceInstances(List<CloneData> toReplace)
         {
+            // Update this action's state instances with the updated instances
             foreach (InstanceState state in m_states)
             {
-                if (toReplace.ContainsKey(state.instance))
+                CloneData data = CloneData.GetFromOriginal(toReplace, state.instance);
+                if (data != null)
                 {
-                    DebugUtils.Log("CloneAction Replacing: " + state.instance.id.RawData + " -> " + toReplace[state.instance].id.RawData);
-                    state.ReplaceInstance(toReplace[state.instance]);
+                    Log.Debug($"CloneAction Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.1]");
+                    state.ReplaceInstance(data.Clone);
                 }
             }
 
-            foreach (Instance instance in toReplace.Keys)
+            // Update the selected instances
+            if (m_oldSelection != null)
             {
-                if (m_oldSelection.Remove(instance))
+                foreach (CloneData data in toReplace)
                 {
-                    DebugUtils.Log("CloneAction Replacing: " + instance.id.RawData + " -> " + toReplace[instance].id.RawData);
-                    m_oldSelection.Add(toReplace[instance]);
-                }
-            }
-
-            if (m_origToClone != null)
-            {
-                Dictionary<Instance, Instance> clonedOrigin = new Dictionary<Instance, Instance>();
-
-                foreach (Instance key in m_origToClone.Keys)
-                {
-                    if (toReplace.ContainsKey(key))
+                    if (m_oldSelection.Remove(data.Original))
                     {
-                        clonedOrigin.Add(toReplace[key], m_origToClone[key]);
-                        DebugUtils.Log("CloneAction Replacing: " + key.id.RawData + " -> " + toReplace[key].id.RawData);
+                        Log.Debug($"CloneAction Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.1]");
+                        m_oldSelection.Add(data.Clone);
+                    }
+                }
+            }
+
+            // Update this action's clone data
+            if (m_cloneData != null && m_cloneData.Count > 0)
+            {
+                List<CloneData> clonedOrigin = new List<CloneData>();
+
+                foreach (CloneData data in m_cloneData)
+                {
+                    CloneData update = CloneData.GetFromOriginal(toReplace, data.Original);
+                    if (update != null)
+                    {
+                        update.Clone = data.Clone;
+                        clonedOrigin.Add(update);
+                        Log.Debug($"CloneAction Replacing: {data.OriginalIId.Debug()} -> {update.CloneIId.Debug()}", "[M80]");
                     }
                     else
                     {
-                        clonedOrigin.Add(key, m_origToClone[key]);
+                        clonedOrigin.Add(data);
                     }
                 }
-                m_origToClone = clonedOrigin;
+
+                m_cloneData = clonedOrigin;
             }
         }
 

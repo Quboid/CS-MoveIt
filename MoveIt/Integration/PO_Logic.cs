@@ -147,8 +147,8 @@ namespace MoveIt
             Action.selection.Add(cloneInstance);
             if (ActionQueue.instance.current is CloneActionBase ca)
             {
-                ca.m_clones.Add(cloneInstance);
-                ca.m_origToClone.Add(new MoveableProc(original), cloneInstance);
+                //ca.m_clones.Add(cloneInstance);
+                //ca.m_origToClone.Add(new MoveableProc(original), cloneInstance);
             }
             else
             {
@@ -263,8 +263,8 @@ namespace MoveIt
                 };
 
                 Action.selection.Add(cloneInstance);
-                ca.m_clones.Add(cloneInstance);
-                ca.m_origToClone.Add(original, cloneInstance);
+                //ca.m_clones.Add(cloneInstance);
+                //ca.m_origToClone.Add(original, cloneInstance);
 
                 MoveItTool.SetToolState();
                 MoveItTool.instance.ProcessSensitivityMode(false);

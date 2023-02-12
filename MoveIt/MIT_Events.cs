@@ -9,7 +9,7 @@ namespace MoveIt
     {
         private void OnLeftMouseDown()
         {
-            Log.Debug("OnLeftMouseDown: " + ToolState, "[M32]");
+            //Log.Debug("OnLeftMouseDown: " + ToolState, "[M32]");
 
             Vector3 mousePos = RaycastMouseLocation();
             if (ToolState == ToolStates.Default)
@@ -53,7 +53,7 @@ namespace MoveIt
 
         private void OnLeftMouseUp()
         {
-            Log.Debug("OnLeftMouseUp: " + ToolState, "[M33]");
+            //Log.Debug("OnLeftMouseUp: " + ToolState, "[M33]");
 
             if (ToolState == ToolStates.DrawingSelection)
             {
@@ -97,7 +97,7 @@ namespace MoveIt
 
         private void OnLeftClick()
         {
-            Log.Debug("OnLeftClick: " + ToolState, "[M34]");
+            //Log.Debug("OnLeftClick: " + ToolState, "[M34]");
 
             if (POProcessing > 0)
             {
@@ -348,7 +348,7 @@ namespace MoveIt
 
         private void OnLeftDrag()
         {
-            Log.Debug("OnLeftDrag: " + ToolState, "[M35]");
+            //Log.Debug("OnLeftDrag: " + ToolState, "[M35]");
 
             if (ToolState == ToolStates.Default || ToolState == ToolStates.ToolActive)
             {
@@ -383,7 +383,7 @@ namespace MoveIt
 
         private void OnLeftDragStop()
         {
-            Log.Debug("OnLeftDragStop: " + ToolState, "[M36]");
+            //Log.Debug("OnLeftDragStop: " + ToolState, "[M36]");
 
             if (ToolState == ToolStates.MouseDragging && m_rightClickTime == 0)
             {
@@ -398,7 +398,7 @@ namespace MoveIt
 
         private void OnRightMouseDown()
         {
-            Log.Debug("OnRightMouseDown: " + ToolState, "[M37]");
+            //Log.Debug("OnRightMouseDown: " + ToolState, "[M37]");
 
             if (ToolState == ToolStates.Default)
             {
@@ -428,7 +428,7 @@ namespace MoveIt
 
         private void OnRightClick()
         {
-            Log.Debug("OnRightClick: " + ToolState, "[M38]");
+            //Log.Debug("OnRightClick: " + ToolState, "[M38]");
 
             if (ToolState == ToolStates.Default)
             {
@@ -474,7 +474,7 @@ namespace MoveIt
 
         private void OnRightDrag()
         {
-            Log.Debug("OnRightDrag: " + ToolState, "[M39]");
+            //Log.Debug("OnRightDrag: " + ToolState, "[M39]");
 
             if (ToolState == ToolStates.Default || ToolState == ToolStates.ToolActive)
             {
@@ -501,7 +501,7 @@ namespace MoveIt
 
         private void OnRightDragStop()
         {
-            Log.Debug("OnRightDragStop: " + ToolState, "[M40]");
+            //Log.Debug("OnRightDragStop: " + ToolState, "[M40]");
 
             if (ToolState == ToolStates.MouseDragging && m_leftClickTime == 0)
             {
@@ -520,7 +520,7 @@ namespace MoveIt
 
         private void OnMiddleMouseDown()
         {
-            Log.Debug("OnMiddleMouseDown: " + ToolState, "[M41]");
+            //Log.Debug("OnMiddleMouseDown: " + ToolState, "[M41]");
 
             Vector3 mousePos = RaycastMouseLocation();
 
@@ -574,7 +574,7 @@ namespace MoveIt
 
         private void OnMiddleDragStop()
         {
-            Log.Debug("OnMiddleDragStop: " + ToolState, "[M45]");
+            //Log.Debug("OnMiddleDragStop: " + ToolState, "[M45]");
 
             if (ToolState == ToolStates.MouseDragging && m_rightClickTime == 0)
             {

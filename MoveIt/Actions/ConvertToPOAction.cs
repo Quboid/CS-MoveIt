@@ -90,7 +90,7 @@ namespace MoveIt
             firstRun = false; // TODO this disables Redo
             if (m_states == null) return;
 
-            Dictionary<Instance, Instance> toReplace = new Dictionary<Instance, Instance>();
+            List<CloneData> toReplace = new List<CloneData>();
             foreach (Instance clone in m_clones)
             {
                 MoveItTool.PO.visibleObjects.Remove(clone.id.NetLane);
@@ -102,7 +102,7 @@ namespace MoveIt
                 if (state.instance is MoveableBuilding || state.instance is MoveableProp)
                 {
                     Instance clone = state.instance.Clone(state, null);
-                    toReplace.Add(state.instance, clone);
+                    toReplace.Add(new CloneData() { Original = state.instance, Clone = clone });
                     m_oldSelection.Add(clone);
                 }
             }
@@ -114,23 +114,29 @@ namespace MoveIt
             MoveItTool.m_debugPanel.UpdatePanel();
         }
 
-        public override void ReplaceInstances(Dictionary<Instance, Instance> toReplace)
+        public override void ReplaceInstances(List<CloneData> toReplace)
         {
+            // Update this action's state instances with the updated instances
             foreach (InstanceState state in m_states)
             {
-                if (toReplace.ContainsKey(state.instance))
+                CloneData data = CloneData.GetFromOriginal(toReplace, state.instance);
+                if (data != null)
                 {
-                    DebugUtils.Log($"ConvertToPO Replacing: {state.instance} ({state.instance.id.RawData}) -> {toReplace[state.instance]} ({toReplace[state.instance].id.RawData})");
-                    state.ReplaceInstance(toReplace[state.instance]);
+                    Log.Debug($"ConvertToPO Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.9]");
+                    state.ReplaceInstance(data.Clone);
                 }
             }
 
-            foreach (Instance instance in toReplace.Keys)
+            // Update the selected instances
+            if (m_oldSelection != null)
             {
-                if (m_oldSelection.Remove(instance))
+                foreach (CloneData data in toReplace)
                 {
-                    DebugUtils.Log($"ConvertToPO Replacing: {instance} ({instance.id.RawData} -> {toReplace[instance]} ({toReplace[instance].id.RawData})");
-                    m_oldSelection.Add(toReplace[instance]);
+                    if (m_oldSelection.Remove(data.Original))
+                    {
+                        Log.Debug($"ConvertToPO Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.5]");
+                        m_oldSelection.Add(data.Clone);
+                    }
                 }
             }
         }

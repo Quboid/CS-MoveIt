@@ -102,6 +102,7 @@ namespace MoveIt
 
         public bool Do()
         {
+            Log.Debug($"AAA05");
             if (m_current == m_tail)
             {
                 return false;
@@ -130,7 +131,7 @@ namespace MoveIt
             m_tail = 0;
         }
 
-        public void ReplaceInstancesForward(Dictionary<Instance, Instance> toReplace)
+        public void ReplaceInstancesForward(List<CloneData> toReplace)
         {
             int action = m_current;
 
@@ -141,7 +142,7 @@ namespace MoveIt
             }
         }
 
-        public void ReplaceInstancesBackward(Dictionary<Instance, Instance> toReplace)
+        public void ReplaceInstancesBackward(List<CloneData> toReplace)
         {
             int action = m_current;
 

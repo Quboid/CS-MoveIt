@@ -25,27 +25,28 @@ namespace MoveIt
             Dictionary<Instance, float> instanceRotations = new Dictionary<Instance, float>();
 
             Matrix4x4 matrix4x = default;
-            foreach (Instance instance in m_clones)
+            foreach (CloneData cloneData in m_cloneData)
             {
-                if (instance.isValid)
+                if (cloneData.Clone.isValid)
                 {
                     InstanceState state = null;
 
-                    foreach (KeyValuePair<Instance, Instance> pair in m_origToClone)
+                    foreach (CloneData candidate in m_cloneData)
                     {
-                        if (pair.Value.id.RawData == instance.id.RawData)
-                        {               
-                            if (pair.Value is MoveableSegment)
+                        if (candidate.CloneIId.RawData == cloneData.CloneIId.RawData)
+                        {
+                            if (candidate.Clone is MoveableSegment)
                             { // Segments need original state because nodes move before clone's position is saved
-                                state = pair.Key.SaveToState();
+                                state = candidate.Original.SaveToState();
                             }
                             else
                             { // Buildings need clone state to access correct subInstances. Others don't matter, but clone makes most sense
-                                state = pair.Value.SaveToState();
+                                state = candidate.Clone.SaveToState();
                             }
                             break;
                         }
                     }
+
                     if (state == null)
                     {
                         throw new NullReferenceException($"Original for cloned object not found.");
@@ -53,38 +54,40 @@ namespace MoveIt
 
                     float faceDelta = getMirrorFacingDelta(state.angle, mirrorAngle);
                     float posDelta = getMirrorPositionDelta(state.position, mirrorPivot, mirrorAngle);
-                    instanceRotations[instance] = faceDelta;
+                    instanceRotations[cloneData.Clone] = faceDelta;
 
                     matrix4x.SetTRS(mirrorPivot, Quaternion.AngleAxis(posDelta * Mathf.Rad2Deg, Vector3.down), Vector3.one);
 
-                    instance.Transform(state, ref matrix4x, 0f, faceDelta, mirrorPivot, followTerrain);
+                    cloneData.Clone.Transform(state, ref matrix4x, 0f, faceDelta, mirrorPivot, followTerrain);
                 }
             }
 
-            // Mirror integrations
-            foreach (var item in m_stateToClone)
+            // Mirror integrations, including lanes
+            Dictionary<InstanceID, InstanceID> mapOrigToClone = new Dictionary<InstanceID, InstanceID>(m_mapLanes);
+            foreach (CloneData cloneData in m_cloneData)
             {
-                foreach (var data in item.Key.IntegrationData)
+                mapOrigToClone.Add(cloneData.OriginalIId, cloneData.CloneIId);
+            }
+
+            foreach (CloneData cloneData in m_cloneData)
+            {
+                foreach (var data in cloneData.CloneState.IntegrationData)
                 {
                     try
                     {
-                        CallIntegration(data.Key, item.Value.id, data.Value, m_InstanceID_origToClone, instanceRotations[item.Value], mirrorAngle);
-                        //data.Key.Mirror(item.Value.id, data.Value, m_InstanceID_origToClone);
-                    }
-                    catch (MissingMethodException e)
-                    {
-                        Log.Debug($"Failed to find Mirror method, a mod {data.Key.Name} needs updated.\n{e}", "[M14]");
+                        CallIntegration(data.Key, cloneData.CloneIId, data.Value, mapOrigToClone, instanceRotations[cloneData.Clone], mirrorAngle);
                     }
                     catch (Exception e)
                     {
-                        InstanceID sourceInstanceID = item.Key.instance.id;
-                        InstanceID targetInstanceID = item.Value.id;
+                        InstanceID sourceInstanceID = cloneData.StateIId;
+                        InstanceID targetInstanceID = cloneData.CloneIId;
                         Log.Error($"integration {data.Key} Failed to paste from " +
-                            $"{sourceInstanceID.Type}:{sourceInstanceID.Index} to {targetInstanceID.Type}:{targetInstanceID.Index}", "[M15]");
+                            $"{sourceInstanceID.Type}:{sourceInstanceID.Index} to {targetInstanceID.Type}:{targetInstanceID.Index}", "[M21]");
                         DebugUtils.LogException(e);
                     }
                 }
             }
+
 
             bool fast = Settings.fastMove != Event.current.shift;
             UpdateArea(originalBounds, !fast || ((TypeMask & TypeMasks.Network) != TypeMasks.None));

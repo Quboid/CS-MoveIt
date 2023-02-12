@@ -41,6 +41,7 @@ namespace MoveIt
                 Log.Error($"InstallMod with existing instance!", "[M53]");
             }
 
+            Log.IsDebug = true;
             Directory.CreateDirectory(MoveItTool.saveFolder);
 
             MoveItTool.stepOver = new StepOver();

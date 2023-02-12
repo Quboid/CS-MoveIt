@@ -9,7 +9,7 @@ using System;
 using System.Globalization;
 using System.IO;
 
-// Error code M77
+// Error code M80
 
 namespace MoveIt
 {

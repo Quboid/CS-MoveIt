@@ -24,7 +24,7 @@ namespace MoveIt
 
         public abstract void Do();
         public abstract void Undo();
-        public abstract void ReplaceInstances(Dictionary<Instance, Instance> toReplace);
+        public abstract void ReplaceInstances(List<CloneData> toReplace);
 
         protected static Building[] buildingBuffer = Singleton<BuildingManager>.instance.m_buildings.m_buffer;
         protected static NetNode[] nodeBuffer = Singleton<NetManager>.instance.m_nodes.m_buffer;
