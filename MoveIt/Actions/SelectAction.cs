@@ -11,7 +11,6 @@ namespace MoveIt
 
         public SelectAction(bool append = false)
         {
-            Log.Debug($"AAA04");
             m_oldSelection = selection;
 
             if (append && selection != null)

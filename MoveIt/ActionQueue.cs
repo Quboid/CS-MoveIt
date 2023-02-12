@@ -102,7 +102,6 @@ namespace MoveIt
 
         public bool Do()
         {
-            Log.Debug($"AAA05");
             if (m_current == m_tail)
             {
                 return false;

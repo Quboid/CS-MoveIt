@@ -35,6 +35,7 @@ namespace MoveIt
             {
                 bool isInsideUI = this.m_toolController.IsInsideUI;
 
+                #region Mouse Buttons
                 if (m_leftClickTime == 0 && Input.GetMouseButton(0))
                     {
                         if (!isInsideUI)
@@ -150,6 +151,7 @@ namespace MoveIt
                         OnMiddleDrag();
                     }
                 }
+                #endregion
 
                 if (!isInsideUI && Cursor.visible)
                 {

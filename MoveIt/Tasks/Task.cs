@@ -65,7 +65,7 @@ namespace MoveIt.Tasks
                         break;
 
                     case Threads.Main:
-                        SimulationManager.instance.m_ThreadingWrapper.QueueMainThread(() =>
+                        Singleton<SimulationManager>.instance.m_ThreadingWrapper.QueueMainThread(() =>
                         {
                             try
                             {
