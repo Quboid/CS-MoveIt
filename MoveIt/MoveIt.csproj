@@ -73,12 +73,12 @@
       <DependentUpon>Str.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="MIT_Events.cs" />
-    <Compile Include="MIT_Filtering.cs" />
-    <Compile Include="MIT_Keyboard.cs" />
-    <Compile Include="MIT_OnToolUpdate.cs" />
-    <Compile Include="MIT_ToolManagement.cs" />
-    <Compile Include="MIT_Utilities.cs" />
+    <Compile Include="Tool\MIT_Events.cs" />
+    <Compile Include="Tool\MIT_Filtering.cs" />
+    <Compile Include="Tool\MIT_Keyboard.cs" />
+    <Compile Include="Tool\MIT_OnToolUpdate.cs" />
+    <Compile Include="Tool\MIT_ToolManagement.cs" />
+    <Compile Include="Tool\MIT_Utilities.cs" />
     <Compile Include="Moveable\MoveableProc.cs" />
     <Compile Include="Integration\PO_Logic.cs" />
     <Compile Include="Integration\PO_Manager.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="Moveable\MoveableSegment.cs" />
     <Compile Include="Moveable\MoveableTree.cs" />
     <Compile Include="MoveItLoader.cs" />
-    <Compile Include="MoveItTool.cs" />
+    <Compile Include="Tool\MoveItTool.cs" />
     <Compile Include="OptionsKeymapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\ResourceLoader.cs" />
@@ -106,7 +106,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="StepOver.cs" />
     <Compile Include="Tasks\Task.cs" />
-    <Compile Include="Tasks\TaskManager.cs" />
+    <Compile Include="Tasks\TaskManagement.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

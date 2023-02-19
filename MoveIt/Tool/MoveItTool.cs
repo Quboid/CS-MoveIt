@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using MoveIt.GUI;
+using MoveIt.Tasks;
 
 namespace MoveIt
 {
@@ -86,6 +87,7 @@ namespace MoveIt
 
         internal static PO_Manager PO = null;
         internal static NS_Manager NS = null;
+        internal static TaskManagement TaskManager = null;
         private static int _POProcessing = 0;
         private static float POProcessingStart = 0;
         internal static int POProcessing
@@ -330,6 +332,8 @@ namespace MoveIt
             {
                 Log.Error($"NetworkSkins Failed:\n{e}", "[M57]");
             }
+
+            TaskManager = new TaskManagement();
 
             if (UIToolOptionPanel.instance == null)
             {
@@ -696,6 +700,8 @@ namespace MoveIt
 
         public override void SimulationStep()
         {
+            TaskManager.Update();
+
             lock (ActionQueue.instance)
             {
                 try

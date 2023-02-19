@@ -235,7 +235,7 @@ namespace MoveIt
         {
             return new NodeMergeExisting()
             {
-                ChildId = cloneData.StateIId.NetNode,
+                ChildId = cloneData.CloneIId.NetNode,
                 ParentId = ParentId
             };
         }

@@ -103,20 +103,20 @@ namespace MoveIt.Tasks
 
             return t;
         }
-    }
 
-    internal enum Statuses
-    {
-        None,
-        Waiting,
-        Processing,
-        Finished
-    }
+        internal enum Statuses
+        {
+            None,
+            Waiting,
+            Processing,
+            Finished
+        }
 
-    internal enum Threads
-    {
-        None,
-        Main,
-        Simulation
+        internal enum Threads
+        {
+            None,
+            Main,
+            Simulation
+        }
     }
 }
