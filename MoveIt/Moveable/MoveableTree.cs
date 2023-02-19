@@ -189,11 +189,21 @@ namespace MoveIt
             }
 
             uint tree = id.Tree;
-            Singleton<SimulationManager>.instance.AddAction(() =>
+            //Singleton<SimulationManager>.instance.AddAction(() =>
+            //{
+            //    TreeManager.instance.MoveTree(tree, newPosition);
+            //    TreeManager.instance.UpdateTreeRenderer(tree, true);
+            //});
+
+            List<Tasks.Task> tasks = new List<Tasks.Task>
             {
-                TreeManager.instance.MoveTree(tree, newPosition);
-                TreeManager.instance.UpdateTreeRenderer(tree, true);
-            });
+                new Tasks.Task(null, Tasks.Task.Threads.Simulation, () =>
+                {
+                    TreeManager.instance.MoveTree(tree, newPosition);
+                    TreeManager.instance.UpdateTreeRenderer(tree, true);
+                })
+            };
+            MoveItTool.TaskManager.AddBatch(new Tasks.Batch(tasks, null, null, "MT-SetHeight-1"));
         }
 
         public override void SetHeight()

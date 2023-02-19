@@ -73,6 +73,7 @@
       <DependentUpon>Str.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Tasks\Batch.cs" />
     <Compile Include="Tool\MIT_Events.cs" />
     <Compile Include="Tool\MIT_Filtering.cs" />
     <Compile Include="Tool\MIT_Keyboard.cs" />

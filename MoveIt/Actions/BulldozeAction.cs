@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using MoveIt.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -228,16 +229,24 @@ namespace MoveIt
 
             Bounds bounds = GetTotalBounds(false);
 
+            List<Task> tasks = new List<Task>();
+
             foreach (InstanceState state in m_states)
             {
                 if (skipPO && state is ProcState) continue;
                 if (state is BuildingState) continue;
 
-                if (state.instance.isValid)
+                tasks.Add(new Task(this, Task.Threads.Simulation, () =>
                 {
-                    state.instance.Delete();
-                }
+                    if (state.instance.isValid)
+                    {
+                        state.instance.Delete();
+                    }
+                }));
             }
+
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, null, "Bdz-Do-1"));
+            tasks = new List<Task>();
 
             // Remove buildings last so attached nodes are cleaned up
             foreach (InstanceState state in m_states)
@@ -245,16 +254,21 @@ namespace MoveIt
                 if (skipPO && state is ProcState) continue;
                 if (!(state is BuildingState)) continue;
 
-                if (state.instance.isValid)
+                tasks.Add(new Task(this, Task.Threads.Simulation, () =>
                 {
-                    ((MoveableBuilding)state.instance).m_assetEditorSubBuilding.Destroy(state.instance.id.Building);
-                    state.instance.Delete();
-                }
+                    if (state.instance.isValid)
+                    {
+                        ((MoveableBuilding)state.instance).m_assetEditorSubBuilding.Destroy(state.instance.id.Building);
+                        state.instance.Delete();
+                    }
+                }));
             }
 
-            UpdateArea(bounds);
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new Task(this, Task.Threads.Simulation, () => {
+                UpdateArea(bounds);
+                selection = new HashSet<Instance>();
+            }), "Bdz-Do-2"));
 
-            selection = new HashSet<Instance>();
             MoveItTool.m_debugPanel.UpdatePanel();
             MoveItTool.UpdatePillarMap();
         }
@@ -268,13 +282,16 @@ namespace MoveIt
         {
             if (m_states == null) return;
 
-            List<CloneData> toReplace = new List<CloneData>();
-            Dictionary<ushort, ushort> clonedNodes = new Dictionary<ushort, ushort>();
+            Dictionary<ushort, ushort> mapNodes = new Dictionary<ushort, ushort>();
+            List<CloneData> cloneData = new List<CloneData>();
+            //List<CloneData> toReplace = new List<CloneData>();
 
             var stateToClone = new Dictionary<InstanceState, Instance>();
-            var InstanceID_origToClone = new Dictionary<InstanceID, InstanceID>();
+            //var InstanceID_origToClone = new Dictionary<InstanceID, InstanceID>();
 
             Building[] buildingBuffer = BuildingManager.instance.m_buildings.m_buffer;
+
+            List<Task> tasks = new List<Task>();
 
             // Recreate nodes
             foreach (InstanceState state in m_states)
@@ -283,12 +300,13 @@ namespace MoveIt
                 {
                     if (state.instance.id.Type == InstanceType.NetNode)
                     {
-                        Instance clone = state.instance.Clone(state, null);
-                        toReplace.Add(new CloneData() { Original = state.instance, Clone = clone });
-                        stateToClone.Add(state, clone);
-                        InstanceID_origToClone.Add(state.instance.id, clone.id);
-                        clonedNodes.Add(state.instance.id.NetNode, clone.id.NetNode);
-                        ActionQueue.instance.UpdateNodeIdInStateHistory(state.instance.id.NetNode, clone.id.NetNode);
+                        tasks.Add(new Task(this, Task.Threads.Simulation, () =>
+                        {
+                            Instance clone = state.instance.Clone(state, null);
+                            cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
+                            mapNodes.Add(state.instance.id.NetNode, clone.id.NetNode);
+                            ActionQueue.instance.UpdateNodeIdInStateHistory(state.instance.id.NetNode, clone.id.NetNode);
+                        }));
                     }
                 }
                 catch (Exception e)
@@ -296,6 +314,9 @@ namespace MoveIt
                     Log.Info($"Undo Bulldoze failed on {(state is InstanceState ? state.prefabName : "unknown")}\n{e}", "[M16]");
                 }
             }
+
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, null, "Bdz-Undo-1"));
+            tasks = new List<Task>();
 
             // Recreate everything except nodes and segments
             foreach (InstanceState state in m_states)
@@ -306,83 +327,92 @@ namespace MoveIt
                     if (state.instance.id.Type == InstanceType.NetSegment) continue;
                     if (state is ProcState) continue;
 
-                    Instance clone = state.instance.Clone(state, clonedNodes);
-                    toReplace.Add(new CloneData() { Original = state.instance, Clone = clone });
-                    stateToClone.Add(state, clone);
-                    InstanceID_origToClone.Add(state.instance.id, clone.id);
-
-                    if (state.instance.id.Type == InstanceType.Prop)
+                    tasks.Add(new Task(this, Task.Threads.Simulation, () =>
                     {
-                        PropLayer.Manager.SetFixedHeight(clone.id, ((PropState)state).fixedHeight);
-                    }
-                    else if (state.instance.id.Type == InstanceType.Building)
-                    {
-                        // Add attached nodes to the clonedNode list so other segments reconnect
-                        BuildingState buildingState = state as BuildingState;
-                        List<ushort> origNodeIds = new List<ushort>();
+                        Instance clone = state.instance.Clone(state, mapNodes);
+                        cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
 
-                        MoveableBuilding cb = clone as MoveableBuilding;
-                        ushort cloneNodeId = ((Building)cb.data).m_netNode;
-
-                        if (reset)
+                        if (state.instance.id.Type == InstanceType.Prop)
                         {
-                            ushort cloneId = cb.id.Building;
-
-                            buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags & ~Building.Flags.BurnedDown;
-                            buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags & ~Building.Flags.Collapsed;
-                            buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags & ~Building.Flags.Abandoned;
-                            buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags | Building.Flags.Active;
-                            Thread.Sleep(50);
+                            PropLayer.Manager.SetFixedHeight(clone.id, ((PropState)state).fixedHeight);
                         }
-
-                        if (cloneNodeId != 0)
+                        else if (state.instance.id.Type == InstanceType.Building)
                         {
-                            int c = 0;
-                            foreach (InstanceState i in buildingState.subStates)
+                            // Add attached nodes to the clonedNode list so other segments reconnect
+                            BuildingState buildingState = state as BuildingState;
+                            List<ushort> origNodeIds = new List<ushort>();
+
+                            MoveableBuilding cb = clone as MoveableBuilding;
+                            ushort cloneNodeId = ((Building)cb.data).m_netNode;
+
+                            if (reset)
                             {
-                                if (i is NodeState ns)
+                                ushort cloneId = cb.id.Building;
+
+                                buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags & ~Building.Flags.BurnedDown;
+                                buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags & ~Building.Flags.Collapsed;
+                                buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags & ~Building.Flags.Abandoned;
+                                buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags & ~Building.Flags.Flooded;
+                                buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags | Building.Flags.Active;
+
+                                if ((((Building)state.instance.data).m_flags & Building.Flags.Historical) != Building.Flags.None)
                                 {
-                                    InstanceID instanceID = default;
-                                    instanceID.RawData = ns.id;
-                                    origNodeIds.Insert(c++, instanceID.NetNode);
+                                    buildingBuffer[cloneId].m_flags = buildingBuffer[cloneId].m_flags | Building.Flags.Historical;
                                 }
                             }
 
-                            c = 0;
-                            while (cloneNodeId != 0)
+                            if (cloneNodeId != 0)
                             {
-                                ushort origNodeId = origNodeIds[c];
-
-                                NetNode clonedAttachedNode = Singleton<NetManager>.instance.m_nodes.m_buffer[cloneNodeId];
-                                if (clonedAttachedNode.Info.GetAI() is TransportLineAI)
+                                int c = 0;
+                                foreach (InstanceState i in buildingState.subStates)
                                 {
+                                    if (i is NodeState ns)
+                                    {
+                                        InstanceID instanceID = default;
+                                        instanceID.RawData = ns.id;
+                                        origNodeIds.Insert(c++, instanceID.NetNode);
+                                    }
+                                }
+
+                                c = 0;
+                                while (cloneNodeId != 0)
+                                {
+                                    ushort origNodeId = origNodeIds[c];
+
+                                    NetNode clonedAttachedNode = Singleton<NetManager>.instance.m_nodes.m_buffer[cloneNodeId];
+                                    if (clonedAttachedNode.Info.GetAI() is TransportLineAI)
+                                    {
+                                        cloneNodeId = clonedAttachedNode.m_nextBuildingNode;
+                                        continue;
+                                    }
+
+                                    if (mapNodes.ContainsKey(origNodeId))
+                                    {
+                                        Log.Debug($"Node #{origNodeId} is already in clone list!", "[M17]");
+                                    }
+
+                                    mapNodes.Add(origNodeId, cloneNodeId);
+
                                     cloneNodeId = clonedAttachedNode.m_nextBuildingNode;
-                                    continue;
-                                }
 
-                                if (clonedNodes.ContainsKey(origNodeId))
-                                {
-                                    Log.Debug($"Node #{origNodeId} is already in clone list!", "[M17]");
-                                }
-
-                                clonedNodes.Add(origNodeId, cloneNodeId);
-
-                                cloneNodeId = clonedAttachedNode.m_nextBuildingNode;
-
-                                if (++c > 32768)
-                                {
-                                    CODebugBase<LogChannel>.Error(LogChannel.Core, "Nodes: Invalid list detected!\n" + Environment.StackTrace);
-                                    break;
+                                    if (++c > 32768)
+                                    {
+                                        CODebugBase<LogChannel>.Error(LogChannel.Core, "Nodes: Invalid list detected!\n" + Environment.StackTrace);
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
+                    }));
                 }
                 catch (Exception e)
                 {
                     Log.Warning($"Undo Bulldoze failed on {(state is InstanceState ? state.prefabName : "unknown")}\n{e}", "[M18]");
                 }
             }
+
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, null, "Bdz-Undo-2"));
+            tasks = new List<Task>();
 
             // Recreate segments
             foreach (InstanceState state in m_states)
@@ -391,33 +421,34 @@ namespace MoveIt
                 {
                     if (state is SegmentState segmentState)
                     {
-                        if (!clonedNodes.ContainsKey(segmentState.startNodeId))
+                        tasks.Add(new Task(this, Task.Threads.Simulation, () =>
                         {
-                            InstanceID instanceID = InstanceID.Empty;
-                            instanceID.NetNode = segmentState.startNodeId;
+                            if (!mapNodes.ContainsKey(segmentState.startNodeId))
+                            {
+                                InstanceID instanceID = InstanceID.Empty;
+                                instanceID.NetNode = segmentState.startNodeId;
 
-                            // Don't clone if node is missing
-                            if (!((Instance)instanceID).isValid) continue;
+                                // Don't clone if node is missing
+                                if (!((Instance)instanceID).isValid) return;
 
-                            clonedNodes.Add(segmentState.startNodeId, segmentState.startNodeId);
-                        }
+                                mapNodes.Add(segmentState.startNodeId, segmentState.startNodeId);
+                            }
 
-                        if (!clonedNodes.ContainsKey(segmentState.endNodeId))
-                        {
-                            InstanceID instanceID = InstanceID.Empty;
-                            instanceID.NetNode = segmentState.endNodeId;
+                            if (!mapNodes.ContainsKey(segmentState.endNodeId))
+                            {
+                                InstanceID instanceID = InstanceID.Empty;
+                                instanceID.NetNode = segmentState.endNodeId;
 
-                            // Don't clone if node is missing
-                            if (!((Instance)instanceID).isValid) continue;
+                                // Don't clone if node is missing
+                                if (!((Instance)instanceID).isValid) return;
 
-                            clonedNodes.Add(segmentState.endNodeId, segmentState.endNodeId);
-                        }
+                                mapNodes.Add(segmentState.endNodeId, segmentState.endNodeId);
+                            }
 
-                        Instance clone = state.instance.Clone(state, clonedNodes);
-                        toReplace.Add(new CloneData() { Original = state.instance, Clone = clone });
-                        stateToClone.Add(state, clone);
-                        InstanceID_origToClone.Add(state.instance.id, clone.id);
-                        MoveItTool.NS.SetSegmentModifiers(clone.id.NetSegment, segmentState);
+                            Instance clone = state.instance.Clone(state, mapNodes);
+                            cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
+                            MoveItTool.NS.SetSegmentModifiers(clone.id.NetSegment, segmentState);
+                        }));
                     }
                 }
                 catch (Exception e)
@@ -426,53 +457,63 @@ namespace MoveIt
                 }
             }
 
-            // clone integrations.
-            foreach (var item in stateToClone)
+            Task postfix = new Task(this, Task.Threads.Main, () =>
             {
-                foreach (var data in item.Key.IntegrationData)
+                // clone integrations
+                Dictionary<InstanceID, InstanceID> mapOrigToClone = new Dictionary<InstanceID, InstanceID>();
+                foreach (CloneData data in cloneData)
                 {
-                    try
+                    mapOrigToClone.Add(data.OriginalIId, data.CloneIId);
+                }
+                foreach (CloneData data in cloneData)
+                {
+                    foreach (var integration in data.CloneState.IntegrationData)
                     {
-                        data.Key.Paste(item.Value.id, data.Value, InstanceID_origToClone);
-                    }
-                    catch (Exception e)
-                    {
-                        InstanceID sourceInstanceID = item.Key.instance.id;
-                        InstanceID targetInstanceID = item.Value.id;
-                        Log.Error($"integration {data.Key} Failed to paste from " +
-                            $"{sourceInstanceID.Type}:{sourceInstanceID.Index} to {targetInstanceID.Type}:{targetInstanceID.Index}", "[M20]");
-                        DebugUtils.LogException(e);
+                        try
+                        {
+                            integration.Key.Paste(data.Clone.id, integration.Value, mapOrigToClone);
+                        }
+                        catch (Exception e)
+                        {
+                            InstanceID sourceInstanceID = data.Original.id;
+                            InstanceID targetInstanceID = data.Clone.id;
+                            Log.Error($"integration {integration.Key} Failed to paste from " +
+                                $"{sourceInstanceID.Type}:{sourceInstanceID.Index} to {targetInstanceID.Type}:{targetInstanceID.Index}", "[M20]");
+                            DebugUtils.LogException(e);
+                        }
                     }
                 }
-            }
 
-            if (replaceInstances)
-            {
-                ReplaceInstances(toReplace);
-                ActionQueue.instance.ReplaceInstancesBackward(toReplace);
-
-                selection = new HashSet<Instance>();
-                foreach (Instance i in m_oldSelection)
+                if (replaceInstances)
                 {
-                    if (i is MoveableProc) continue;
-                    selection.Add(i);
-                }
-                MoveItTool.m_debugPanel.UpdatePanel();
-            }
+                    ReplaceInstances(cloneData);
+                    ActionQueue.instance.ReplaceInstancesBackward(cloneData);
 
-            // Does not check MoveItTool.advancedPillarControl, because even if disabled now advancedPillarControl may have been active earlier in action queue
-            foreach (KeyValuePair<BuildingState, BuildingState> pillarClone in pillarsOriginalToClone)
-            {
-                BuildingState originalState = pillarClone.Key;
-                originalState.instance.isHidden = false;
-                buildingBuffer[originalState.instance.id.Building].m_flags &= ~Building.Flags.Hidden;
-                selection.Add(originalState.instance);
-                m_states.Add(originalState);
-            }
-            if (pillarsOriginalToClone.Count > 0)
-            {
-                MoveItTool.UpdatePillarMap();
-            }
+                    selection = new HashSet<Instance>();
+                    foreach (Instance i in m_oldSelection)
+                    {
+                        if (i is MoveableProc) continue;
+                        selection.Add(i);
+                    }
+                    MoveItTool.m_debugPanel.UpdatePanel();
+                }
+
+                // Does not check MoveItTool.advancedPillarControl, because even if disabled now advancedPillarControl may have been active earlier in action queue
+                foreach (KeyValuePair<BuildingState, BuildingState> pillarClone in pillarsOriginalToClone)
+                {
+                    BuildingState originalState = pillarClone.Key;
+                    originalState.instance.isHidden = false;
+                    buildingBuffer[originalState.instance.id.Building].m_flags &= ~Building.Flags.Hidden;
+                    selection.Add(originalState.instance);
+                    m_states.Add(originalState);
+                }
+                if (pillarsOriginalToClone.Count > 0)
+                {
+                    MoveItTool.UpdatePillarMap();
+                }
+            });
+
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, postfix, "Bdz-Undo-3"));
         }
 
         internal override void UpdateNodeIdInSegmentState(ushort oldId, ushort newId)
@@ -501,7 +542,7 @@ namespace MoveIt
                 CloneData data = CloneData.GetFromOriginal(toReplace, state.instance);
                 if (data != null)
                 {
-                    Log.Debug($"BulldozeAction Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.6]");
+                    Log.Debug($"Bdz Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.6]");
                     state.ReplaceInstance(data.Clone);
                 }
             }
@@ -513,7 +554,7 @@ namespace MoveIt
                 {
                     if (m_oldSelection.Remove(data.Original))
                     {
-                        Log.Debug($"BulldozeAction Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.2]");
+                        Log.Debug($"Bdz Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.2]");
                         m_oldSelection.Add(data.Clone);
                     }
                 }

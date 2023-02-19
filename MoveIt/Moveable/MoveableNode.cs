@@ -304,7 +304,8 @@ namespace MoveIt
 
         public override void Move(Vector3 location, float angle)
         {
-            Singleton<SimulationManager>.instance.AddAction(() => MoveProcess(location, angle));
+            //Singleton<SimulationManager>.instance.AddAction(() => MoveProcess(location, angle));
+            MoveProcess(location, angle);
         }
 
         internal static void UpdateSegments(ushort node, Vector3 oldPosition)
