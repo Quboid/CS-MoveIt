@@ -36,6 +36,11 @@ namespace MoveIt
 
         public override void Do()
         {
+            MoveItTool.TaskManager.AddTask(new QTasks.QTask(QTasks.QTask.Threads.Simulation, () => { DoImplementation(); }), "AlignRotation-01");
+        }
+
+        public void DoImplementation()
+        { 
             Vector3 PoR;
             Matrix4x4 matrix = default;
             Bounds bounds = GetTotalBounds();

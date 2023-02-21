@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MoveIt.Tasks
+namespace MoveIt.QTasks
 {
-    internal class Task
+    internal class QTask
     {
         /// <summary>
         /// The Action object that called this task
@@ -34,7 +34,7 @@ namespace MoveIt.Tasks
         internal delegate void DCodeBlock();
 
         //internal Task(Action action, Threads thread, DCodeBlock codeBlock)
-        internal Task(Threads thread, DCodeBlock codeBlock)
+        internal QTask(Threads thread, DCodeBlock codeBlock)
         {
             CodeBlock = codeBlock;
             //CallingAction = action;
@@ -81,7 +81,7 @@ namespace MoveIt.Tasks
                         break;
 
                     default:
-                        Log.Error($"Task called invalid thread!", "[MI77");
+                        Log.Error($"Task called invalid thread!", "[MI77]");
                         break;
                 }
             }

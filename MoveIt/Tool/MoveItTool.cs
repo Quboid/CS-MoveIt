@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using MoveIt.GUI;
-using MoveIt.Tasks;
+using MoveIt.QTasks;
 
 namespace MoveIt
 {

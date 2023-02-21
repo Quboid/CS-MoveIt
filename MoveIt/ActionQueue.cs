@@ -84,6 +84,7 @@ namespace MoveIt
                 return false;
             }
 
+            //MoveItTool.TaskManager.AddTask(new Tasks.Task(Tasks.Task.Threads.Simulation, () => { m_actions[m_current].Undo(); }), "ActionQueue-Undo-01");
             m_actions[m_current].Undo();
 
             DebugUtils.Log("ActionQueue Undo(" + m_current + "): " + m_actions[m_current].GetType());

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MoveIt.Tasks
+namespace MoveIt.QTasks
 {
     internal class TaskManagement
     {
@@ -61,9 +61,9 @@ namespace MoveIt.Tasks
         /// </summary>
         /// <param name="task">The Task instance to add</param>
         /// <param name="name">Optional name for logging</param>
-        internal void AddTask(Task task, string name = "")
+        internal void AddTask(QTask task, string name = "")
         {
-            AddBatch(new Batch(new List<Task>{ task }, null, null, name));
+            AddBatch(new Batch(new List<QTask>{ task }, null, null, name));
         }
     }
 }

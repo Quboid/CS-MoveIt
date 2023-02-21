@@ -1,4 +1,4 @@
-﻿using MoveIt.Tasks;
+﻿using MoveIt.QTasks;
 using System.Collections.Generic;
 
 namespace MoveIt
@@ -22,33 +22,33 @@ namespace MoveIt
 
         public override void Do()
         {
-            List<Task> tasks = new List<Task>();
+            List<QTask> tasks = new List<QTask>();
 
             foreach (InstanceState state in m_states)
             {
                 if (state.instance.isValid)
                 {
-                    tasks.Add(new Task(Task.Threads.Simulation, () => {
+                    tasks.Add(new QTask(QTask.Threads.Simulation, () => {
                         state.instance.SetHeight(height);
                     }));
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new Task(Task.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignHeight-Do-01"));
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new QTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignHeight-Do-01"));
         }
 
         public override void Undo()
         {
-            List<Task> tasks = new List<Task>();
+            List<QTask> tasks = new List<QTask>();
 
             foreach (InstanceState state in m_states)
             {
-                tasks.Add(new Task(Task.Threads.Simulation, () => {
+                tasks.Add(new QTask(QTask.Threads.Simulation, () => {
                     state.instance.LoadFromState(state);
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new Task(Task.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignHeight-Undo-01"));
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new QTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignHeight-Undo-01"));
         }
 
         public override void ReplaceInstances(List<CloneData> toReplace)
