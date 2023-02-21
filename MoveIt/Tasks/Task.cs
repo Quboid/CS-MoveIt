@@ -11,8 +11,8 @@ namespace MoveIt.Tasks
         /// <summary>
         /// The Action object that called this task
         /// </summary>
-        internal Action CallingAction { get => _callingAction; set => _callingAction = value; }
-        private Action _callingAction;
+        //internal Action CallingAction { get => _callingAction; set => _callingAction = value; }
+        //private Action _callingAction;
 
         /// <summary>
         /// The thread to execute the codeblock on
@@ -33,10 +33,11 @@ namespace MoveIt.Tasks
         private DCodeBlock _codeBlock;
         internal delegate void DCodeBlock();
 
-        internal Task(Action action, Threads thread, DCodeBlock codeBlock)
+        //internal Task(Action action, Threads thread, DCodeBlock codeBlock)
+        internal Task(Threads thread, DCodeBlock codeBlock)
         {
             CodeBlock = codeBlock;
-            CallingAction = action;
+            //CallingAction = action;
             Thread = thread;
             Status = Statuses.Waiting;
         }
@@ -97,12 +98,12 @@ namespace MoveIt.Tasks
             Status = Statuses.Finished;
         }
 
-        internal static Task Create(Action action, Threads thread, DCodeBlock codeBlock)
-        {
-            Task t = new Task(action, thread, codeBlock);
+        //internal static Task Create(Threads thread, DCodeBlock codeBlock)
+        //{
+        //    Task t = new Task(thread, codeBlock);
 
-            return t;
-        }
+        //    return t;
+        //}
 
         internal enum Statuses
         {

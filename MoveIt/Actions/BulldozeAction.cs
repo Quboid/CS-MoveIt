@@ -236,7 +236,7 @@ namespace MoveIt
                 if (skipPO && state is ProcState) continue;
                 if (state is BuildingState) continue;
 
-                tasks.Add(new Task(this, Task.Threads.Simulation, () =>
+                tasks.Add(new Task( Task.Threads.Simulation, () =>
                 {
                     if (state.instance.isValid)
                     {
@@ -254,7 +254,7 @@ namespace MoveIt
                 if (skipPO && state is ProcState) continue;
                 if (!(state is BuildingState)) continue;
 
-                tasks.Add(new Task(this, Task.Threads.Simulation, () =>
+                tasks.Add(new Task(Task.Threads.Simulation, () =>
                 {
                     if (state.instance.isValid)
                     {
@@ -264,7 +264,7 @@ namespace MoveIt
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new Task(this, Task.Threads.Simulation, () => {
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new Task(Task.Threads.Simulation, () => {
                 UpdateArea(bounds);
                 selection = new HashSet<Instance>();
             }), "Bdz-Do-2"));
@@ -300,7 +300,7 @@ namespace MoveIt
                 {
                     if (state.instance.id.Type == InstanceType.NetNode)
                     {
-                        tasks.Add(new Task(this, Task.Threads.Simulation, () =>
+                        tasks.Add(new Task(Task.Threads.Simulation, () =>
                         {
                             Instance clone = state.instance.Clone(state, null);
                             cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
@@ -327,7 +327,7 @@ namespace MoveIt
                     if (state.instance.id.Type == InstanceType.NetSegment) continue;
                     if (state is ProcState) continue;
 
-                    tasks.Add(new Task(this, Task.Threads.Simulation, () =>
+                    tasks.Add(new Task(Task.Threads.Simulation, () =>
                     {
                         Instance clone = state.instance.Clone(state, mapNodes);
                         cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
@@ -421,7 +421,7 @@ namespace MoveIt
                 {
                     if (state is SegmentState segmentState)
                     {
-                        tasks.Add(new Task(this, Task.Threads.Simulation, () =>
+                        tasks.Add(new Task(Task.Threads.Simulation, () =>
                         {
                             if (!mapNodes.ContainsKey(segmentState.startNodeId))
                             {
@@ -457,7 +457,7 @@ namespace MoveIt
                 }
             }
 
-            Task postfix = new Task(this, Task.Threads.Main, () =>
+            Task postfix = new Task(Task.Threads.Main, () =>
             {
                 // clone integrations
                 Dictionary<InstanceID, InstanceID> mapOrigToClone = new Dictionary<InstanceID, InstanceID>();

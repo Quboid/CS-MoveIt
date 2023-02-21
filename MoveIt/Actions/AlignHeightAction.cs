@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MoveIt.Tasks;
+using System.Collections.Generic;
 
 namespace MoveIt
 {
@@ -21,25 +22,33 @@ namespace MoveIt
 
         public override void Do()
         {
+            List<Task> tasks = new List<Task>();
+
             foreach (InstanceState state in m_states)
             {
                 if (state.instance.isValid)
                 {
-                    state.instance.SetHeight(height);
+                    tasks.Add(new Task(Task.Threads.Simulation, () => {
+                        state.instance.SetHeight(height);
+                    }));
                 }
             }
 
-            UpdateArea(GetTotalBounds(false));
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new Task(Task.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignHeight-Do-01"));
         }
 
         public override void Undo()
         {
+            List<Task> tasks = new List<Task>();
+
             foreach (InstanceState state in m_states)
             {
-                state.instance.LoadFromState(state);
+                tasks.Add(new Task(Task.Threads.Simulation, () => {
+                    state.instance.LoadFromState(state);
+                }));
             }
 
-            UpdateArea(GetTotalBounds(false));
+            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new Task(Task.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignHeight-Undo-01"));
         }
 
         public override void ReplaceInstances(List<CloneData> toReplace)

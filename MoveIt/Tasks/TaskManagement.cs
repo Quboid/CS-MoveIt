@@ -45,11 +45,25 @@ namespace MoveIt.Tasks
             Current.Update();
         }
 
+        /// <summary>
+        /// Add a new batch to the queue
+        /// </summary>
+        /// <param name="batch">The batch to add to the end of the queue</param>
         internal void AddBatch(Batch batch)
         {
             if (Batches == null) Batches = new Queue<Batch>();
 
             Batches.Enqueue(batch);
+        }
+
+        /// <summary>
+        /// Create and queue a new batch with a single task
+        /// </summary>
+        /// <param name="task">The Task instance to add</param>
+        /// <param name="name">Optional name for logging</param>
+        internal void AddTask(Task task, string name = "")
+        {
+            AddBatch(new Batch(new List<Task>{ task }, null, null, name));
         }
     }
 }
