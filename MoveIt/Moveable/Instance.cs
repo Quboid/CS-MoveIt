@@ -123,7 +123,8 @@ namespace MoveIt
         [XmlArrayItem("IntegrationEntry_Item")]
         public IntegrationEntry[] IntegrationData64
         {
-            get {
+            get
+            {
                 List<IntegrationEntry> ret = new List<IntegrationEntry>();
                 foreach (var item in IntegrationData)
                 {
@@ -149,7 +150,8 @@ namespace MoveIt
                 }
                 return ret.ToArray();
             }
-            set {
+            set
+            {
                 IntegrationData = new Dictionary<MoveItIntegrationBase, object>();
                 if (value == null) return;
                 foreach (var entry in value)
