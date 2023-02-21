@@ -2,14 +2,14 @@
 using ColossalFramework.Math;
 using ColossalFramework.IO;
 using ColossalFramework.UI;
+using MoveIt.GUI;
 using MoveItIntegration;
+using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using MoveIt.GUI;
-using MoveIt.QTasks;
 
 namespace MoveIt
 {
@@ -87,7 +87,7 @@ namespace MoveIt
 
         internal static PO_Manager PO = null;
         internal static NS_Manager NS = null;
-        internal static TaskManagement TaskManager = null;
+        internal static QTaskManager TaskManager = null;
         private static int _POProcessing = 0;
         private static float POProcessingStart = 0;
         internal static int POProcessing
@@ -333,7 +333,7 @@ namespace MoveIt
                 Log.Error($"NetworkSkins Failed:\n{e}", "[M57]");
             }
 
-            TaskManager = new TaskManagement();
+            TaskManager = new QTaskManager(Log.instance);
 
             if (UIToolOptionPanel.instance == null)
             {

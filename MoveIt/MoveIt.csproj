@@ -73,7 +73,6 @@
       <DependentUpon>Str.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Tasks\Batch.cs" />
     <Compile Include="Tool\MIT_Events.cs" />
     <Compile Include="Tool\MIT_Filtering.cs" />
     <Compile Include="Tool\MIT_Keyboard.cs" />
@@ -106,8 +105,6 @@
     <Compile Include="GUI\UIUtils.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StepOver.cs" />
-    <Compile Include="Tasks\Task.cs" />
-    <Compile Include="Tasks\TaskManagement.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

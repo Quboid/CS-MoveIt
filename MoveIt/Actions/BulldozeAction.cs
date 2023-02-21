@@ -1,6 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
-using MoveIt.QTasks;
+using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -236,7 +236,7 @@ namespace MoveIt
                 if (skipPO && state is ProcState) continue;
                 if (state is BuildingState) continue;
 
-                tasks.Add(new QTask( QTask.Threads.Simulation, () =>
+                tasks.Add(MoveItTool.TaskManager.CreateTask( QTask.Threads.Simulation, () =>
                 {
                     if (state.instance.isValid)
                     {
@@ -245,7 +245,7 @@ namespace MoveIt
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, null, "Bdz-Do-1"));
+            MoveItTool.TaskManager.AddBatch(tasks, null, null, "Bdz-Do-1");
             tasks = new List<QTask>();
 
             // Remove buildings last so attached nodes are cleaned up
@@ -254,7 +254,7 @@ namespace MoveIt
                 if (skipPO && state is ProcState) continue;
                 if (!(state is BuildingState)) continue;
 
-                tasks.Add(new QTask(QTask.Threads.Simulation, () =>
+                tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
                 {
                     if (state.instance.isValid)
                     {
@@ -264,10 +264,10 @@ namespace MoveIt
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, new QTask(QTask.Threads.Simulation, () => {
+            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                 UpdateArea(bounds);
                 selection = new HashSet<Instance>();
-            }), "Bdz-Do-2"));
+            }), "Bdz-Do-2");
 
             MoveItTool.m_debugPanel.UpdatePanel();
             MoveItTool.UpdatePillarMap();
@@ -300,7 +300,7 @@ namespace MoveIt
                 {
                     if (state.instance.id.Type == InstanceType.NetNode)
                     {
-                        tasks.Add(new QTask(QTask.Threads.Simulation, () =>
+                        tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
                         {
                             Instance clone = state.instance.Clone(state, null);
                             cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
@@ -315,7 +315,7 @@ namespace MoveIt
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, null, "Bdz-Undo-1"));
+            MoveItTool.TaskManager.AddBatch(tasks, null, null, "Bdz-Undo-01");
             tasks = new List<QTask>();
 
             // Recreate everything except nodes and segments
@@ -327,7 +327,7 @@ namespace MoveIt
                     if (state.instance.id.Type == InstanceType.NetSegment) continue;
                     if (state is ProcState) continue;
 
-                    tasks.Add(new QTask(QTask.Threads.Simulation, () =>
+                    tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
                     {
                         Instance clone = state.instance.Clone(state, mapNodes);
                         cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
@@ -411,7 +411,7 @@ namespace MoveIt
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, null, "Bdz-Undo-2"));
+            MoveItTool.TaskManager.AddBatch(tasks, null, null, "Bdz-Undo-02");
             tasks = new List<QTask>();
 
             // Recreate segments
@@ -421,7 +421,7 @@ namespace MoveIt
                 {
                     if (state is SegmentState segmentState)
                     {
-                        tasks.Add(new QTask(QTask.Threads.Simulation, () =>
+                        tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
                         {
                             if (!mapNodes.ContainsKey(segmentState.startNodeId))
                             {
@@ -457,7 +457,7 @@ namespace MoveIt
                 }
             }
 
-            QTask postfix = new QTask(QTask.Threads.Main, () =>
+            QTask postfix = MoveItTool.TaskManager.CreateTask(QTask.Threads.Main, () =>
             {
                 // clone integrations
                 Dictionary<InstanceID, InstanceID> mapOrigToClone = new Dictionary<InstanceID, InstanceID>();
@@ -513,7 +513,7 @@ namespace MoveIt
                 }
             });
 
-            MoveItTool.TaskManager.AddBatch(new Batch(tasks, null, postfix, "Bdz-Undo-3"));
+            MoveItTool.TaskManager.AddBatch(tasks, null, postfix, "Bdz-Undo-03");
         }
 
         internal override void UpdateNodeIdInSegmentState(ushort oldId, ushort newId)

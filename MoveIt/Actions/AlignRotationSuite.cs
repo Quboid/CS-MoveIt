@@ -1,5 +1,6 @@
-﻿using System;
-using ColossalFramework;
+﻿using ColossalFramework;
+using QCommonLib.QTasks;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace MoveIt
 
         public override void Do()
         {
-            MoveItTool.TaskManager.AddTask(new QTasks.QTask(QTasks.QTask.Threads.Simulation, () => { DoImplementation(); }), "AlignRotation-01");
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () => { DoImplementation(); }, "AlignRotation-Do-01");
         }
 
         public void DoImplementation()
