@@ -95,7 +95,6 @@ namespace MoveIt
                 segment.m_endNode = toId.NetNode;
             else
                 Log.Info($"Node not found for segment #{segmentId} (switching {fromId} to {toId})", "[M62]");
-            //Log.Debug($"BBB06 Node switch segment #{segmentId} (switching {fromId.NetNode} to {toId.NetNode}) - {segmentBuffer[segmentId].m_startNode},{segmentBuffer[segmentId].m_endNode}", "[M63]");
         }
     }
 

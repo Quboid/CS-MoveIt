@@ -547,7 +547,7 @@ namespace MoveIt
             //string msg = "";
             //foreach (var x in action.m_nodeMergeData) msg += $"{x}, ";
             //if (msg != "") msg = $"\n  {action.m_nodeMergeData.Count}: " + msg;
-            //Log.Debug($"AAA02 candidate found:{(snapCandidate == null ? "<null>" : snapCandidate.nodeState.Info.Prefab.name + " (#" + snapCandidate.StateId + ")")}{msg}", "[M48]");
+            //Log.Debug($"ZZZ candidate found:{(snapCandidate == null ? "<null>" : snapCandidate.nodeState.Info.Prefab.name + " (#" + snapCandidate.StateId + ")")}{msg}", "[M48]");
 
             return snapCandidate;
         }

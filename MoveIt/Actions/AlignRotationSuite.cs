@@ -182,15 +182,21 @@ namespace MoveIt
 
         public override void Undo()
         {
+            List<QTask> tasks = new List<QTask>();
+
             Bounds bounds = GetTotalBounds(false);
 
             foreach (InstanceState state in m_states)
             {
-                state.instance.LoadFromState(state);
+                tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
+                    state.instance.LoadFromState(state);
+                }));
             }
 
-            UpdateArea(bounds);
-            UpdateArea(GetTotalBounds(false));
+            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
+                UpdateArea(bounds);
+                UpdateArea(GetTotalBounds(false));
+            }), "AlignRotation-Undo-01");
         }
 
 
