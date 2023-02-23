@@ -223,11 +223,7 @@ namespace MoveIt
                 return null;
             }
 
-            PrefabInfo prefab = (PrefabInfo)tPO.GetField("_baseBuilding").GetValue(procObj);
-            if (prefab == null)
-            {
-                prefab = (PrefabInfo)tPO.GetField("_baseProp").GetValue(procObj);
-            }
+            PrefabInfo prefab = (PrefabInfo)tPO.GetField("_baseBuilding").GetValue(procObj) ?? (PrefabInfo)tPO.GetField("_baseProp").GetValue(procObj);
             return prefab;
         }
     }

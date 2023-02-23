@@ -63,7 +63,7 @@ namespace MoveIt
 
             for (int i = 0; i < 8; i++)
             {
-                if (child.GetSegment(i) > 0) SwitchSegmentNode(child.GetSegment(i), data.ChildInstanceId, data.ParentInstanceId);
+                if (child.GetSegment(i) > 0) SwitchSegmentNode(child.GetSegment(i), data.ChildIId, data.ParentIId);
             }
             parent.CalculateNode(data.ParentId);
 
@@ -76,7 +76,7 @@ namespace MoveIt
             if (child.m_segment6 > 0) { child.m_segment6 = 0; }
             if (child.m_segment7 > 0) { child.m_segment7 = 0; }
 
-            MoveableNode childNode = new MoveableNode(data.ChildInstanceId);
+            MoveableNode childNode = new MoveableNode(data.ChildIId);
             childNode.Delete();
 
             Log.Info($"Merged node {data.ChildId} into {data.ParentId} ({segments.Count} segments)", "[M61]");
@@ -113,7 +113,7 @@ namespace MoveIt
         /// <summary>
         /// The new node that is merging, may or may not exist (InstanceID)
         /// </summary>
-        internal abstract InstanceID ChildInstanceId { get; }
+        internal abstract InstanceID ChildIId { get; }
 
         private ushort _parentId;
         /// <summary>
@@ -123,7 +123,7 @@ namespace MoveIt
         /// <summary>
         /// The existing node that is being merged into (InstanceID)
         /// </summary>
-        internal InstanceID ParentInstanceId
+        internal InstanceID ParentIId
         {
             get
             {
@@ -190,8 +190,8 @@ namespace MoveIt
         internal NodeState nodeState;
         internal NodeState adjustedState;
 
-        internal override ushort ChildId { get => ChildInstanceId.NetNode; set { ; } }
-        internal override InstanceID ChildInstanceId => nodeState.instance.id;
+        internal override ushort ChildId { get => ChildIId.NetNode; set { ; } }
+        internal override InstanceID ChildIId => nodeState.instance.id;
 
         private float _distance = -1;
         internal override float Distance
@@ -244,7 +244,7 @@ namespace MoveIt
     {
         private ushort _childId;
         internal override ushort ChildId { get => _childId; set => _childId = value; }
-        internal override InstanceID ChildInstanceId
+        internal override InstanceID ChildIId
         {
             get
             {

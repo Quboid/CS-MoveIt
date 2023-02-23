@@ -45,7 +45,7 @@ namespace MoveIt
             return null;
         }
 
-        public static HashSet<Instance> GetClones(List<CloneData> cloneData)
+        internal static HashSet<Instance> GetClones(List<CloneData> cloneData)
         {
             HashSet<Instance> result = new HashSet<Instance>();
             foreach (CloneData data in cloneData)
