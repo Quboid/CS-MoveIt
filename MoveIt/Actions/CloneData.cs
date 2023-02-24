@@ -1,9 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace MoveIt
 {
+    public class CloneDataPO : CloneData
+    {
+        internal Vector3 m_position;
+        internal float m_angle;
+        internal CloneActionBase m_action;
+    }
+
     public class CloneData
     {
         public Instance Original { get => _original ?? throw new NullReferenceException(); set => _original = value; }

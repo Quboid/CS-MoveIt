@@ -8,6 +8,24 @@ namespace MoveIt
 {
     public class ProcState : InstanceState
     {
+        public void BeginClone(ref Matrix4x4 matrix4x, float deltaHeight, float deltaAngle, Vector3 center, bool followTerrain, CloneDataPO cloneData)
+        {
+            Vector3 newPosition = matrix4x.MultiplyPoint(position - center);
+            newPosition.y = position.y + deltaHeight;
+
+            if (followTerrain)
+            {
+                newPosition.y = newPosition.y + TerrainManager.instance.SampleOriginalRawHeightSmooth(newPosition) - terrainHeight;
+            }
+
+            cloneData.m_angle = angle + deltaAngle;
+            cloneData.m_position = newPosition;
+            cloneData.CloneState = this;
+
+            MoveItTool.PO.Clone(cloneData);
+
+            return;
+        }
     }
 
     public class MoveableProc : Instance
@@ -126,19 +144,21 @@ namespace MoveIt
 
         public override Instance Clone(InstanceState instanceState, ref Matrix4x4 matrix4x, float deltaHeight, float deltaAngle, Vector3 center, bool followTerrain, Dictionary<ushort, ushort> clonedNodes, Action action)
         {
-            ProcState state = instanceState as ProcState;
+            throw new Exception($"Called Clone for MoveableProc");
 
-            Vector3 newPosition = matrix4x.MultiplyPoint(state.position - center);
-            newPosition.y = state.position.y + deltaHeight;
+            //ProcState state = instanceState as ProcState;
 
-            if (followTerrain)
-            {
-                newPosition.y = newPosition.y + TerrainManager.instance.SampleOriginalRawHeightSmooth(newPosition) - state.terrainHeight;
-            }
+            //Vector3 newPosition = matrix4x.MultiplyPoint(state.position - center);
+            //newPosition.y = state.position.y + deltaHeight;
 
-            MoveItTool.PO.Clone(state, newPosition, state.angle + deltaAngle, action);
+            //if (followTerrain)
+            //{
+            //    newPosition.y = newPosition.y + TerrainManager.instance.SampleOriginalRawHeightSmooth(newPosition) - state.terrainHeight;
+            //}
 
-            return null;
+            //MoveItTool.PO.Clone(state, newPosition, state.angle + deltaAngle, action);
+
+            //return null;
         }
 
         public override Instance Clone(InstanceState instanceState, Dictionary<ushort, ushort> clonedNodes)

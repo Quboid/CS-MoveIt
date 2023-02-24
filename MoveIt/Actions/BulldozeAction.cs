@@ -242,6 +242,7 @@ namespace MoveIt
                     {
                         state.instance.Delete();
                     }
+                    return true;
                 }));
             }
 
@@ -261,12 +262,14 @@ namespace MoveIt
                         ((MoveableBuilding)state.instance).m_assetEditorSubBuilding.Destroy(state.instance.id.Building);
                         state.instance.Delete();
                     }
+                    return true;
                 }));
             }
 
             MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                 UpdateArea(bounds);
                 selection = new HashSet<Instance>();
+                return true;
             }), "Bdz-Do-2");
 
             MoveItTool.m_debugPanel.UpdatePanel();
@@ -306,6 +309,7 @@ namespace MoveIt
                             cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
                             mapNodes.Add(state.instance.id.NetNode, clone.id.NetNode);
                             ActionQueue.instance.UpdateNodeIdInStateHistory(state.instance.id.NetNode, clone.id.NetNode);
+                            return true;
                         }));
                     }
                 }
@@ -403,6 +407,7 @@ namespace MoveIt
                                 }
                             }
                         }
+                        return true;
                     }));
                 }
                 catch (Exception e)
@@ -429,7 +434,7 @@ namespace MoveIt
                                 instanceID.NetNode = segmentState.startNodeId;
 
                                 // Don't clone if node is missing
-                                if (!((Instance)instanceID).isValid) return;
+                                if (!((Instance)instanceID).isValid) return true;
 
                                 mapNodes.Add(segmentState.startNodeId, segmentState.startNodeId);
                             }
@@ -440,7 +445,7 @@ namespace MoveIt
                                 instanceID.NetNode = segmentState.endNodeId;
 
                                 // Don't clone if node is missing
-                                if (!((Instance)instanceID).isValid) return;
+                                if (!((Instance)instanceID).isValid) return true;
 
                                 mapNodes.Add(segmentState.endNodeId, segmentState.endNodeId);
                             }
@@ -448,6 +453,7 @@ namespace MoveIt
                             Instance clone = state.instance.Clone(state, mapNodes);
                             cloneData.Add(new CloneData() { Original = state.instance, Clone = clone, CloneState = state });
                             MoveItTool.NS.SetSegmentModifiers(clone.id.NetSegment, segmentState);
+                            return true;
                         }));
                     }
                 }
@@ -511,6 +517,8 @@ namespace MoveIt
                 {
                     MoveItTool.UpdatePillarMap();
                 }
+
+                return true;
             });
 
             MoveItTool.TaskManager.AddBatch(tasks, null, postfix, "Bdz-Undo-03");

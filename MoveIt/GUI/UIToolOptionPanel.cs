@@ -523,7 +523,7 @@ namespace MoveIt
             m_viewOptions = AddUIComponent<UIPanel>();
             m_viewOptions.atlas = UIUtils.GetAtlas("Ingame");
             m_viewOptions.backgroundSprite = "InfoPanelBack";
-            m_viewOptions.size = new Vector2(44f, 116f);
+            m_viewOptions.size = new Vector2(44f, 120f);
 
             m_viewOptions.absolutePosition = new Vector3(GetUIView().GetScreenResolution().x - m_viewOptions.width, absolutePosition.y - m_viewOptions.height - 8f);
 
@@ -551,7 +551,7 @@ namespace MoveIt
 
             SetViewOptionsProperties(underground, "BulldozerOptionPipes");
 
-            underground.relativePosition = new Vector3(4f, 40f);
+            underground.relativePosition = new Vector3(4f, 42f);
             underground.activeStateIndex = 0;
 
             underground.eventClicked += (c, p) =>
@@ -567,7 +567,7 @@ namespace MoveIt
 
             SetViewOptionsProperties(mergeNodes, "NodeMerge");
 
-            mergeNodes.relativePosition = new Vector3(4f, 76f);
+            mergeNodes.relativePosition = new Vector3(4f, 80f);
             mergeNodes.activeStateIndex = Settings.autoMergeNodes ? 1 : 0;
 
             mergeNodes.eventClicked += (c, p) =>
@@ -585,7 +585,7 @@ namespace MoveIt
 
                 SetViewOptionsProperties(PO_button, "PO");
 
-                PO_button.relativePosition = new Vector3(4f, 112f);
+                PO_button.relativePosition = new Vector3(4f, 118f);
                 PO_button.activeStateIndex = 0;
 
                 PO_button.eventClicked += (c, p) =>
@@ -593,8 +593,8 @@ namespace MoveIt
                     MoveItTool.PO.InitialiseTool();
                 };
 
-                m_viewOptions.height += 36;
-                m_viewOptions.absolutePosition += new Vector3(0, -36);
+                m_viewOptions.height += 38;
+                m_viewOptions.absolutePosition += new Vector3(0, -38);
             }
 
             #endregion

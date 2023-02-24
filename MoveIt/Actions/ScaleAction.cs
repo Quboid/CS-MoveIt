@@ -37,6 +37,7 @@ namespace MoveIt
                         {
                             n.AutoCurve(segmentCurve);
                         }
+                        return true;
                     });
                 }
             }

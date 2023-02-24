@@ -30,11 +30,12 @@ namespace MoveIt
                 {
                     tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                         state.instance.SetHeight(height);
+                        return true;
                     }));
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignHeight-Do-01");
+            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); return true; }), "AlignHeight-Do-01");
         }
 
         public override void Undo()
@@ -45,10 +46,11 @@ namespace MoveIt
             {
                 tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                     state.instance.LoadFromState(state);
+                    return true;
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignHeight-Undo-01");
+            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); return true; }), "AlignHeight-Undo-01");
         }
 
         public override void ReplaceInstances(List<CloneData> toReplace)

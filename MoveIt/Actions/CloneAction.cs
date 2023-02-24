@@ -332,14 +332,20 @@ namespace MoveIt
 
         public override void Do()
         {
-            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { DoImplemenation(); }), "Clone-Do-01");
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoImplementation), "Clone-Do-01");
         }
 
-        private void DoImplemenation()
-        { 
+        private bool FinalizePO(CloneData cloneData)
+        {
+            if (!(cloneData is CloneDataPO clonePO)) throw new Exception($"PO Clone: cloneData is not for PO");
+            return MoveItTool.PO.Logic.RetrieveClone(clonePO);
+        }
+
+        private bool DoImplementation()
+        {
             if (MoveItTool.POProcessing > 0)
             {
-                return;
+                return true;
             }
 
             MoveItTool.instance.m_lastInstance = null;
@@ -350,7 +356,29 @@ namespace MoveIt
 
             matrix4x.SetTRS(center + moveDelta, Quaternion.AngleAxis(angleDelta * Mathf.Rad2Deg, Vector3.down), Vector3.one);
 
-            // Clone nodes first
+            // Clone PO
+            MoveItTool.PO.MapGroupClones(m_states, this);
+
+            List<QTask> tasks = new List<QTask>();
+            foreach (InstanceState state in m_states)
+            {
+                if (state is ProcState ps)
+                {
+                    Log.Debug($"PPP01 {ps.prefabName}");
+                    CloneDataPO cloneData = new CloneDataPO()
+                    {
+                        Original = state.instance,
+                        m_action = this
+                    };
+
+                    ps.BeginClone(ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, cloneData);
+                    tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { return FinalizePO(cloneData); }));
+                    m_cloneData.Add(cloneData);
+                }
+            }
+            MoveItTool.TaskManager.AddBatch(tasks, null, null, "Clone-Do-02");
+
+            // Clone nodes before buildings or segments
             foreach (InstanceState state in m_states)
             {
                 if (state is NodeState)
@@ -360,7 +388,7 @@ namespace MoveIt
                     if (clone == null)
                     {
                         Log.Info($"Failed to clone node {state}", "[M23]");
-                        return;
+                        return true;
                     }
 
                     m_cloneData.Add(new CloneData()
@@ -385,7 +413,7 @@ namespace MoveIt
                     if (clone == null)
                     {
                         Log.Info($"Failed to clone building {state}", "[M24]");
-                        return;
+                        return true;
                     }
 
                     m_cloneData.Add(new CloneData()
@@ -406,7 +434,7 @@ namespace MoveIt
                 }
             }
 
-            // Clone everything else except PO
+            // Clone the remaining types
             foreach (InstanceState state in m_states)
             {
                 if (!(state is NodeState || state is BuildingState || state is ProcState))
@@ -416,7 +444,7 @@ namespace MoveIt
                     if (clone == null)
                     {
                         Log.Info($"Failed to clone {state}", "[M25]");
-                        return;
+                        return true;
                     }
 
                     m_cloneData.Add(new CloneData()
@@ -445,6 +473,14 @@ namespace MoveIt
                 }
             }
 
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoFinalize), "Clone-Do-03");
+
+            return true;
+        }
+
+        public bool DoFinalize()
+        {
+            Log.Debug($"PPP02 DoFinalize");
             // Merge nodes
             if (MoveItTool.instance.MergeNodes)
             {
@@ -464,16 +500,6 @@ namespace MoveIt
                         else
                             Log.Info($"Failed node merge - virtual:{mergeClone.ChildId}, placed:{cloneData.StateIId.NetNode} (parent:{mergeClone.ParentId})", "[M26.2]");
                     }
-                }
-            }
-
-            // Clone PO
-            MoveItTool.PO.MapGroupClones(m_states, this);
-            foreach (InstanceState state in m_states)
-            {
-                if (state is ProcState)
-                {
-                    _ = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
                 }
             }
 
@@ -538,6 +564,8 @@ namespace MoveIt
 
                 ActionQueue.instance.ReplaceInstancesForward(m_cloneData);
             }
+
+            return true;
         }
 
         //public void DoProcess()
@@ -742,6 +770,7 @@ namespace MoveIt
                     tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
                     {
                         data.Clone.Delete();
+                        return true;
                     }));
                 }
             }
@@ -758,6 +787,7 @@ namespace MoveIt
 
                 UpdateArea(bounds);
                 MoveItTool.UpdatePillarMap();
+                return true;
             });
 
             MoveItTool.TaskManager.AddBatch(tasks, null, postfix, "Clone-Undo-01");

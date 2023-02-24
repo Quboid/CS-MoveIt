@@ -126,12 +126,19 @@ namespace MoveIt
             }
         }
 
-        internal void Clone(ProcState original, Vector3 position, float angle, Action action)
+        internal void Clone(CloneDataPO cloneData)
         {
             if (!Enabled) return;
 
-            Logic.Clone((MoveableProc)original.instance, position, angle, action);
+            Logic.Clone((MoveableProc)cloneData.Original);
         }
+
+        //internal void Clone(ProcState original, Vector3 position, float angle, Action action)
+        //{
+        //    if (!Enabled) return;
+
+        //    Logic.Clone((MoveableProc)original.instance, position, angle, action);
+        //}
 
         internal void MapGroupClones(HashSet<InstanceState> m_states, CloneActionBase action)
         {

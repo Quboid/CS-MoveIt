@@ -37,10 +37,10 @@ namespace MoveIt
 
         public override void Do()
         {
-            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () => { DoImplementation(); }, "AlignRotation-Do-01");
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, DoImplementation, "AlignRotation-Do-01");
         }
 
-        public void DoImplementation()
+        public bool DoImplementation()
         { 
             Vector3 PoR;
             Matrix4x4 matrix = default;
@@ -177,6 +177,7 @@ namespace MoveIt
             MoveItTool.SetToolState();
             UpdateArea(bounds);
             UpdateArea(GetTotalBounds(false));
+            return true;
         }
 
 
@@ -190,12 +191,14 @@ namespace MoveIt
             {
                 tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                     state.instance.LoadFromState(state);
+                    return true;
                 }));
             }
 
             MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                 UpdateArea(bounds);
                 UpdateArea(GetTotalBounds(false));
+                return true;
             }), "AlignRotation-Undo-01");
         }
 

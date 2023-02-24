@@ -178,55 +178,39 @@ namespace MoveIt
         //    return (uint)id + 1;
         //}
 
-        public void Clone(MoveableProc original, Vector3 position, float angle, Action action)
+        public void Clone(MoveableProc original)
         {
-            MoveItTool.POProcessing++;
+            //MoveItTool.POProcessing++;
             tPOMoveIt.GetMethod("CallPOCloning", new Type[] { tPO }).Invoke(null, new[] { original.m_procObj.GetProceduralObject() });
-            StartCoroutine(RetrieveClone(original, position, angle, action));
         }
 
-        public IEnumerator<object> RetrieveClone(MoveableProc original, Vector3 position, float angle, Action action)
+        public bool RetrieveClone(CloneDataPO cloneData)
         {
-            const uint MaxAttempts = 100_000;
-            CloneActionBase ca = (CloneActionBase)action;
+            if (cloneData == null) throw new NullReferenceException($"PO Clone: cloneData is null");
+            if (cloneData.OriginalIId == null) throw new NullReferenceException($"PO Clone: cloneData original IID is null");
+            if (cloneData.Original == null) throw new NullReferenceException($"PO Clone: cloneData original is null");
+            if (cloneData.OriginalIId.Type != InstanceType.NetLane) throw new Exception($"PO Clone: cloneData original IID is {cloneData.OriginalIId.Type}");
+            if (!(cloneData.Original is MoveableProc original)) throw new Exception($"PO Clone: cloneData original is {cloneData.Original.GetType()}");
+
+            CloneActionBase cab = cloneData.m_action;
 
             if (!(original.m_procObj is PO_Object))
             {
                 Log.Info($"PO Cloning failed: object not found", "[M68]");
-                MoveItTool.POProcessing--;
-                yield break;
+                return true;
             }
 
             Type[] types = new Type[] { tPO, tPO.MakeByRefType(), typeof(uint).MakeByRefType() };
             object originalObject = original.m_procObj.GetProceduralObject();
             object[] paramList = new[] { originalObject, null, null };
-            MethodInfo retrieve = tPOMoveIt.GetMethod("TryRetrieveClone", BindingFlags.Public | BindingFlags.Static, null, types, null);
-            if (retrieve == null)
-            {
-                Log.Info($"PO Cloning failed: retrieve not found", "[M69]");
-                MoveItTool.POProcessing--;
-                yield break;
-            }
+            MethodInfo retrieve = tPOMoveIt.GetMethod("TryRetrieveClone", BindingFlags.Public | BindingFlags.Static, null, types, null) ?? throw new NullReferenceException($"PO Cloning failed: retrieve method not found");
 
-            uint c = 0;
-            while (c < MaxAttempts && !(bool)retrieve.Invoke(null, paramList))
-            {
-                //if (c % 100 == 0)
-                //{
-                //    BindingFlags f = BindingFlags.Static | BindingFlags.Public;
-                //    object queueObj = tPOMoveIt.GetField("queuedCloning", f).GetValue(null);
-                //    int queueCount = (int)queueObj.GetType().GetProperty("Count").GetValue(queueObj, null);
-                //    object doneObj = tPOMoveIt.GetField("doneCloning", f).GetValue(null);
-                //    int doneCount = (int)doneObj.GetType().GetProperty("Count").GetValue(doneObj, null);
-                //}
-                c++;
-                yield return new WaitForSeconds(0.05f);
+            if (!(bool)retrieve.Invoke(null, paramList))
+            { // Not ready yet
+                Log.Debug($"PPP03.1 {cloneData.OriginalIId.Debug()} not ready yet");
+                return false;
             }
-
-            if (c == MaxAttempts)
-            {
-                throw new Exception($"Failed to clone object #{original.m_procObj.Id}! [PO-F4]");
-            }
+            Log.Debug($"PPP03.2 {cloneData.OriginalIId.Debug()} ready!");
 
             try
             {
@@ -235,15 +219,15 @@ namespace MoveIt
                     POColor = original.m_procObj.POColor
                 };
 
-                if (original.m_procObj.Group != null && action is CloneActionBase cloneAction)
+                if (original.m_procObj.Group != null)
                 {
-                    if (!cloneAction.m_POGroupMap.ContainsKey(original.m_procObj.Group))
+                    if (!cab.m_POGroupMap.ContainsKey(original.m_procObj.Group))
                     {
                         Log.Debug($"Clone Error: {original.m_procObj.Id}'s group isn't in group map", "[M70]");
                     }
                     else
                     {
-                        clone.Group = cloneAction.m_POGroupMap[original.m_procObj.Group];
+                        clone.Group = cab.m_POGroupMap[original.m_procObj.Group];
                         clone.Group.AddObject(clone);
                         if (original.m_procObj.isGroupRoot())
                         {
@@ -258,16 +242,15 @@ namespace MoveIt
 
                 MoveableProc cloneInstance = new MoveableProc(cloneID)
                 {
-                    position = position,
-                    angle = angle
+                    position = cloneData.m_position,
+                    angle = cloneData.m_angle
                 };
 
                 Action.selection.Add(cloneInstance);
-                //ca.m_clones.Add(cloneInstance);
-                //ca.m_origToClone.Add(original, cloneInstance);
+                cloneData.Clone = cloneInstance;
 
-                MoveItTool.SetToolState();
-                MoveItTool.instance.ProcessSensitivityMode(false);
+                //MoveItTool.SetToolState();
+                //MoveItTool.instance.ProcessSensitivityMode(false);
                 Log.Info($"Cloned PO {original.m_procObj.Id} to #{clone.Id}", "[M71]");
             }
             catch (Exception e)
@@ -275,9 +258,102 @@ namespace MoveIt
                 Log.Error($"Exception when cloning PO:\n{e}", "[M72]");
             }
 
-            yield return new WaitForSeconds(0.25f);
-            MoveItTool.POProcessing--;
+            return true;
         }
+
+        //public IEnumerator<object> RetrieveClone(MoveableProc original, Vector3 position, float angle, Action action)
+        //{
+        //    const uint MaxAttempts = 100_000;
+        //    CloneActionBase ca = (CloneActionBase)action;
+
+        //    if (!(original.m_procObj is PO_Object))
+        //    {
+        //        Log.Info($"PO Cloning failed: object not found", "[M68]");
+        //        MoveItTool.POProcessing--;
+        //        yield break;
+        //    }
+
+        //    Type[] types = new Type[] { tPO, tPO.MakeByRefType(), typeof(uint).MakeByRefType() };
+        //    object originalObject = original.m_procObj.GetProceduralObject();
+        //    object[] paramList = new[] { originalObject, null, null };
+        //    MethodInfo retrieve = tPOMoveIt.GetMethod("TryRetrieveClone", BindingFlags.Public | BindingFlags.Static, null, types, null);
+        //    if (retrieve == null)
+        //    {
+        //        Log.Info($"PO Cloning failed: retrieve not found", "[M69]");
+        //        MoveItTool.POProcessing--;
+        //        yield break;
+        //    }
+
+        //    uint c = 0;
+        //    while (c < MaxAttempts && !(bool)retrieve.Invoke(null, paramList))
+        //    {
+        //        //if (c % 100 == 0)
+        //        //{
+        //        //    BindingFlags f = BindingFlags.Static | BindingFlags.Public;
+        //        //    object queueObj = tPOMoveIt.GetField("queuedCloning", f).GetValue(null);
+        //        //    int queueCount = (int)queueObj.GetType().GetProperty("Count").GetValue(queueObj, null);
+        //        //    object doneObj = tPOMoveIt.GetField("doneCloning", f).GetValue(null);
+        //        //    int doneCount = (int)doneObj.GetType().GetProperty("Count").GetValue(doneObj, null);
+        //        //}
+        //        c++;
+        //        yield return new WaitForSeconds(0.05f);
+        //    }
+
+        //    if (c == MaxAttempts)
+        //    {
+        //        throw new Exception($"Failed to clone object #{original.m_procObj.Id}! [PO-F4]");
+        //    }
+
+        //    try
+        //    {
+        //        PO_Object clone = new PO_Object(paramList[1])
+        //        {
+        //            POColor = original.m_procObj.POColor
+        //        };
+
+        //        if (original.m_procObj.Group != null && action is CloneActionBase cloneAction)
+        //        {
+        //            if (!cloneAction.m_POGroupMap.ContainsKey(original.m_procObj.Group))
+        //            {
+        //                Log.Debug($"Clone Error: {original.m_procObj.Id}'s group isn't in group map", "[M70]");
+        //            }
+        //            else
+        //            {
+        //                clone.Group = cloneAction.m_POGroupMap[original.m_procObj.Group];
+        //                clone.Group.AddObject(clone);
+        //                if (original.m_procObj.isGroupRoot())
+        //                {
+        //                    clone.Group.SetNewRoot(clone);
+        //                }
+        //            }
+        //        }
+
+        //        InstanceID cloneID = default;
+        //        cloneID.NetLane = clone.Id;
+        //        MoveItTool.PO.visibleObjects.Add(cloneID.NetLane, clone);
+
+        //        MoveableProc cloneInstance = new MoveableProc(cloneID)
+        //        {
+        //            position = position,
+        //            angle = angle
+        //        };
+
+        //        Action.selection.Add(cloneInstance);
+        //        //ca.m_clones.Add(cloneInstance);
+        //        //ca.m_origToClone.Add(original, cloneInstance);
+
+        //        MoveItTool.SetToolState();
+        //        MoveItTool.instance.ProcessSensitivityMode(false);
+        //        Log.Info($"Cloned PO {original.m_procObj.Id} to #{clone.Id}", "[M71]");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Log.Error($"Exception when cloning PO:\n{e}", "[M72]");
+        //    }
+
+        //    yield return new WaitForSeconds(0.25f);
+        //    MoveItTool.POProcessing--;
+        //}
 
         public void Delete(PO_Object obj)
         {

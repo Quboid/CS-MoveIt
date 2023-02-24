@@ -30,6 +30,7 @@ namespace MoveIt
                     {
                         tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                             state.instance.SetHeight();
+                            return true;
                         }));
                     }
                 }
@@ -47,12 +48,13 @@ namespace MoveIt
                     {
                         tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                             state.instance.SetHeight();
+                            return true;
                         }));
                     }
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignTerrainHeight-Do-02");
+            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); return true; }), "AlignTerrainHeight-Do-02");
         }
 
         public override void Undo()
@@ -63,10 +65,11 @@ namespace MoveIt
             {
                 tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
                     state.instance.LoadFromState(state);
+                    return true;
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); }), "AlignTerrainHeight-Undo-01");
+            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); return true; }), "AlignTerrainHeight-Undo-01");
         }
 
         public override void ReplaceInstances(List<CloneData> toReplace)
