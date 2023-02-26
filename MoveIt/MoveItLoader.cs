@@ -3,6 +3,7 @@ using ColossalFramework.Globalization;
 using ColossalFramework.Plugins;
 using ICities;
 using MoveIt.Lang;
+using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace MoveIt
     {
         public static bool IsGameLoaded { get; private set; } = false;
         public static LoadMode loadMode;
-        private static GameObject DebugGameObject, MoveToToolObject;
+        private static GameObject DebugGameObject, MoveToToolObject, TaskManagerObject;
 
         public override void OnLevelLoaded(LoadMode mode)
         {
@@ -54,6 +55,11 @@ namespace MoveIt
             MoveToToolObject.AddComponent<MoveToPanel>();
             MoveItTool.m_moveToPanel = MoveToToolObject.GetComponent<MoveToPanel>();
 
+            TaskManagerObject = new GameObject("MIT_TaskManager");
+            TaskManagerObject.AddComponent<QTaskManager>();
+            MoveItTool.TaskManager = TaskManagerObject.GetComponent<QTaskManager>();
+            MoveItTool.TaskManager.Log = Log.instance;
+
             UIFilters.FilterCBs.Clear();
             UIFilters.NetworkCBs.Clear();
 
@@ -90,6 +96,8 @@ namespace MoveIt
             ActionQueue.instance?.CleanQueue();
             UnityEngine.Object.Destroy(DebugGameObject);
             UnityEngine.Object.Destroy(MoveToToolObject);
+            UnityEngine.Object.Destroy(TaskManagerObject);
+            WaitCursor.Close();
             if (PO_Manager.gameObject != null)
             {
                 UnityEngine.Object.Destroy(PO_Manager.gameObject);
@@ -97,13 +105,13 @@ namespace MoveIt
             UIToolOptionPanel.instance = null;
             UIMoreTools.MoreToolsPanel = null;
             UIMoreTools.MoreToolsBtn = null;
+            MoveItTool.TaskManager = null;
             Action.selection.Clear();
             Filters.Picker = null;
             MoveItTool.PO = null;
             UnityEngine.Object.Destroy(MoveItTool.instance.m_button);
 
-            UILoadWindow.Close();
-            UISaveWindow.Close();
+            GUI.XMLWindow.Close();
 
             // Unified UI
             MoveItTool.instance.DisableUUI();

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 
 namespace MoveIt
 {
@@ -207,10 +206,8 @@ namespace MoveIt
 
             if (!(bool)retrieve.Invoke(null, paramList))
             { // Not ready yet
-                Log.Debug($"PPP03.1 {cloneData.OriginalIId.Debug()} not ready yet");
                 return false;
             }
-            Log.Debug($"PPP03.2 {cloneData.OriginalIId.Debug()} ready!");
 
             try
             {
@@ -251,7 +248,7 @@ namespace MoveIt
 
                 //MoveItTool.SetToolState();
                 //MoveItTool.instance.ProcessSensitivityMode(false);
-                Log.Info($"Cloned PO {original.m_procObj.Id} to #{clone.Id}", "[M71]");
+                //Log.Info($"Cloned PO {original.m_procObj.Id} to #{clone.Id}", "[M71]");
             }
             catch (Exception e)
             {

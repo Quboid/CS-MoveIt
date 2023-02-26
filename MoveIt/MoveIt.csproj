@@ -73,6 +73,7 @@
       <DependentUpon>Str.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="GUI\WaitCursor.cs" />
     <Compile Include="Tool\MIT_Events.cs" />
     <Compile Include="Tool\MIT_Filtering.cs" />
     <Compile Include="Tool\MIT_Keyboard.cs" />
@@ -291,6 +292,16 @@
   <ItemGroup>
     <EmbeddedResource Include="Icons\NodeMerge.png" />
     <EmbeddedResource Include="Icons\NodeMergeFocused.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Cursors\icon-wait-00.png" />
+    <EmbeddedResource Include="Icons\Cursors\icon-wait-01.png" />
+    <EmbeddedResource Include="Icons\Cursors\icon-wait-02.png" />
+    <EmbeddedResource Include="Icons\Cursors\icon-wait-03.png" />
+    <EmbeddedResource Include="Icons\Cursors\icon-wait-04.png" />
+    <EmbeddedResource Include="Icons\Cursors\icon-wait-05.png" />
+    <EmbeddedResource Include="Icons\Cursors\icon-wait-06.png" />
+    <EmbeddedResource Include="Icons\Cursors\icon-wait-07.png" />
   </ItemGroup>
   <Import Project="..\..\..\QCommon\Repo\QCommon\QCommon\Shared\QCommon Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

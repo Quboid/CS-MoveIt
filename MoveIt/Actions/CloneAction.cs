@@ -163,22 +163,9 @@ namespace MoveIt
         internal Dictionary<InstanceID, InstanceID> m_mapLanes;
 
         /// <summary>
-        /// Original -> Clone mapping for updating action queue on undo/redo 
-        /// </summary>
-        //internal Dictionary<Instance, Instance> m_origToClone;
-        /// <summary>
-        /// Buffer of m_origToClone, the Original -> Clone mapping mapping for undo/redo
-        /// </summary>
-        //internal Dictionary<Instance, Instance> m_origToCloneUpdate;
-        /// <summary>
         /// Map of node clones, Original -> Clone to connect cloned segments
         /// </summary>
         internal Dictionary<ushort, ushort> m_mapNodes;
-        /// <summary>
-        /// Map of unplaced clone state to placed clone instance
-        /// </summary>
-        //protected Dictionary<InstanceState, Instance> m_stateToClone = new Dictionary<InstanceState, Instance>();
-        //protected Dictionary<InstanceID, InstanceID> m_InstanceID_origToClone = new Dictionary<InstanceID, InstanceID>();
         internal Dictionary<PO_Group, PO_Group> m_POGroupMap = new Dictionary<PO_Group, PO_Group>();
 
         protected Matrix4x4 matrix4x = default;
@@ -343,11 +330,6 @@ namespace MoveIt
 
         private bool DoImplementation()
         {
-            if (MoveItTool.POProcessing > 0)
-            {
-                return true;
-            }
-
             MoveItTool.instance.m_lastInstance = null;
 
             m_cloneData = new List<CloneData>();
@@ -364,7 +346,6 @@ namespace MoveIt
             {
                 if (state is ProcState ps)
                 {
-                    Log.Debug($"PPP01 {ps.prefabName}");
                     CloneDataPO cloneData = new CloneDataPO()
                     {
                         Original = state.instance,
@@ -480,7 +461,6 @@ namespace MoveIt
 
         public bool DoFinalize()
         {
-            Log.Debug($"PPP02 DoFinalize");
             // Merge nodes
             if (MoveItTool.instance.MergeNodes)
             {
@@ -557,194 +537,11 @@ namespace MoveIt
             {
                 Dictionary<Instance, Instance> toReplace = new Dictionary<Instance, Instance>();
 
-                //foreach (CloneData cloneData in m_cloneData)
-                //{
-                //    Log.Debug($"To replace: {cloneData.StateIId.Debug()} -> {cloneData.CloneIId.Debug()}.", "[M22]");
-                //}
-
                 ActionQueue.instance.ReplaceInstancesForward(m_cloneData);
             }
 
             return true;
         }
-
-        //public void DoProcess()
-        //{
-        //    if (MoveItTool.POProcessing > 0)
-        //    {
-        //        return;
-        //    }
-
-        //    MoveItTool.instance.m_lastInstance = null;
-
-        //    m_cloneData = new List<CloneData>();
-        //    m_mapLanes = new Dictionary<InstanceID, InstanceID>();
-        //    m_mapNodes = new Dictionary<ushort, ushort>();
-
-        //    matrix4x.SetTRS(center + moveDelta, Quaternion.AngleAxis(angleDelta * Mathf.Rad2Deg, Vector3.down), Vector3.one);
-
-        //    // Clone nodes first
-        //    List<QTask> tasks = new List<QTask>();
-        //    foreach (InstanceState state in m_states)
-        //    {
-        //        if (state is NodeState)
-        //        {
-        //            tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
-        //            {
-        //                Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
-
-        //                if (clone == null)
-        //                {
-        //                    Log.Info($"Failed to clone node {state}", "[M23]");
-        //                    return;
-        //                }
-
-        //                m_cloneData.Add(new CloneData()
-        //                {
-        //                    Original = state.instance,
-        //                    Clone = clone,
-        //                    CloneState = state
-        //                });
-
-        //                m_mapNodes.Add(state.instance.id.NetNode, clone.id.NetNode);
-        //            }));
-        //        }
-        //    }
-        //    MoveItTool.TaskManager.AddBatch(tasks, null, null, "Clone-Do-01-Nodes");
-
-        //    // Clone buildings next (so attached nodes are created before segments)
-        //    tasks = new List<QTask>();
-        //    List<ushort> attachedNodes = new List<ushort>();
-        //    foreach (InstanceState state in m_states)
-        //    {
-        //        if (state is BuildingState)
-        //        {
-        //            tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
-        //            {
-        //                Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
-
-        //                if (clone == null)
-        //                {
-        //                    Log.Info($"Failed to clone building {state}", "[M24]");
-        //                    return;
-        //                }
-
-        //                m_cloneData.Add(new CloneData()
-        //                {
-        //                    Original = state.instance,
-        //                    Clone = clone,
-        //                    CloneState = state
-        //                });
-
-        //                foreach (Instance inst in clone.subInstances)
-        //                {
-        //                    if (inst is MoveableNode mn)
-        //                    {
-        //                        attachedNodes.Add(mn.id.NetNode);
-        //                        NetInfo node = (NetInfo)mn.Info.Prefab;
-        //                    }
-        //                }
-        //            }));
-        //        }
-        //    }
-        //    MoveItTool.TaskManager.AddBatch(tasks, null, null, "Clone-Do-02-Buildings");
-
-        //    // Clone everything else except PO
-        //    tasks = new List<QTask>();
-        //    foreach (InstanceState state in m_states)
-        //    {
-        //        if (!(state is NodeState || state is BuildingState || state is ProcState))
-        //        {
-        //            tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
-        //            {
-        //                Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
-
-        //                if (clone == null)
-        //                {
-        //                    Log.Info($"Failed to clone {state}", "[M25]");
-        //                    return;
-        //                }
-
-        //                m_cloneData.Add(new CloneData()
-        //                {
-        //                    Original = state.instance,
-        //                    Clone = clone,
-        //                    CloneState = state
-        //                });
-
-        //                if (state is SegmentState segmentState)
-        //                {
-        //                    MoveItTool.NS.SetSegmentModifiers(clone.id.NetSegment, segmentState);
-        //                    if (segmentState.LaneIDs != null)
-        //                    {
-        //                        // old version does not store lane ids
-        //                        var clonedLaneIds = MoveableSegment.GetLaneIds(clone.id.NetSegment);
-        //                        DebugUtils.AssertEq(clonedLaneIds.Count, segmentState.LaneIDs.Count, "clonedLaneIds.Count, segmentState.LaneIDs.Count");
-        //                        for (int i = 0; i < clonedLaneIds.Count; ++i)
-        //                        {
-        //                            var origLaneIId = new InstanceID { NetLane = segmentState.LaneIDs[i] };
-        //                            var cloneLaneIId = new InstanceID { NetLane = clonedLaneIds[i] };
-        //                            m_mapLanes.Add(origLaneIId, cloneLaneIId);
-        //                        }
-        //                    }
-        //                }
-        //            }));
-        //        }
-        //    }
-        //    MoveItTool.TaskManager.AddBatch(tasks, null, null, "Clone-Do-03-All");
-
-        //    tasks = new List<QTask>();
-        //    if (MoveItTool.instance.MergeNodes)
-        //    {
-        //        tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
-        //        {
-        //            foreach (NodeMergeClone mergeClone in m_nodeMergeData)
-        //            {
-        //                CloneData cloneData = CloneData.GetFromState(m_cloneData, mergeClone.nodeState);
-        //                if (NodeMerging.MergeNodes(mergeClone.ConvertToExisting(cloneData)))
-        //                {
-        //                    MoveableNode.UpdateSegments(mergeClone.ParentId, mergeClone.ParentNetNode.m_position);
-        //                    cloneData.Clone = mergeClone.ParentInstanceId;
-        //                    m_mapNodes[mergeClone.nodeState.instance.id.NetNode] = mergeClone.ParentId;
-        //                }
-        //                else
-        //                {
-        //                    if (cloneData == null)
-        //                        Log.Info($"Failed node merge - virtual:{mergeClone.ChildId}, placed:<null> (parent:{mergeClone.ParentId})", "[M26.1]");
-        //                    else
-        //                        Log.Info($"Failed node merge - virtual:{mergeClone.ChildId}, placed:{cloneData.StateIId.NetNode} (parent:{mergeClone.ParentId})", "[M26.2]");
-        //                }
-        //            }
-        //        }));
-        //    }
-        //    MoveItTool.TaskManager.AddBatch(tasks, null, null, "Clone-Do-04-Merge");
-
-        //    // Clone PO
-        //    tasks = new List<QTask>();
-        //    MoveItTool.PO.MapGroupClones(m_states, this);
-        //    foreach (InstanceState state in m_states)
-        //    {
-        //        if (state is ProcState)
-        //        {
-        //            tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { 
-        //                _ = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
-        //            }));
-        //        }
-        //    }
-        //    MoveItTool.TaskManager.AddBatch(tasks, null, null, "Clone-Do-05-PO");
-
-        //    MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () =>
-        //    {
-        //        if (m_states.Count == 1)
-        //        {
-        //            foreach (InstanceState state in m_states)
-        //            {
-        //                MoveItTool.CloneSingleObject(state.Info.Prefab);
-        //                break;
-        //            }
-        //        }
-        //    }, "Clone-Do-06-CloneSingleObject");
-        //}
 
         public override void Undo()
         {

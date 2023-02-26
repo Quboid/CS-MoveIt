@@ -511,5 +511,10 @@ namespace MoveIt
 
             action.DoMirrorProcess();
         }
+
+        internal void SetCursor(CursorInfo cursor)
+        {
+            ToolCursor = cursor;
+        }
     }
 }

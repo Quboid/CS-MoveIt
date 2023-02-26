@@ -56,9 +56,11 @@ namespace MoveIt
         internal static HashSet<Instance> GetClones(List<CloneData> cloneData)
         {
             HashSet<Instance> result = new HashSet<Instance>();
+            if (cloneData == null) return result;
+
             foreach (CloneData data in cloneData)
             {
-                result.Add(data.Clone);
+                if (data != null && data.Clone != null) result.Add(data.Clone);
             }
             return result;
         }

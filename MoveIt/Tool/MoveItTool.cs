@@ -305,6 +305,7 @@ namespace MoveIt
             }
 
             PropLayer.Initialise();
+            WaitCursor.Initialise();
         }
 
         protected override void OnEnable()
@@ -333,7 +334,7 @@ namespace MoveIt
                 Log.Error($"NetworkSkins Failed:\n{e}", "[M57]");
             }
 
-            TaskManager = new QTaskManager(Log.instance);
+            //TaskManager = QTaskManager.Factory(Log.instance);// new QTaskManager(Log.instance);
 
             if (UIToolOptionPanel.instance == null)
             {
@@ -385,16 +386,16 @@ namespace MoveIt
                 }
             }
 
-            if (PO.Active)
-            {
-                PO.ToolEnabled();
-                if (POProcessing > 0 && Time.time > POProcessingStart + 300)
-                { // If it's been more than 5 mins since PO last started copying, give up and reset
-                    Log.Info($"Timing out PO Processing", "[M58]");
-                    POProcessing = 0;
-                }
-                ActionQueue.instance.Push(new TransformAction());
-            }
+            //if (PO.Active)
+            //{
+            //    PO.ToolEnabled();
+            //    if (POProcessing > 0 && Time.time > POProcessingStart + 300)
+            //    { // If it's been more than 5 mins since PO last started copying, give up and reset
+            //        Log.Info($"Timing out PO Processing", "[M58]");
+            //        POProcessing = 0;
+            //    }
+            //    ActionQueue.instance.Push(new TransformAction());
+            //}
 
             UIMoreTools.UpdateMoreTools();
             UpdatePillarMap();
@@ -402,6 +403,7 @@ namespace MoveIt
 
         protected override void OnDisable()
         {
+            SetCursor(null);
             lock (ActionQueue.instance)
             {
                 if (ToolState == ToolStates.Cloning || ToolState == ToolStates.RightDraggingClone)
@@ -425,10 +427,7 @@ namespace MoveIt
                     UIToolOptionPanel.instance.isVisible = false;
                 }
 
-                if (m_moveToPanel != null)
-                {
-                    m_moveToPanel.Visible(false);
-                }
+                m_moveToPanel?.Visible(false);
 
                 InfoManager.instance.SetCurrentMode(m_prevInfoMode, InfoManager.instance.CurrentSubMode);
 
@@ -700,8 +699,6 @@ namespace MoveIt
 
         public override void SimulationStep()
         {
-            TaskManager.Update();
-
             lock (ActionQueue.instance)
             {
                 try

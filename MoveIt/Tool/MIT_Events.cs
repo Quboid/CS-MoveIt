@@ -10,6 +10,7 @@ namespace MoveIt
         private void OnLeftMouseDown()
         {
             //Log.Debug("OnLeftMouseDown: " + ToolState, "[M32]");
+            if (TaskManager.Active) { return; }
 
             Vector3 mousePos = RaycastMouseLocation();
             if (ToolState == ToolStates.Default)
@@ -41,19 +42,20 @@ namespace MoveIt
                 CloneActionBase action = ActionQueue.instance.current as CloneActionBase;
                 action.followTerrain = followTerrain;
 
-                if (POProcessing == 0)
-                {
+                //if (POProcessing == 0)
+                //{
                     SetToolState();
                     m_nextAction = ToolAction.Do;
 
                     UpdateSensitivityMode();
-                }
+                //}
             }
         }
 
         private void OnLeftMouseUp()
         {
             //Log.Debug("OnLeftMouseUp: " + ToolState, "[M33]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.DrawingSelection)
             {
@@ -98,11 +100,12 @@ namespace MoveIt
         private void OnLeftClick()
         {
             //Log.Debug("OnLeftClick: " + ToolState, "[M34]");
+            if (TaskManager.Active) { return; }
 
-            if (POProcessing > 0)
-            {
-                return;
-            }
+            //if (POProcessing > 0)
+            //{
+            //    return;
+            //}
 
             if (ToolState == ToolStates.Default || ToolState == ToolStates.DrawingSelection || ToolState == ToolStates.ToolActive)
             {
@@ -349,6 +352,7 @@ namespace MoveIt
         private void OnLeftDrag()
         {
             //Log.Debug("OnLeftDrag: " + ToolState, "[M35]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.Default || ToolState == ToolStates.ToolActive)
             {
@@ -384,6 +388,7 @@ namespace MoveIt
         private void OnLeftDragStop()
         {
             //Log.Debug("OnLeftDragStop: " + ToolState, "[M36]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.MouseDragging && m_rightClickTime == 0)
             {
@@ -399,6 +404,7 @@ namespace MoveIt
         private void OnRightMouseDown()
         {
             //Log.Debug("OnRightMouseDown: " + ToolState, "[M37]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.Default)
             {
@@ -429,6 +435,7 @@ namespace MoveIt
         private void OnRightClick()
         {
             //Log.Debug("OnRightClick: " + ToolState, "[M38]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.Default)
             {
@@ -475,6 +482,7 @@ namespace MoveIt
         private void OnRightDrag()
         {
             //Log.Debug("OnRightDrag: " + ToolState, "[M39]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.Default || ToolState == ToolStates.ToolActive)
             {
@@ -502,6 +510,7 @@ namespace MoveIt
         private void OnRightDragStop()
         {
             //Log.Debug("OnRightDragStop: " + ToolState, "[M40]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.MouseDragging && m_leftClickTime == 0)
             {
@@ -520,7 +529,8 @@ namespace MoveIt
 
         private void OnMiddleMouseDown()
         {
-            //Log.Debug("OnMiddleMouseDown: " + ToolState, "[M41]");
+            //Log.Debug("OnMiddleMouseDown: " + ToolState, "[M41]"); 
+            if (TaskManager.Active) { return; }
 
             Vector3 mousePos = RaycastMouseLocation();
 
@@ -555,6 +565,8 @@ namespace MoveIt
         private void OnMiddleDrag()
         {
             //Log.Debug($"OnMiddleDrag: {ToolState}\nm_dragStartRelative:{m_dragStartRelative}\nm_sensitivityTogglePosAbs:{m_sensitivityTogglePosAbs}\nm_clickPositionAbs:{m_clickPositionAbs}", "[M44]");
+            //Log.Debug("OnMiddleDrag: " + ToolState, "[M44]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.Default)
             {
@@ -575,6 +587,7 @@ namespace MoveIt
         private void OnMiddleDragStop()
         {
             //Log.Debug("OnMiddleDragStop: " + ToolState, "[M45]");
+            if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.MouseDragging && m_rightClickTime == 0)
             {
