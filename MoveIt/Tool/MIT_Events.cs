@@ -42,13 +42,10 @@ namespace MoveIt
                 CloneActionBase action = ActionQueue.instance.current as CloneActionBase;
                 action.followTerrain = followTerrain;
 
-                //if (POProcessing == 0)
-                //{
-                    SetToolState();
-                    m_nextAction = ToolAction.Do;
+                SetToolState();
+                m_nextAction = ToolAction.Do;
 
-                    UpdateSensitivityMode();
-                //}
+                UpdateSensitivityMode();
             }
         }
 
@@ -101,11 +98,6 @@ namespace MoveIt
         {
             //Log.Debug("OnLeftClick: " + ToolState, "[M34]");
             if (TaskManager.Active) { return; }
-
-            //if (POProcessing > 0)
-            //{
-            //    return;
-            //}
 
             if (ToolState == ToolStates.Default || ToolState == ToolStates.DrawingSelection || ToolState == ToolStates.ToolActive)
             {

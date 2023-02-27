@@ -88,24 +88,6 @@ namespace MoveIt
         internal static PO_Manager PO = null;
         internal static NS_Manager NS = null;
         internal static QTaskManager TaskManager = null;
-        private static int _POProcessing = 0;
-        private static float POProcessingStart = 0;
-        internal static int POProcessing
-        {
-            get
-            {
-                return _POProcessing;
-            }
-            set
-            {
-                _POProcessing = value;
-                POProcessingStart = Time.time;
-                if (m_debugPanel != null)
-                {
-                    m_debugPanel.UpdatePanel();
-                }
-            }
-        }
 
         private const float XFACTOR = 0.25f;
         private const float YFACTOR = 0.015625f; // 1/64
@@ -385,17 +367,6 @@ namespace MoveIt
                     }
                 }
             }
-
-            //if (PO.Active)
-            //{
-            //    PO.ToolEnabled();
-            //    if (POProcessing > 0 && Time.time > POProcessingStart + 300)
-            //    { // If it's been more than 5 mins since PO last started copying, give up and reset
-            //        Log.Info($"Timing out PO Processing", "[M58]");
-            //        POProcessing = 0;
-            //    }
-            //    ActionQueue.instance.Push(new TransformAction());
-            //}
 
             UIMoreTools.UpdateMoreTools();
             UpdatePillarMap();

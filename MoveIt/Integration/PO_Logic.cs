@@ -135,51 +135,32 @@ namespace MoveIt
             }
         }
 
-        public void Paste(InstanceID original, InstanceID target, int id)
-        {
-            InstanceID cloneID = target;
-            cloneID.NetLane = (uint)id + 1;
-            MoveItTool.PO.visibleObjects.Add(cloneID.NetLane, GetPOById((uint)id + 1));
-
-            MoveableProc cloneInstance = new MoveableProc(cloneID){};
-
-            Action.selection.Add(cloneInstance);
-            if (ActionQueue.instance.current is CloneActionBase ca)
-            {
-                //ca.m_clones.Add(cloneInstance);
-                //ca.m_origToClone.Add(new MoveableProc(original), cloneInstance);
-            }
-            else
-            {
-                Log.Debug($"Current action is {ActionQueue.instance.current.GetType()}, not CloneActionBase", "[M66]");
-            }
-
-            MoveItTool.SetToolState();
-            MoveItTool.instance.ProcessSensitivityMode(false);
-            Log.Info($"Cloned PO {original.NetLane} to #{cloneInstance.id.NetLane} (new method)", "[M67]");
-        }
-
-        //public uint Clone(ProcState original, Vector3 position, float angle)
+        //public void Paste(InstanceID original, InstanceID target, int id)
         //{
-        //    // Create an empty PO object that integration will manipulate
+        //    InstanceID cloneID = target;
+        //    cloneID.NetLane = (uint)id + 1;
+        //    MoveItTool.PO.visibleObjects.Add(cloneID.NetLane, GetPOById((uint)id + 1));
 
-        //    //PrefabInfo prefab = PrefabCollection<BuildingInfo>.FindLoaded(original.prefabName);
-        //    //if (prefab is null)
-        //    //{
-        //    //    prefab = PrefabCollection<PropInfo>.FindLoaded(original.prefabName);
-        //    //}
+        //    MoveableProc cloneInstance = new MoveableProc(cloneID){};
 
-        //    object raw = tPOLogic.Assembly.CreateInstance("ProceduralObjects.Classes.ProceduralObject");
-        //    int id = (int)tPUtils.GetMethod("GetNextUnusedId").Invoke(null, new[] { tPOLogic.GetField("proceduralObjects").GetValue(POLogic) });
-        //    tPO.GetField("id").SetValue(raw, id);
-        //    object POlist = tPOLogic.GetField("proceduralObjects").GetValue(POLogic);
-        //    POlist.GetType().GetMethod("Add", new Type[] { tPO }).Invoke(POlist, new[] { raw });
-        //    return (uint)id + 1;
+        //    Action.selection.Add(cloneInstance);
+        //    if (ActionQueue.instance.current is CloneActionBase ca)
+        //    {
+        //        //ca.m_clones.Add(cloneInstance);
+        //        //ca.m_origToClone.Add(new MoveableProc(original), cloneInstance);
+        //    }
+        //    else
+        //    {
+        //        Log.Debug($"Current action is {ActionQueue.instance.current.GetType()}, not CloneActionBase", "[M66]");
+        //    }
+
+        //    MoveItTool.SetToolState();
+        //    MoveItTool.instance.ProcessSensitivityMode(false);
+        //    Log.Info($"Cloned PO {original.NetLane} to #{cloneInstance.id.NetLane} (new method)", "[M67]");
         //}
 
         public void Clone(MoveableProc original)
         {
-            //MoveItTool.POProcessing++;
             tPOMoveIt.GetMethod("CallPOCloning", new Type[] { tPO }).Invoke(null, new[] { original.m_procObj.GetProceduralObject() });
         }
 
@@ -257,100 +238,6 @@ namespace MoveIt
 
             return true;
         }
-
-        //public IEnumerator<object> RetrieveClone(MoveableProc original, Vector3 position, float angle, Action action)
-        //{
-        //    const uint MaxAttempts = 100_000;
-        //    CloneActionBase ca = (CloneActionBase)action;
-
-        //    if (!(original.m_procObj is PO_Object))
-        //    {
-        //        Log.Info($"PO Cloning failed: object not found", "[M68]");
-        //        MoveItTool.POProcessing--;
-        //        yield break;
-        //    }
-
-        //    Type[] types = new Type[] { tPO, tPO.MakeByRefType(), typeof(uint).MakeByRefType() };
-        //    object originalObject = original.m_procObj.GetProceduralObject();
-        //    object[] paramList = new[] { originalObject, null, null };
-        //    MethodInfo retrieve = tPOMoveIt.GetMethod("TryRetrieveClone", BindingFlags.Public | BindingFlags.Static, null, types, null);
-        //    if (retrieve == null)
-        //    {
-        //        Log.Info($"PO Cloning failed: retrieve not found", "[M69]");
-        //        MoveItTool.POProcessing--;
-        //        yield break;
-        //    }
-
-        //    uint c = 0;
-        //    while (c < MaxAttempts && !(bool)retrieve.Invoke(null, paramList))
-        //    {
-        //        //if (c % 100 == 0)
-        //        //{
-        //        //    BindingFlags f = BindingFlags.Static | BindingFlags.Public;
-        //        //    object queueObj = tPOMoveIt.GetField("queuedCloning", f).GetValue(null);
-        //        //    int queueCount = (int)queueObj.GetType().GetProperty("Count").GetValue(queueObj, null);
-        //        //    object doneObj = tPOMoveIt.GetField("doneCloning", f).GetValue(null);
-        //        //    int doneCount = (int)doneObj.GetType().GetProperty("Count").GetValue(doneObj, null);
-        //        //}
-        //        c++;
-        //        yield return new WaitForSeconds(0.05f);
-        //    }
-
-        //    if (c == MaxAttempts)
-        //    {
-        //        throw new Exception($"Failed to clone object #{original.m_procObj.Id}! [PO-F4]");
-        //    }
-
-        //    try
-        //    {
-        //        PO_Object clone = new PO_Object(paramList[1])
-        //        {
-        //            POColor = original.m_procObj.POColor
-        //        };
-
-        //        if (original.m_procObj.Group != null && action is CloneActionBase cloneAction)
-        //        {
-        //            if (!cloneAction.m_POGroupMap.ContainsKey(original.m_procObj.Group))
-        //            {
-        //                Log.Debug($"Clone Error: {original.m_procObj.Id}'s group isn't in group map", "[M70]");
-        //            }
-        //            else
-        //            {
-        //                clone.Group = cloneAction.m_POGroupMap[original.m_procObj.Group];
-        //                clone.Group.AddObject(clone);
-        //                if (original.m_procObj.isGroupRoot())
-        //                {
-        //                    clone.Group.SetNewRoot(clone);
-        //                }
-        //            }
-        //        }
-
-        //        InstanceID cloneID = default;
-        //        cloneID.NetLane = clone.Id;
-        //        MoveItTool.PO.visibleObjects.Add(cloneID.NetLane, clone);
-
-        //        MoveableProc cloneInstance = new MoveableProc(cloneID)
-        //        {
-        //            position = position,
-        //            angle = angle
-        //        };
-
-        //        Action.selection.Add(cloneInstance);
-        //        //ca.m_clones.Add(cloneInstance);
-        //        //ca.m_origToClone.Add(original, cloneInstance);
-
-        //        MoveItTool.SetToolState();
-        //        MoveItTool.instance.ProcessSensitivityMode(false);
-        //        Log.Info($"Cloned PO {original.m_procObj.Id} to #{clone.Id}", "[M71]");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Log.Error($"Exception when cloning PO:\n{e}", "[M72]");
-        //    }
-
-        //    yield return new WaitForSeconds(0.25f);
-        //    MoveItTool.POProcessing--;
-        //}
 
         public void Delete(PO_Object obj)
         {

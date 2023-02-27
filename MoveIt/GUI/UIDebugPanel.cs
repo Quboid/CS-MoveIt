@@ -42,7 +42,7 @@ namespace MoveIt
         {
             yield return new WaitForSeconds(0.05f);
             ActionStatus.text = ActionQueue.instance.current == null ? "" : $"{ActionQueue.instance.current.GetType()}";
-            ToolStatus.text = $"{MoveItTool.ToolState} ({MoveItTool.MT_Tool}.{MoveItTool.AlignToolPhase}), TM:{MoveItTool.TaskManager.Active} POProc:{MoveItTool.POProcessing}";
+            ToolStatus.text = $"{MoveItTool.ToolState} ({MoveItTool.MT_Tool}.{MoveItTool.AlignToolPhase}), TM:{MoveItTool.TaskManager.Active}";
 
             SelectedLarge.text = $"Objects Selected: {Action.selection.Count}";
             ushort[] types = new ushort[8];
