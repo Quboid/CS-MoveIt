@@ -322,13 +322,7 @@ namespace MoveIt
             MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoImplementation), "Clone-Do-01");
         }
 
-        private bool FinalizePO(CloneData cloneData)
-        {
-            if (!(cloneData is CloneDataPO clonePO)) throw new Exception($"PO Clone: cloneData is not for PO");
-            return MoveItTool.PO.Logic.RetrieveClone(clonePO);
-        }
-
-        private bool DoImplementation()
+        internal bool DoImplementation()
         {
             MoveItTool.instance.m_lastInstance = null;
 
@@ -459,7 +453,13 @@ namespace MoveIt
             return true;
         }
 
-        public bool DoFinalize()
+        internal bool FinalizePO(CloneData cloneData)
+        {
+            if (!(cloneData is CloneDataPO clonePO)) throw new Exception($"PO Clone: cloneData is not for PO");
+            return MoveItTool.PO.Logic.RetrieveClone(clonePO);
+        }
+
+        internal bool DoFinalize()
         {
             // Merge nodes
             if (MoveItTool.instance.MergeNodes)

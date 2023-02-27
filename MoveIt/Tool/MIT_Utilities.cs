@@ -211,13 +211,6 @@ namespace MoveIt
                 StopCloning();
                 StopTool();
 
-                //bool activatePO = true;
-                //if (!PO.Active)
-                //{
-                //    activatePO = false;
-                //    PO.InitialiseTool(true);
-                //}
-
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(Selection));
                 Selection selectionState;
 
@@ -486,30 +479,6 @@ namespace MoveIt
             //}
             //Log.Debug($"\nStart:{originalList.Count}\nInner:{innerList.Count}", "[M05]");
             return innerList;
-        }
-
-        internal void ProcessMirror(AlignMirrorAction action)
-        {
-            StartCoroutine(ProcessMirrorIterate(action));
-        }
-
-        internal IEnumerator<object> ProcessMirrorIterate(AlignMirrorAction action)
-        {
-            const uint MaxAttempts = 1000_000;
-
-            uint c = 0;
-            while (c < MaxAttempts && POProcessing > 0)
-            {
-                c++;
-                yield return new WaitForSeconds(0.05f);
-            }
-
-            if (c == MaxAttempts)
-            {
-                throw new Exception($"Failed to mirror PO");
-            }
-
-            action.DoMirrorProcess();
         }
 
         internal void SetCursor(CursorInfo cursor)

@@ -240,8 +240,6 @@ namespace MoveIt
 
                         ActionQueue.instance.Push(action);
                         ActionQueue.instance.Do();
-
-                        Singleton<SimulationManager>.instance.AddAction(() => ProcessMirror(action));
                     }
 
                     DeactivateTool();

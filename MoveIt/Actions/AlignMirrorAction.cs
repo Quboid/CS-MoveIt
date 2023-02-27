@@ -1,7 +1,7 @@
 ﻿using System;
-using ColossalFramework;
 using System.Collections.Generic;
 using UnityEngine;
+using QCommonLib.QTasks;
 
 namespace MoveIt
 {
@@ -17,10 +17,17 @@ namespace MoveIt
         {
             originalBounds = GetTotalBounds(false);
 
-            base.Do();
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoImplementation), "Mirror-Do-01");
+
+            // Queue batch to queue additional batch, so final batch is run after those added by the above batch
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
+            {
+                MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoMirrorProcess), "Mirror-Do-03");
+                return true;
+            }), "Mirror-Do-02");
         }
 
-        public void DoMirrorProcess()
+        public bool DoMirrorProcess()
         {
             Dictionary<Instance, float> instanceRotations = new Dictionary<Instance, float>();
 
@@ -92,6 +99,7 @@ namespace MoveIt
             bool fast = Settings.fastMove != Event.current.shift;
             UpdateArea(originalBounds, !fast || ((TypeMask & TypeMasks.Network) != TypeMasks.None));
             UpdateArea(GetTotalBounds(false), !fast);
+            return true;
         }
 
         private void CallIntegration(MoveItIntegration.MoveItIntegrationBase method, InstanceID id, object data, Dictionary<InstanceID, InstanceID> map, float instanceRotation, float mirrorRotation)

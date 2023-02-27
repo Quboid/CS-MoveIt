@@ -317,7 +317,7 @@ namespace MoveIt
             }
             states = newStates;
             watch.Stop();
-            Log.Debug($"Pillars handled in {watch.ElapsedMilliseconds} ms\nSelected nodes:{nodesWithAttachments.Count}, total selection:{states.Count}, dups mapped:{pillarsOriginalToClone.Count}", "[M13]");
+            //Log.Debug($"Pillars handled in {watch.ElapsedMilliseconds} ms\nSelected nodes:{nodesWithAttachments.Count}, total selection:{states.Count}, dups mapped:{pillarsOriginalToClone.Count}", "[M13]");
             PillarsProcessed = true;
 
             return states;
