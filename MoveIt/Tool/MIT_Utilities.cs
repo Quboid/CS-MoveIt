@@ -222,6 +222,21 @@ namespace MoveIt
                     using (FileStream stream = new FileStream(path, FileMode.Open))
                     {
                         selectionState = xmlSerializer.Deserialize(stream) as Selection;
+                        InstanceID pIId = new InstanceID() { Prop = 1 };
+                        InstanceID tIId = new InstanceID() { Tree = 1 };
+                        foreach (InstanceState state in selectionState.states)
+                        {
+                            if (state is TreeState)
+                            {
+                                state.id = tIId.RawData;
+                                tIId.Tree++;
+                            }
+                            if (state is PropState)
+                            {
+                                state.id = tIId.RawData;
+                                tIId.Prop++;
+                            }
+                        }
                         if (selectionState.version != null && selectionState.GetVersion().CompareTo(new Version(2, 9, 9)) == -1)
                         { // XML pre-dates terrain height date
                             foreach (InstanceState state in selectionState.states)

@@ -26,11 +26,6 @@ namespace MoveIt
                     }
 
                     m_states.Add(state);
-
-                    //if (state is ProcState)
-                    //{
-                    //    includesPO = true;
-                    //}
                 }
             }
 
@@ -153,7 +148,6 @@ namespace MoveIt
         internal List<NodeMergeClone> m_nodeMergeData = new List<NodeMergeClone>();
 
         public HashSet<InstanceState> m_states = new HashSet<InstanceState>(); // the InstanceStates to be cloned
-        //internal HashSet<Instance> m_clones; // the resulting Instances
         internal HashSet<Instance> m_oldSelection; // The selection before cloning
 
         /// <summary>
@@ -403,7 +397,6 @@ namespace MoveIt
                         if (inst is MoveableNode mn)
                         {
                             attachedNodes.Add(mn.id.NetNode);
-                            NetInfo node = (NetInfo)mn.Info.Prefab;
                         }
                     }
                 }
@@ -447,6 +440,41 @@ namespace MoveIt
                     }
                 }
             }
+
+            // Look for overlapping nodes within the clones, to reattach networks to attached networks
+            int c = 0;
+            HashSet<CloneData> tmpClones = new HashSet<CloneData>(m_cloneData);
+            foreach (CloneData cloneData in tmpClones)
+            {
+                if (cloneData.Clone is MoveableNode mn)
+                {
+                    NetNode node = (NetNode)mn.data;
+                    NetInfo nodeInfo = (NetInfo)mn.Info.Prefab;
+                    c++;
+
+                    foreach (ushort attachedId in attachedNodes)
+                    {
+                        NetNode attached = nodeBuffer[attachedId];
+
+                        if ((node.m_flags & NetNode.Flags.Untouchable) == NetNode.Flags.Untouchable && (attached.m_flags & NetNode.Flags.Untouchable) == NetNode.Flags.Untouchable &&
+                            node.Info.m_class.m_service == attached.Info.m_class.m_service && node.Info.m_class.m_subService == attached.Info.m_class.m_subService)
+                        {
+                            if ((mn.position - attached.m_position).magnitude < 0.01f)
+                            {
+                                if (NodeMerging.MergeNodes(new NodeMergeExisting()
+                                {
+                                    ParentId = attachedId,
+                                    ChildId = mn.id.NetNode
+                                }))
+                                {
+                                    m_cloneData.Remove(cloneData);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //Log.Debug($"Independent nodes: {c}, attached nodes: {attachedNodes.Count}, objects: {m_cloneData.Count} (was: {tmpClones.Count})");
 
             MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoFinalize), "Clone-Do-03");
 
