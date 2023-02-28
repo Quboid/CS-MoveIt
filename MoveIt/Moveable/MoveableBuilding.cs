@@ -333,9 +333,7 @@ namespace MoveIt
             {
                 buildingBuffer[clone].m_flags |= Building.Flags.FixedHeight;
                 buildingBuffer[clone].m_position = position;
-                InstanceID cloneID = default;
-                cloneID.Building = clone;
-                return new MoveableBuilding(cloneID);
+                return new MoveableBuilding(new InstanceID() { Building = clone });
             }
 
             throw new Exception($"Failed to duplicate {id.Building}!");
@@ -364,9 +362,7 @@ namespace MoveIt
             {
                 SimulationManager.instance.m_currentBuildIndex++;
 
-                InstanceID cloneID = default;
-                cloneID.Building = clone;
-                cloneInstance = new MoveableBuilding(cloneID);
+                cloneInstance = new MoveableBuilding(new InstanceID() { Building = clone });
 
                 if ((state.flags & Building.Flags.Completed) != Building.Flags.None)
                 {
@@ -443,9 +439,7 @@ namespace MoveIt
             {
                 SimulationManager.instance.m_currentBuildIndex++;
 
-                InstanceID cloneID = default;
-                cloneID.Building = clone;
-                cloneInstance = new MoveableBuilding(cloneID);
+                cloneInstance = new MoveableBuilding(new InstanceID() { Building = clone });
 
                 buildingBuffer[clone].m_flags = state.flags;
 

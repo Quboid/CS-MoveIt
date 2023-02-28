@@ -227,8 +227,7 @@ namespace MoveIt
 
             if (PropLayer.Manager.CreateProp(out uint clone, state.Info.Prefab as PropInfo, newPosition, state.angle + deltaAngle, state.single))
             {
-                InstanceID cloneID = default;
-                cloneID = PropLayer.Manager.SetProp(cloneID, clone);
+                InstanceID cloneID = PropLayer.Manager.SetProp(cloneID, clone);
                 PropLayer.Manager.Buffer(cloneID).FixedHeight = state.fixedHeight;
                 cloneInstance = new MoveableProp(cloneID);
             }
@@ -244,8 +243,7 @@ namespace MoveIt
 
             if (PropLayer.Manager.CreateProp(out uint clone, state.Info.Prefab as PropInfo, state.position, state.angle, state.single))
             {
-                InstanceID cloneID = default;
-                cloneID = PropLayer.Manager.SetProp(cloneID, clone);
+                InstanceID cloneID = PropLayer.Manager.SetProp(cloneID, clone);
                 cloneInstance = new MoveableProp(cloneID);
             }
 

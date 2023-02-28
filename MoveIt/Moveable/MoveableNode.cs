@@ -547,16 +547,13 @@ namespace MoveIt
             {
                 SimulationManager.instance.m_currentBuildIndex++;
 
-                InstanceID cloneID = default;
-                cloneID.NetNode = clone;
-
                 nodeBuffer[clone].m_flags = state.flags;
 
                 nodeBuffer[clone].CalculateNode(clone);
                 nodeBuffer[clone].Info.m_netAI.GetNodeBuilding(clone, ref nodeBuffer[clone], out BuildingInfo newBuilding, out float heightOffset);
                 nodeBuffer[clone].UpdateBuilding(clone, newBuilding, heightOffset);
 
-                cloneInstance = new MoveableNode(cloneID);
+                cloneInstance = new MoveableNode(new InstanceID() { Building = clone });
 
                 if (((NetNode)data).m_building > 0)
                 {
@@ -578,9 +575,7 @@ namespace MoveIt
             {
                 SimulationManager.instance.m_currentBuildIndex++;
 
-                InstanceID cloneID = default;
-                cloneID.NetNode = clone;
-                cloneInstance = new MoveableNode(cloneID);
+                cloneInstance = new MoveableNode(new InstanceID() { Building = clone });
 
                 nodeBuffer[clone].m_flags = state.flags;
 

@@ -510,5 +510,39 @@ namespace MoveIt
 
             return msg;
         }
+
+        public static string DebugEx(this InstanceID id)
+        {
+            string msg = Debug(id) + ":";
+
+            switch (id.Type)
+            {
+                case InstanceType.Building:
+                    msg += Singleton<BuildingManager>.instance.m_buildings.m_buffer[id.Building].Info.name;
+                    break;
+
+                case InstanceType.Prop:
+                    msg += Singleton<PropManager>.instance.m_props.m_buffer[id.Prop].Info.name;
+                    break;
+
+                case InstanceType.Tree:
+                    msg += Singleton<TreeManager>.instance.m_trees.m_buffer[id.Tree].Info.name;
+                    break;
+
+                case InstanceType.NetLane:
+                    msg += MoveItTool.PO.GetProcObj(id.NetLane).Info?.Name;
+                    break;
+
+                case InstanceType.NetNode:
+                    msg += Singleton<NetManager>.instance.m_nodes.m_buffer[id.NetNode].Info.name;
+                    break;
+
+                case InstanceType.NetSegment:
+                    msg += Singleton<NetManager>.instance.m_segments.m_buffer[id.NetSegment].Info.name;
+                    break;
+            }
+
+            return msg;
+        }
     }
 }

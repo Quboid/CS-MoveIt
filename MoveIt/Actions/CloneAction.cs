@@ -144,11 +144,25 @@ namespace MoveIt
         public float angleDelta;
         public bool followTerrain;
 
+        /// <summary>
+        /// Which node to snap to which node if player is using snapping
+        /// </summary>
         internal NodeMergeClone m_snapNode = null;
+
+        /// <summary>
+        /// List of data for what nodes to merge
+        /// </summary>
         internal List<NodeMergeClone> m_nodeMergeData = new List<NodeMergeClone>();
 
-        public HashSet<InstanceState> m_states = new HashSet<InstanceState>(); // the InstanceStates to be cloned
-        internal HashSet<Instance> m_oldSelection; // The selection before cloning
+        /// <summary>
+        /// The InstanceStates to be cloned
+        /// </summary>
+        public HashSet<InstanceState> m_states = new HashSet<InstanceState>();
+
+        /// <summary>
+        /// The selection before cloning
+        /// </summary>
+        internal HashSet<Instance> m_oldSelection;
 
         /// <summary>
         /// Maps of clones
@@ -172,10 +186,25 @@ namespace MoveIt
         public static HashSet<Instance> GetCleanSelection(out Vector3 center)
         {
             HashSet<Instance> newSelection = new HashSet<Instance>(selection);
-
-            InstanceID id = new InstanceID();
+            InstanceID id;
 
             // Adding missing nodes
+            id = new InstanceID();
+            //HashSet<ushort> attachedNodes = new HashSet<ushort>();
+            //foreach (Instance instance in selection)
+            //{
+            //    if (instance is MoveableBuilding building)
+            //    {
+            //        foreach (Instance sub in building.subInstances)
+            //        {
+            //            Log.Debug($"AAA02 attached:{sub.id.DebugEx()}");
+            //            if (sub is MoveableNode)
+            //            {
+            //                attachedNodes.Add(sub.id.NetNode);
+            //            }
+            //        }
+            //    }
+            //}
             foreach (Instance instance in selection)
             {
                 if (instance is MoveableSegment)
@@ -191,6 +220,7 @@ namespace MoveIt
             }
 
             // Adding missing segments
+            id = new InstanceID();
             foreach (Instance instance in selection)
             {
                 if (instance.id.Type == InstanceType.NetNode)
@@ -225,8 +255,9 @@ namespace MoveIt
                 }
             }
 
-            // Remove single nodes
+            // Remove nodes that have no selected segments
             HashSet<Instance> toRemove = new HashSet<Instance>();
+            id = new InstanceID();
             foreach (Instance instance in newSelection)
             {
                 if (instance.id.Type == InstanceType.NetNode)
@@ -331,6 +362,13 @@ namespace MoveIt
             m_attachedNodes = new List<ushort>();
 
             matrix4x.SetTRS(center + moveDelta, Quaternion.AngleAxis(angleDelta * Mathf.Rad2Deg, Vector3.down), Vector3.one);
+
+            string msg = $"DEBUG Selected Objects:{m_states.Count}";
+            foreach (InstanceState state in m_states)
+            {
+                msg += $"\n  {state.instance.id.Debug()}:{state.Info.Name}";
+            }
+            Log.Debug(msg);
 
             // Clone PO
             MoveItTool.PO.MapGroupClones(m_states, this);

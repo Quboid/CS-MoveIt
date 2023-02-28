@@ -97,6 +97,12 @@ namespace MoveIt
                 }
             }
 
+            //string msg = $"Cloned Objects: {m_cloneData.Count}";
+            //foreach (CloneData cloneData in m_cloneData)
+            //{
+            //    msg += $"\n  {cloneData.OriginalIId.Debug()}->{cloneData.CloneIId.Debug()}";
+            //}
+            //Log.Debug(msg);
 
             bool fast = Settings.fastMove != Event.current.shift;
             UpdateArea(originalBounds, !fast || ((TypeMask & TypeMasks.Network) != TypeMasks.None));

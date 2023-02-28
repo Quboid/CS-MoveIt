@@ -221,8 +221,7 @@ namespace MoveIt
             if (TreeManager.instance.CreateTree(out uint clone, ref SimulationManager.instance.m_randomizer,
                 state.Info.Prefab as TreeInfo, newPosition, state.single))
             {
-                InstanceID cloneID = default;
-                cloneID.Tree = clone;
+                InstanceID cloneID = new InstanceID() { Tree = clone };
                 cloneInstance = new MoveableTree(cloneID);
                 buffer[clone].FixedHeight = state.fixedHeight;
             }
@@ -240,8 +239,7 @@ namespace MoveIt
             if (TreeManager.instance.CreateTree(out uint clone, ref SimulationManager.instance.m_randomizer,
                 state.Info.Prefab as TreeInfo, state.position, state.single))
             {
-                InstanceID cloneID = default;
-                cloneID.Tree = clone;
+                InstanceID cloneID = new InstanceID() { Tree = clone };
                 cloneInstance = new MoveableTree(cloneID);
                 buffer[clone].FixedHeight = state.fixedHeight;
             }

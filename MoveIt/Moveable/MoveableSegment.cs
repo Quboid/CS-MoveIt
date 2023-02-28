@@ -370,9 +370,7 @@ namespace MoveIt
             {
                 SimulationManager.instance.m_currentBuildIndex++;
 
-                InstanceID cloneID = default;
-                cloneID.NetSegment = clone;
-                cloneInstance = new MoveableSegment(cloneID);
+                cloneInstance = new MoveableSegment(new InstanceID() { NetSegment = clone });
             }
 
             return cloneInstance;
@@ -398,9 +396,7 @@ namespace MoveIt
             {
                 SimulationManager.instance.m_currentBuildIndex++;
 
-                InstanceID cloneID = default;
-                cloneID.NetSegment = clone;
-                cloneInstance = new MoveableSegment(cloneID);
+                cloneInstance = new MoveableSegment(new InstanceID() { NetSegment = clone });
             }
 
             return cloneInstance;
@@ -637,7 +633,7 @@ namespace MoveIt
                 }
                 else
                 {
-                    DebugUtils.Warning("Invalid segment directions!");
+                    Log.Info($"Invalid segment directions for {id.Debug()}!");
                 }
             }
 

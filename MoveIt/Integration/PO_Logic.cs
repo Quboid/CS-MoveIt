@@ -214,8 +214,7 @@ namespace MoveIt
                     }
                 }
 
-                InstanceID cloneID = default;
-                cloneID.NetLane = clone.Id;
+                InstanceID cloneID = new InstanceID() { NetLane = clone.Id };
                 MoveItTool.PO.visibleObjects.Add(cloneID.NetLane, clone);
 
                 MoveableProc cloneInstance = new MoveableProc(cloneID)
