@@ -162,6 +162,11 @@ namespace MoveIt
         internal Dictionary<ushort, ushort> m_mapNodes;
         internal Dictionary<PO_Group, PO_Group> m_POGroupMap = new Dictionary<PO_Group, PO_Group>();
 
+        /// <summary>
+        /// List of nodes belonging to cloned buildings
+        /// </summary>
+        List<ushort> m_attachedNodes;
+
         protected Matrix4x4 matrix4x = default;
 
         public static HashSet<Instance> GetCleanSelection(out Vector3 center)
@@ -323,6 +328,7 @@ namespace MoveIt
             m_cloneData = new List<CloneData>();
             m_mapLanes = new Dictionary<InstanceID, InstanceID>();
             m_mapNodes = new Dictionary<ushort, ushort>();
+            m_attachedNodes = new List<ushort>();
 
             matrix4x.SetTRS(center + moveDelta, Quaternion.AngleAxis(angleDelta * Mathf.Rad2Deg, Vector3.down), Vector3.one);
 
@@ -372,7 +378,6 @@ namespace MoveIt
             }
 
             // Clone buildings next (so attached nodes are created before segments)
-            List<ushort> attachedNodes = new List<ushort>();
             foreach (InstanceState state in m_states)
             {
                 if (state is BuildingState)
@@ -396,9 +401,31 @@ namespace MoveIt
                     {
                         if (inst is MoveableNode mn)
                         {
-                            attachedNodes.Add(mn.id.NetNode);
+                            m_attachedNodes.Add(mn.id.NetNode);
                         }
                     }
+
+                    // When mirroring, flip attached networks so other networks connect to correct end
+                    //if (this is AlignMirrorAction)
+                    //{
+                    //    foreach (MoveableSegment ms in ((MoveableBuilding)clone).GetAttachedSegments())
+                    //    {
+                    //        ref NetSegment segment = ref segmentBuffer[ms.id.NetSegment];
+                    //        ref NetNode node1 = ref nodeBuffer[segment.m_startNode];
+                    //        ref NetNode node2 = ref nodeBuffer[segment.m_endNode];
+                    //        Vector3 buffer;
+
+                    //        buffer = node1.m_position;
+                    //        node1.m_position = node2.m_position;
+                    //        node2.m_position = buffer;
+
+                    //        buffer = segment.m_startDirection;
+                    //        segment.m_startDirection = segment.m_endDirection;
+                    //        segment.m_endDirection = buffer;
+
+                    //        Log.Debug($"Switched {ms.id.NetSegment}'s nodes ({segment.m_startNode}<->{segment.m_endNode})");
+                    //    }
+                    //}
                 }
             }
 
@@ -441,40 +468,7 @@ namespace MoveIt
                 }
             }
 
-            // Look for overlapping nodes within the clones, to reattach networks to attached networks
-            int c = 0;
-            HashSet<CloneData> tmpClones = new HashSet<CloneData>(m_cloneData);
-            foreach (CloneData cloneData in tmpClones)
-            {
-                if (cloneData.Clone is MoveableNode mn)
-                {
-                    NetNode node = (NetNode)mn.data;
-                    NetInfo nodeInfo = (NetInfo)mn.Info.Prefab;
-                    c++;
-
-                    foreach (ushort attachedId in attachedNodes)
-                    {
-                        NetNode attached = nodeBuffer[attachedId];
-
-                        if ((node.m_flags & NetNode.Flags.Untouchable) == NetNode.Flags.Untouchable && (attached.m_flags & NetNode.Flags.Untouchable) == NetNode.Flags.Untouchable &&
-                            node.Info.m_class.m_service == attached.Info.m_class.m_service && node.Info.m_class.m_subService == attached.Info.m_class.m_subService)
-                        {
-                            if ((mn.position - attached.m_position).magnitude < 0.01f)
-                            {
-                                if (NodeMerging.MergeNodes(new NodeMergeExisting()
-                                {
-                                    ParentId = attachedId,
-                                    ChildId = mn.id.NetNode
-                                }))
-                                {
-                                    m_cloneData.Remove(cloneData);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            //Log.Debug($"Independent nodes: {c}, attached nodes: {attachedNodes.Count}, objects: {m_cloneData.Count} (was: {tmpClones.Count})");
+            if (!(this is AlignMirrorAction)) ReattachNodes(); // Delay for mirror until after new position is calculated
 
             MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoFinalize), "Clone-Do-03");
 
@@ -670,6 +664,44 @@ namespace MoveIt
 
                 m_cloneData = clonedOrigin;
             }
+        }
+
+        protected void ReattachNodes()
+        {
+            // Look for overlapping nodes within the clones, to reattach networks to attached networks
+            int c = 0;
+            HashSet<CloneData> tmpClones = new HashSet<CloneData>(m_cloneData);
+            foreach (CloneData cloneData in tmpClones)
+            {
+                if (cloneData.Clone is MoveableNode mn)
+                {
+                    NetNode node = (NetNode)mn.data;
+                    NetInfo nodeInfo = (NetInfo)mn.Info.Prefab;
+                    c++;
+
+                    foreach (ushort attachedId in m_attachedNodes)
+                    {
+                        NetNode attached = nodeBuffer[attachedId];
+
+                        if ((node.m_flags & NetNode.Flags.Untouchable) == NetNode.Flags.Untouchable && (attached.m_flags & NetNode.Flags.Untouchable) == NetNode.Flags.Untouchable &&
+                            node.Info.m_class.m_service == attached.Info.m_class.m_service && node.Info.m_class.m_subService == attached.Info.m_class.m_subService)
+                        {
+                            if ((mn.position - attached.m_position).magnitude < 0.01f)
+                            {
+                                if (NodeMerging.MergeNodes(new NodeMergeExisting()
+                                {
+                                    ParentId = attachedId,
+                                    ChildId = mn.id.NetNode
+                                }))
+                                {
+                                    m_cloneData.Remove(cloneData);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //Log.Debug($"Independent nodes: {c}, attached nodes: {attachedNodes.Count}, objects: {m_cloneData.Count} (was: {tmpClones.Count})");
         }
 
         public Dictionary<InstanceState, InstanceState> CalculateStates(Vector3 deltaPosition, float deltaAngle, Vector3 center, bool followTerrain, ref HashSet<InstanceState> newStates)

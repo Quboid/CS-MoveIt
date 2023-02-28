@@ -69,6 +69,8 @@ namespace MoveIt
                 }
             }
 
+            ReattachNodes();
+
             // Mirror integrations, including lanes
             Dictionary<InstanceID, InstanceID> mapOrigToClone = new Dictionary<InstanceID, InstanceID>(m_mapLanes);
             foreach (CloneData cloneData in m_cloneData)

@@ -850,5 +850,61 @@ namespace MoveIt
                 Singleton<RenderManager>.instance.UpdateGroup(num * 45 / 270, num2 * 45 / 270, info.m_prefabDataLayer);
             }
         }
+
+        internal List<MoveableSegment> GetAttachedSegments()
+        {
+            List<MoveableSegment> segments = new List<MoveableSegment>();
+            try
+            {
+                HashSet<ushort> allSegments = new HashSet<ushort>();
+                HashSet<ushort> attachedSegments = new HashSet<ushort>();
+
+                foreach (Instance sub in subInstances)
+                {
+                    if (sub is MoveableNode mn)
+                    {
+                        NetNode node = (NetNode)mn.data;
+                        if (node.Info.m_class.name == "Transport Connection") continue;
+
+                        for (int i = 0; i < 8; i++)
+                        {
+                            ushort s = node.GetSegment(i);
+                            if (s > 0)
+                            {
+                                if (allSegments.Contains(s))
+                                { // If it's already in the list, both nodes are part of this building
+                                    attachedSegments.Add(s);
+                                }
+                                else
+                                {
+                                    allSegments.Add(s);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach (ushort s in attachedSegments)
+                {
+                    NetSegment seg = segmentBuffer[s];
+                    if ((seg.m_flags & NetSegment.Flags.Created) != NetSegment.Flags.Created)
+                    {
+                        throw new Exception($"Found attached segment #{s} but it is not created.");
+                    }
+                    if ((seg.m_flags & NetSegment.Flags.Untouchable) != NetSegment.Flags.Untouchable)
+                    {
+                        throw new Exception($"Found attached segment #{s} but it is not untouchable.");
+                    }
+
+                    segments.Add(new MoveableSegment(new InstanceID() { NetSegment = s }));
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "[M81]");
+            }
+
+            return segments;
+        }
     }
 }
