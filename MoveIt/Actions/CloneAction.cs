@@ -442,28 +442,6 @@ namespace MoveIt
                             m_attachedNodes.Add(mn.id.NetNode);
                         }
                     }
-
-                    // When mirroring, flip attached networks so other networks connect to correct end
-                    //if (this is AlignMirrorAction)
-                    //{
-                    //    foreach (MoveableSegment ms in ((MoveableBuilding)clone).GetAttachedSegments())
-                    //    {
-                    //        ref NetSegment segment = ref segmentBuffer[ms.id.NetSegment];
-                    //        ref NetNode node1 = ref nodeBuffer[segment.m_startNode];
-                    //        ref NetNode node2 = ref nodeBuffer[segment.m_endNode];
-                    //        Vector3 buffer;
-
-                    //        buffer = node1.m_position;
-                    //        node1.m_position = node2.m_position;
-                    //        node2.m_position = buffer;
-
-                    //        buffer = segment.m_startDirection;
-                    //        segment.m_startDirection = segment.m_endDirection;
-                    //        segment.m_endDirection = buffer;
-
-                    //        Log.Debug($"Switched {ms.id.NetSegment}'s nodes ({segment.m_startNode}<->{segment.m_endNode})");
-                    //    }
-                    //}
                 }
             }
 
@@ -505,6 +483,13 @@ namespace MoveIt
                     }
                 }
             }
+
+            //string msg2 = $"Cloned Objects: {m_cloneData.Count}";
+            //foreach (CloneData cloneData in m_cloneData)
+            //{
+            //    msg2 += $"\n  {cloneData.OriginalIId.Debug()}->{cloneData.CloneIId.Debug()}";
+            //}
+            //Log.Debug(msg2);
 
             if (!(this is AlignMirrorAction)) ReattachNodes(); // Delay for mirror until after new position is calculated
 

@@ -80,11 +80,13 @@ namespace MoveIt
         }
 
         // Move It <= 2.6 compatiblity
+#pragma warning disable IDE1006 // Naming Styles
         public ushort startNode
         {
             get => startNodeId;
             set => startNodeId = value;
         }
+#pragma warning disable IDE1006 // Naming Styles
         public ushort endNode
         {
             get => endNodeId;
@@ -634,6 +636,18 @@ namespace MoveIt
                 else
                 {
                     Log.Info($"Invalid segment directions for {id.Debug()}!");
+                    
+                    startDir = EndNode.position - StartNode.position;
+                    endDir = StartNode.position - EndNode.position;
+
+                    startDir.y = 0;
+                    endDir.y = 0;
+
+                    startDir.Normalize();
+                    endDir.Normalize();
+
+                    segmentBuffer[id.NetSegment].m_startDirection = startDir;
+                    segmentBuffer[id.NetSegment].m_endDirection = endDir;
                 }
             }
 

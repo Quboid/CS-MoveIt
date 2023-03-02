@@ -27,8 +27,7 @@ namespace MoveIt
         private bool active = false;
         private long activationMS = 0;
         private QTimer timer;
-        //private float _realTime => SimulationManager.instance.m_realTimer;
-        private CursorInfo[] cursors = new CursorInfo[8];
+        private readonly CursorInfo[] cursors = new CursorInfo[8];
         private UITextureAtlas atlas;
 
         internal void Start()
@@ -36,10 +35,8 @@ namespace MoveIt
             atlas = QTextures.CreateTextureAtlas("Cursor", new[] { "icon-wait-00", "icon-wait-01", "icon-wait-02", "icon-wait-03", "icon-wait-04", "icon-wait-05", "icon-wait-06", "icon-wait-07" }, "MoveIt.Icons.Cursors.");
             for (int i = 0; i < cursors.Length; i++)
             {
-                cursors[i] = new CursorInfo
-                {
-                    m_texture = atlas.sprites[i].texture
-                };
+                cursors[i] = ScriptableObject.CreateInstance<CursorInfo>();
+                cursors[i].m_texture = atlas.sprites[i].texture;
             }
             timer = new QTimer();
         }
