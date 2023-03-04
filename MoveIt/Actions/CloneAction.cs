@@ -190,21 +190,6 @@ namespace MoveIt
 
             // Adding missing nodes
             id = new InstanceID();
-            //HashSet<ushort> attachedNodes = new HashSet<ushort>();
-            //foreach (Instance instance in selection)
-            //{
-            //    if (instance is MoveableBuilding building)
-            //    {
-            //        foreach (Instance sub in building.subInstances)
-            //        {
-            //            Log.Debug($"AAA02 attached:{sub.id.DebugEx()}");
-            //            if (sub is MoveableNode)
-            //            {
-            //                attachedNodes.Add(sub.id.NetNode);
-            //            }
-            //        }
-            //    }
-            //}
             foreach (Instance instance in selection)
             {
                 if (instance is MoveableSegment)
@@ -566,7 +551,6 @@ namespace MoveIt
 
             // Select clones
             selection = CloneData.GetClones(m_cloneData);
-            MoveItTool.m_debugPanel.UpdatePanel();
 
             UpdateArea(GetTotalBounds(false));
             try
@@ -652,7 +636,6 @@ namespace MoveIt
 
                 // Restore selection
                 selection = m_oldSelection;
-                MoveItTool.m_debugPanel.UpdatePanel();
 
                 UpdateArea(bounds);
                 MoveItTool.UpdatePillarMap();

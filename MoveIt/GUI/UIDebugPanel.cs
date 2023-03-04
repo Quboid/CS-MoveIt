@@ -8,13 +8,34 @@ namespace MoveIt
 {
     internal class DebugPanel : MonoBehaviour
     {
+        internal static DebugPanel instance;
+
+        internal static DebugPanel Initialise()
+        {
+            var go = new GameObject("MIT_DebugPanel");
+            go.AddComponent<DebugPanel>();
+            instance = go.GetComponent<DebugPanel>();
+            instance.Init();
+
+            return instance;
+        }
+
+        internal static void Close()
+        {
+            Destroy(instance.gameObject);
+            instance = null;
+        }
+
+
         internal UIPanel Panel;
         private UILabel HoverLarge, HoverSmall, ActionStatus, ToolStatus, SelectedLarge, SelectedSmall;
-        private InstanceID id, lastId;
+        private InstanceID HoveredIId, lastIId;
+        private ushort ticker;
 
-        internal DebugPanel()
+        internal void Init()
         {
-            _initialise();
+            Create();
+            ticker = 0;
         }
 
         internal void Visible(bool show)
@@ -22,25 +43,23 @@ namespace MoveIt
             Panel.isVisible = show;
         }
 
-        internal void UpdatePanel(InstanceID instanceId)
+        internal void SetHovered(InstanceID instanceId)
         {
-            id = instanceId;
-            UpdatePanel();
+            HoveredIId = instanceId;
         }
 
-        internal void UpdatePanel()
+        internal void Update()
         {
             if (!Settings.showDebugPanel)
             {
                 return;
             }
+            if (ticker++ > 0)
+            {
+                if (ticker > 5) ticker = 0;
+                return;
+            }
 
-            StartCoroutine(UpdateDo());
-        }
-
-        internal IEnumerator<object> UpdateDo()
-        {
-            yield return new WaitForSeconds(0.05f);
             ActionStatus.text = ActionQueue.instance.current == null ? "" : $"{ActionQueue.instance.current.GetType()}";
             ToolStatus.text = $"{MoveItTool.ToolState} ({MoveItTool.MT_Tool}.{MoveItTool.AlignToolPhase}), TM:{MoveItTool.TaskManager.Active}";
 
@@ -92,74 +111,76 @@ namespace MoveIt
             SelectedSmall.text = $"B:{types[0]}, P:{types[1]}, D:{types[2]}, S:{types[3]}, T:{types[4]}, PO:{types[5]}, N:{types[6]}, S:{types[7]}\n ";
 
             // End with updating the hovered item
-            if (id == null)
+            if (HoveredIId == null)
             {
-                yield break;
+                return;
             }
-            if (id == InstanceID.Empty)
+            if (HoveredIId == InstanceID.Empty)
             {
-                lastId = id;
+                lastIId = HoveredIId;
                 HoverLarge.textColor = (MoveItTool.superSelect ? new Color32(255, 55, 55, 255) : new Color32(255, 255, 255, 255));
-                yield break;
+                return;
             }
-            if (lastId == id)
+            if (lastIId == HoveredIId)
             {
-                yield break;
+                return;
             }
 
             HoverLarge.textColor = new Color32(127, 217, 255, 255);
             HoverLarge.text = "";
             HoverSmall.text = "";
 
-            if (id.Building > 0)
+            switch (HoveredIId.Type)
             {
-                BuildingInfo info = BuildingManager.instance.m_buildings.m_buffer[id.Building].Info;
-                HoverLarge.text = $"B:{id.Building}  {info.name}";
-                HoverLarge.tooltip = info.name;
-                HoverSmall.text = $"{info.GetType()} ({info.GetAI().GetType()})\n{info.m_class.name}\n({info.m_class.m_service}.{info.m_class.m_subService})";
-            }
-            else if (id.Prop > 0)
-            {
-                string type = "P";
-                PropInfo info = (PropInfo)PropLayer.Manager.GetInfo(id).Prefab;
-                if (info.m_isDecal) type = "D";
-                HoverLarge.text = $"{type}:{PropLayer.Manager.GetId(id)}  {info.name}";
-                HoverLarge.tooltip = info.name;
-                HoverSmall.text = $"{info.GetType()}\n{info.m_class.name}";
-            }
-            else if (id.NetLane > 0)
-            {
-                IInfo info = MoveItTool.PO.GetProcObj(id.NetLane).Info;
-                HoverLarge.text = $"PO:{id.NetLane}  {info.Name}";
-                HoverLarge.tooltip = info.Name;
-                HoverSmall.text = $"\n";
-            }
-            else if (id.Tree > 0)
-            {
-                TreeInfo info = TreeManager.instance.m_trees.m_buffer[id.Tree].Info;
-                HoverLarge.text = $"T:{id.Tree}  {info.name}";
-                HoverLarge.tooltip = info.name;
-                HoverSmall.text = $"{info.GetType()}\n{info.m_class.name}";
-            }
-            else if (id.NetNode > 0)
-            {
-                NetInfo info = NetManager.instance.m_nodes.m_buffer[id.NetNode].Info;
-                HoverLarge.text = $"N:{id.NetNode}  {info.name}";
-                HoverLarge.tooltip = info.name;
-                HoverSmall.text = $"{info.GetType()} ({info.GetAI().GetType()})\n{info.m_class.name}";
-            }
-            else if (id.NetSegment > 0)
-            {
-                NetInfo info = NetManager.instance.m_segments.m_buffer[id.NetSegment].Info;
-                HoverLarge.text = $"S:{id.NetSegment}  {info.name}";
-                HoverLarge.tooltip = info.name;
-                HoverSmall.text = $"{info.GetType()} ({info.GetAI().GetType()})\n{info.m_class.name}";
+                case InstanceType.Building:
+                    BuildingInfo info1 = BuildingManager.instance.m_buildings.m_buffer[HoveredIId.Building].Info;
+                    HoverLarge.text = $"B:{HoveredIId.Building}  {info1.name}";
+                    HoverLarge.tooltip = info1.name;
+                    HoverSmall.text = $"{info1.GetType()} ({info1.GetAI().GetType()})\n{info1.m_class.name}\n({info1.m_class.m_service}.{info1.m_class.m_subService})";
+                    break;
+
+                case InstanceType.Prop:
+                    string type = "P";
+                    PropInfo info2 = (PropInfo)PropLayer.Manager.GetInfo(HoveredIId).Prefab;
+                    if (info2.m_isDecal) type = "D";
+                    HoverLarge.text = $"{type}:{PropLayer.Manager.GetId(HoveredIId)}  {info2.name}";
+                    HoverLarge.tooltip = info2.name;
+                    HoverSmall.text = $"{info2.GetType()}\n{info2.m_class.name}";
+                    break;
+
+                case InstanceType.NetLane:
+                    IInfo info3 = MoveItTool.PO.GetProcObj(HoveredIId.NetLane).Info;
+                    HoverLarge.text = $"PO:{HoveredIId.NetLane}  {info3.Name}";
+                    HoverLarge.tooltip = info3.Name;
+                    HoverSmall.text = $"\n";
+                    break;
+
+                case InstanceType.Tree:
+                    TreeInfo info4 = TreeManager.instance.m_trees.m_buffer[HoveredIId.Tree].Info;
+                    HoverLarge.text = $"T:{HoveredIId.Tree}  {info4.name}";
+                    HoverLarge.tooltip = info4.name;
+                    HoverSmall.text = $"{info4.GetType()}\n{info4.m_class.name}";
+                    break;
+
+                case InstanceType.NetNode:
+                    NetInfo info5 = NetManager.instance.m_nodes.m_buffer[HoveredIId.NetNode].Info;
+                    HoverLarge.text = $"N:{HoveredIId.NetNode}  {info5.name}";
+                    HoverLarge.tooltip = info5.name;
+                    HoverSmall.text = $"{info5.GetType()} ({info5.GetAI().GetType()})\n{info5.m_class.name}";
+                    break;
+
+                case InstanceType.NetSegment:
+                    NetInfo info6 = NetManager.instance.m_segments.m_buffer[HoveredIId.NetSegment].Info;
+                    HoverLarge.text = $"S:{HoveredIId.NetSegment}  {info6.name}";
+                    HoverLarge.tooltip = info6.name;
+                    HoverSmall.text = $"{info6.GetType()} ({info6.GetAI().GetType()})\n{info6.m_class.name}";
+                    break;
             }
 
-            lastId = id;
+            lastIId = HoveredIId;
         }
 
-        private void _initialise()
+        private void Create()
         {
             Panel = UIView.GetAView().AddUIComponent(typeof(UIPanel)) as UIPanel;
             Panel.name = "MoveIt_DebugPanel";

@@ -86,10 +86,10 @@ namespace MoveIt
                 else if (OptionsKeymapping.viewDebug.IsPressed(e))
                 {
                     Settings.showDebugPanel.value = !Settings.showDebugPanel;
-                    if (m_debugPanel != null)
+                    if (DebugPanel.instance != null)
                     {
                         ClearDebugOverlays();
-                        m_debugPanel.Visible(Settings.showDebugPanel);
+                        DebugPanel.instance.Visible(Settings.showDebugPanel);
                     }
                 }
                 else if (OptionsKeymapping.selectSingle.IsPressed(e))
@@ -137,7 +137,6 @@ namespace MoveIt
                         Action.selection.Clear();
                         ActionQueue.instance.Invalidate();
                     }
-                    m_debugPanel.UpdatePanel();
                 }
                 else if (OptionsKeymapping.alignHeights.IsPressed(e))
                 {

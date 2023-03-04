@@ -273,7 +273,6 @@ namespace MoveIt
                 return true;
             }, "Bdz-Do-03");
 
-            MoveItTool.m_debugPanel.UpdatePanel();
             MoveItTool.UpdatePillarMap();
         }
 
@@ -502,7 +501,6 @@ namespace MoveIt
                         if (i is MoveableProc) continue;
                         selection.Add(i);
                     }
-                    MoveItTool.m_debugPanel.UpdatePanel();
                 }
 
                 // Does not check MoveItTool.advancedPillarControl, because even if disabled now advancedPillarControl may have been active earlier in action queue

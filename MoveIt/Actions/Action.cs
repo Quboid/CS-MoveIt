@@ -162,8 +162,6 @@ namespace MoveIt
             {
                 selection.RemoveObject(i);
             }
-
-            MoveItTool.m_debugPanel.UpdatePanel();
         }
 
         public static Bounds GetTotalBounds(bool ignoreSegments = true, bool excludeNetworks = false)

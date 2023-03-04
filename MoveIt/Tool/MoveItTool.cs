@@ -73,7 +73,6 @@ namespace MoveIt
         public static bool treeSnapping = false;
 
         public static StepOver stepOver;
-        internal static DebugPanel m_debugPanel;
         internal static MoveToPanel m_moveToPanel;
 
         public int segmentUpdateCountdown = -1;
@@ -101,7 +100,6 @@ namespace MoveIt
             set
             {
                 m_toolsMode = value;
-                m_debugPanel?.UpdatePanel();
             }
         }
         private static ushort m_alignToolPhase = 0;
@@ -111,7 +109,6 @@ namespace MoveIt
             set
             {
                 m_alignToolPhase = value;
-                m_debugPanel?.UpdatePanel();
             }
         }
 
@@ -288,6 +285,7 @@ namespace MoveIt
 
             PropLayer.Initialise();
             WaitCursor.Initialise();
+            DebugPanel.Initialise();
         }
 
         protected override void OnEnable()

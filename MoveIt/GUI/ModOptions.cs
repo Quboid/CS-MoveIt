@@ -156,7 +156,7 @@ namespace MoveIt.GUI
                 checkBox = (UICheckBox)group.AddCheckbox(Str.options_ShowDebugPanel, Settings.showDebugPanel.value, (b) =>
                 {
                     Settings.showDebugPanel.value = b;
-                    MoveItTool.m_debugPanel?.Visible(b);
+                    DebugPanel.instance?.Visible(b);
                 });
                 checkBox.name = "MoveIt_DebugPanel";
 

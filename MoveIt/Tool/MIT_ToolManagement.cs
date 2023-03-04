@@ -43,7 +43,6 @@ namespace MoveIt
             {
                 UIMoreTools.UpdateMoreTools();
             }
-            m_debugPanel?.UpdatePanel();
         }
 
         public void ProcessAligning(MT_Tools mode)

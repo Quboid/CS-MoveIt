@@ -15,7 +15,7 @@ namespace MoveIt
     {
         public static bool IsGameLoaded { get; private set; } = false;
         public static LoadMode loadMode;
-        private static GameObject DebugGameObject, MoveToToolObject, TaskManagerObject;
+        private static GameObject MoveToToolObject, TaskManagerObject;
 
         public override void OnLevelLoaded(LoadMode mode)
         {
@@ -46,10 +46,6 @@ namespace MoveIt
             Directory.CreateDirectory(MoveItTool.saveFolder);
 
             MoveItTool.stepOver = new StepOver();
-
-            DebugGameObject = new GameObject("MIT_DebugPanel");
-            DebugGameObject.AddComponent<DebugPanel>();
-            MoveItTool.m_debugPanel = DebugGameObject.GetComponent<DebugPanel>();
 
             MoveToToolObject = new GameObject("MIT_MoveToPanel");
             MoveToToolObject.AddComponent<MoveToPanel>();
@@ -92,12 +88,11 @@ namespace MoveIt
             if (ToolsModifierControl.toolController.CurrentTool is MoveItTool)
                 ToolsModifierControl.SetTool<DefaultTool>();
 
-            MoveItTool.m_debugPanel = null;
             ActionQueue.instance?.CleanQueue();
-            UnityEngine.Object.Destroy(DebugGameObject);
             UnityEngine.Object.Destroy(MoveToToolObject);
             UnityEngine.Object.Destroy(TaskManagerObject);
             WaitCursor.Close();
+            DebugPanel.Close();
             if (PO_Manager.gameObject != null)
             {
                 UnityEngine.Object.Destroy(PO_Manager.gameObject);

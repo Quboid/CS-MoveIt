@@ -23,7 +23,6 @@ namespace MoveIt
             }
 
             selection = m_newSelection;
-            MoveItTool.m_debugPanel.UpdatePanel();
         }
 
         // Used by Prop Painter
@@ -43,13 +42,11 @@ namespace MoveIt
         public override void Do()
         {
             selection = m_newSelection;
-            MoveItTool.m_debugPanel.UpdatePanel();
         }
 
         public override void Undo()
         {
             selection = m_oldSelection;
-            MoveItTool.m_debugPanel.UpdatePanel();
         }
 
         public override void ReplaceInstances(List<CloneData> toReplace)

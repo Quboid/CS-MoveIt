@@ -278,7 +278,7 @@ namespace MoveIt
             while (repeatSearch);
 
             m_hoverInstance = id;
-            m_debugPanel?.UpdatePanel(id);
+            DebugPanel.instance?.SetHovered(id);
             ActionQueue.instance.current?.OnHover();
         }
 

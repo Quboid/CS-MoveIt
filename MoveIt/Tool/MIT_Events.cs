@@ -78,7 +78,6 @@ namespace MoveIt
                 if (e.alt)
                 {
                     Action.selection.ExceptWith(m_marqueeInstances);
-                    m_debugPanel.UpdatePanel();
                 }
                 else
                 {
@@ -87,7 +86,6 @@ namespace MoveIt
                         Action.selection.Clear();
                     }
                     Action.selection.UnionWith(m_marqueeInstances);
-                    m_debugPanel.UpdatePanel();
                 }
 
                 m_marqueeInstances = null;
@@ -439,7 +437,6 @@ namespace MoveIt
                     Action.selection.Clear();
                     ActionQueue.instance.Invalidate();
                 }
-                m_debugPanel.UpdatePanel();
             }
             else if (ToolState == ToolStates.Cloning)
             {
