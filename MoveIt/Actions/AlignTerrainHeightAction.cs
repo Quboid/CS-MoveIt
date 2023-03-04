@@ -36,7 +36,7 @@ namespace MoveIt
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, null, "AlignTerrainHeight-Do-01");
+            MoveItTool.TaskManager.AddBatch(tasks, "AlignTerrainHeight-Do-01");
 
             tasks = new List<QTask>();
 
@@ -54,7 +54,8 @@ namespace MoveIt
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); return true; }), "AlignTerrainHeight-Do-02");
+            MoveItTool.TaskManager.AddBatch(tasks, "AlignTerrainHeight-Do-01");
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); return true; }, "AlignTerrainHeight-Do-02");
         }
 
         public override void Undo()
@@ -69,7 +70,8 @@ namespace MoveIt
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); return true; }), "AlignTerrainHeight-Undo-01");
+            MoveItTool.TaskManager.AddBatch(tasks, "AlignTerrainHeight-Undo-01");
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () => { UpdateArea(GetTotalBounds(false)); return true; }, "AlignTerrainHeight-Undo-02");
         }
 
         public override void ReplaceInstances(List<CloneData> toReplace)

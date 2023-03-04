@@ -349,7 +349,7 @@ namespace MoveIt
 
         public override void Do()
         {
-            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoImplementation), "Clone-Do-01");
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoImplementation), "Clone-Do-01-Init");
         }
 
         internal bool DoImplementation()
@@ -370,6 +370,29 @@ namespace MoveIt
             }
             Log.Debug(msg);
 
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Main, ClonePO), "Clone-Do-02-StartPO");
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, CloneNodes), "Clone-Do-03-Nodes");
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, CloneBuildings), "Clone-Do-04-Buildings");
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, CloneOthers), "Clone-Do-05-Others");
+
+            //string msg2 = $"Cloned Objects: {m_cloneData.Count}";
+            //foreach (CloneData cloneData in m_cloneData)
+            //{
+            //    msg2 += $"\n  {cloneData.OriginalIId.Debug()}->{cloneData.CloneIId.Debug()}";
+            //}
+            //Log.Debug(msg2);
+
+            // Delay for mirror until after new position is calculated
+            if (!(this is AlignMirrorAction))
+                MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, ReattachNodes), "Clone-Do-06-MergeAttached");
+
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoFinalize), "Clone-Do-07-Finalize");
+
+            return true;
+        }
+
+        protected bool ClonePO()
+        {
             // Clone PO
             MoveItTool.PO.MapGroupClones(m_states, this);
 
@@ -385,12 +408,17 @@ namespace MoveIt
                     };
 
                     ps.BeginClone(ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, cloneData);
-                    tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => { return FinalizePO(cloneData); }));
+                    tasks.Add(MoveItTool.TaskManager.CreateTask(QTask.Threads.Main, () => { return FetchPO(cloneData); }));
                     m_cloneData.Add(cloneData);
                 }
             }
-            MoveItTool.TaskManager.AddBatch(tasks, null, null, "Clone-Do-02");
+            MoveItTool.TaskManager.AddBatch(tasks, "Clone-Do-08-FetchPO");
 
+            return true;
+        }
+
+        protected bool CloneNodes()
+        {
             // Clone nodes before buildings or segments
             foreach (InstanceState state in m_states)
             {
@@ -415,6 +443,11 @@ namespace MoveIt
                 }
             }
 
+            return true;
+        }
+
+        protected bool CloneBuildings()
+        {
             // Clone buildings next (so attached nodes are created before segments)
             foreach (InstanceState state in m_states)
             {
@@ -445,6 +478,11 @@ namespace MoveIt
                 }
             }
 
+            return true;
+        }
+
+        protected bool CloneOthers()
+        {
             // Clone the remaining types
             foreach (InstanceState state in m_states)
             {
@@ -484,27 +522,16 @@ namespace MoveIt
                 }
             }
 
-            //string msg2 = $"Cloned Objects: {m_cloneData.Count}";
-            //foreach (CloneData cloneData in m_cloneData)
-            //{
-            //    msg2 += $"\n  {cloneData.OriginalIId.Debug()}->{cloneData.CloneIId.Debug()}";
-            //}
-            //Log.Debug(msg2);
-
-            if (!(this is AlignMirrorAction)) ReattachNodes(); // Delay for mirror until after new position is calculated
-
-            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoFinalize), "Clone-Do-03");
-
             return true;
         }
 
-        internal bool FinalizePO(CloneData cloneData)
+        protected bool FetchPO(CloneData cloneData)
         {
             if (!(cloneData is CloneDataPO clonePO)) throw new Exception($"PO Clone: cloneData is not for PO");
             return MoveItTool.PO.Logic.RetrieveClone(clonePO);
         }
 
-        internal bool DoFinalize()
+        protected bool DoFinalize()
         {
             // Merge nodes
             if (MoveItTool.instance.MergeNodes)
@@ -632,7 +659,8 @@ namespace MoveIt
                 return true;
             });
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, postfix, "Clone-Undo-01");
+            MoveItTool.TaskManager.AddBatch(tasks, "Clone-Undo-01");
+            MoveItTool.TaskManager.AddSingleTask(postfix, "Clone-Undo-02");
         }
 
         /// <summary>
@@ -689,9 +717,11 @@ namespace MoveIt
             }
         }
 
-        protected void ReattachNodes()
+        /// <summary>
+        /// Reattach nodes within a placed clone selection, to attach track/path/etc to stations/gates/etc
+        /// </summary>
+        protected bool ReattachNodes()
         {
-            // Look for overlapping nodes within the clones, to reattach networks to attached networks
             int c = 0;
             HashSet<CloneData> tmpClones = new HashSet<CloneData>(m_cloneData);
             foreach (CloneData cloneData in tmpClones)
@@ -725,6 +755,8 @@ namespace MoveIt
                 }
             }
             //Log.Debug($"Independent nodes: {c}, attached nodes: {attachedNodes.Count}, objects: {m_cloneData.Count} (was: {tmpClones.Count})");
+
+            return true;
         }
 
         public Dictionary<InstanceState, InstanceState> CalculateStates(Vector3 deltaPosition, float deltaAngle, Vector3 center, bool followTerrain, ref HashSet<InstanceState> newStates)

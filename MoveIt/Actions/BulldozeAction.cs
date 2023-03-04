@@ -246,7 +246,7 @@ namespace MoveIt
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, null, "Bdz-Do-1");
+            MoveItTool.TaskManager.AddBatch(tasks, "Bdz-Do-1");
             tasks = new List<QTask>();
 
             // Remove buildings last so attached nodes are cleaned up
@@ -266,11 +266,12 @@ namespace MoveIt
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
+            MoveItTool.TaskManager.AddBatch(tasks, "Bdz-Do-02");
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () => {
                 UpdateArea(bounds);
                 selection = new HashSet<Instance>();
                 return true;
-            }), "Bdz-Do-2");
+            }, "Bdz-Do-03");
 
             MoveItTool.m_debugPanel.UpdatePanel();
             MoveItTool.UpdatePillarMap();
@@ -319,7 +320,7 @@ namespace MoveIt
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, null, "Bdz-Undo-01");
+            MoveItTool.TaskManager.AddBatch(tasks, "Bdz-Undo-01");
             tasks = new List<QTask>();
 
             // Recreate everything except nodes and segments
@@ -416,7 +417,7 @@ namespace MoveIt
                 }
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, null, "Bdz-Undo-02");
+            MoveItTool.TaskManager.AddBatch(tasks, "Bdz-Undo-02");
             tasks = new List<QTask>();
 
             // Recreate segments
@@ -521,7 +522,8 @@ namespace MoveIt
                 return true;
             });
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, postfix, "Bdz-Undo-03");
+            MoveItTool.TaskManager.AddBatch(tasks, "Bdz-Undo-03");
+            MoveItTool.TaskManager.AddSingleTask(postfix, "Bdz-Undo-04");
         }
 
         internal override void UpdateNodeIdInSegmentState(ushort oldId, ushort newId)

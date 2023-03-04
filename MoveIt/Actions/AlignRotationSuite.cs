@@ -195,11 +195,12 @@ namespace MoveIt
                 }));
             }
 
-            MoveItTool.TaskManager.AddBatch(tasks, null, MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () => {
+            MoveItTool.TaskManager.AddBatch(tasks, "AlignRotation-Undo-01");
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () => {
                 UpdateArea(bounds);
                 UpdateArea(GetTotalBounds(false));
                 return true;
-            }), "AlignRotation-Undo-01");
+            }, "AlignRotation-Undo-02");
         }
 
 
