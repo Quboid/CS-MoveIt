@@ -17,14 +17,8 @@ namespace MoveIt
         {
             originalBounds = GetTotalBounds(false);
 
-            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoImplementation), "Mirror-Do-01");
-
-            // Queue batch to queue additional batch, so final batch is run after those added by the above batch
-            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, () =>
-            {
-                MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoMirrorProcess), "Mirror-Do-03");
-                return true;
-            }), "Mirror-Do-02");
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoImplementation), "Mirror-Do-01", QBatch.Queues.Main);
+            MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoMirrorProcess), "Mirror-Do-02", QBatch.Queues.Final);
         }
 
         public bool DoMirrorProcess()

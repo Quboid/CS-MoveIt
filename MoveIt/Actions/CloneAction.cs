@@ -632,10 +632,21 @@ namespace MoveIt
             {
                 m_cloneData.Clear();
 
-                //m_clones = null;
-
                 // Restore selection
                 selection = m_oldSelection;
+
+                //string msg = $"CAB-Undo Selections";
+                //msg += $"\n     Reverting to ({m_oldSelection.Count}): ";
+                //foreach (Instance i in m_oldSelection)
+                //{
+                //    msg += i.id.DebugEx() + ",  ";
+                //}
+                //msg += $"\n  Deleted objects ({selection.Count}): ";
+                //foreach (Instance i in selection)
+                //{
+                //    msg += i.id.DebugEx() + ",  ";
+                //}
+                //Log.Debug(msg);
 
                 UpdateArea(bounds);
                 MoveItTool.UpdatePillarMap();

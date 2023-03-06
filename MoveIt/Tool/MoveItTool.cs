@@ -686,12 +686,17 @@ namespace MoveIt
                             }
                         case ToolAction.Do:
                             {
-                                ActionQueue.instance.Do();
-
-                                if (ActionQueue.instance.current is CloneAction a)
-                                {
-                                    StartCloning();
-                                }
+                                TaskManager.AddSingleTask(QTask.Threads.Main, () => {
+                                    ActionQueue.instance.Do();
+                                    return true;
+                                }, "MIT-SimStep-01-Do", QBatch.Queues.Main);
+                                TaskManager.AddSingleTask(QTask.Threads.Main, () => {
+                                    if (ActionQueue.instance.current is CloneAction a)
+                                    {
+                                        StartCloning();
+                                    }
+                                    return true;
+                                }, "MIT-SimStep-02-Do", QBatch.Queues.Final);
                                 break;
                             }
                     }

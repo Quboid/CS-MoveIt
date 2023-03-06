@@ -11,6 +11,8 @@ namespace MoveIt
         private int m_head = 0;
         private int m_tail = 0;
 
+        internal int CurrentIndex { get => m_current; }
+
         public static ActionQueue instance;
 
         public void UpdateNodeIdInStateHistory(ushort oldId, ushort newId)
