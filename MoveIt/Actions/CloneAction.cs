@@ -168,6 +168,7 @@ namespace MoveIt
         /// Maps of clones
         /// </summary>
         internal List<CloneData> m_cloneData = new List<CloneData>();
+        internal List<CloneData> m_cloneDataOld = new List<CloneData>();
         internal Dictionary<InstanceID, InstanceID> m_mapLanes;
 
         /// <summary>
@@ -341,6 +342,9 @@ namespace MoveIt
         {
             MoveItTool.instance.m_lastInstance = null;
 
+            //Log.Debug($"DoImplementation (action#{ActionQueue.CurrentIndex}) - m_cloneData has {m_cloneData.Count} elements");
+
+            m_cloneDataOld = new List<CloneData>(m_cloneData);
             m_cloneData = new List<CloneData>();
             m_mapLanes = new Dictionary<InstanceID, InstanceID>();
             m_mapNodes = new Dictionary<ushort, ushort>();
@@ -348,12 +352,12 @@ namespace MoveIt
 
             matrix4x.SetTRS(center + moveDelta, Quaternion.AngleAxis(angleDelta * Mathf.Rad2Deg, Vector3.down), Vector3.one);
 
-            string msg = $"DEBUG Selected Objects:{m_states.Count}";
-            foreach (InstanceState state in m_states)
-            {
-                msg += $"\n  {state.instance.id.Debug()}:{state.Info.Name}";
-            }
-            Log.Debug(msg);
+            //string msg = $"DEBUG Selected Objects:{m_states.Count}";
+            //foreach (InstanceState state in m_states)
+            //{
+            //    msg += $"\n  {state.instance.id.Debug()}:{state.Info.Name}";
+            //}
+            //Log.Debug(msg);
 
             MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Main, ClonePO), "Clone-Do-02-StartPO");
             MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, CloneNodes), "Clone-Do-03-Nodes");
@@ -369,7 +373,9 @@ namespace MoveIt
 
             // Delay for mirror until after new position is calculated
             if (!(this is AlignMirrorAction))
+            {
                 MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, ReattachNodes), "Clone-Do-06-MergeAttached");
+            }
 
             MoveItTool.TaskManager.AddSingleTask(MoveItTool.TaskManager.CreateTask(QTask.Threads.Simulation, DoFinalize), "Clone-Do-07-Finalize");
 
@@ -589,11 +595,31 @@ namespace MoveIt
                 }
             }
 
-            if (m_cloneData != null && m_cloneData.Count > 0)
-            {
-                Dictionary<Instance, Instance> toReplace = new Dictionary<Instance, Instance>();
+            // Check what instances need swapped in future actions, for Redo
+            //string msg = $"Creating Redo data: {m_cloneData.Count} (old:{m_cloneDataOld.Count})";
+            //msg += $"\nm_cloneDataOld: ";
+            //if (m_cloneDataOld != null) foreach (CloneData cd in m_cloneDataOld) { msg += $"{cd.OriginalIId.Debug()}->{cd.CloneIId.Debug()}, "; }
+            //msg += $"\n   m_cloneData: ";
+            //if (m_cloneData != null) foreach (CloneData cd in m_cloneData) { msg += $"{cd.OriginalIId.Debug()}->{cd.CloneIId.Debug()}, "; }
+            //Log.Debug(msg);
 
-                ActionQueue.instance.ReplaceInstancesForward(m_cloneData);
+            if ((m_cloneData != null && m_cloneData.Count > 0) && (m_cloneDataOld != null && m_cloneDataOld.Count > 0))
+            {
+                List<CloneData> toReplace = new List<CloneData>();
+
+                foreach (CloneData cloneData in m_cloneData)
+                {
+                    CloneData old = CloneData.GetFromOriginal(m_cloneDataOld, cloneData.Original);
+                    if (old == null) continue;
+
+                    // If it exists in m_cloneDataOld, create CloneData map of oldData->newData
+                    toReplace.Add(new CloneData
+                    {
+                        Original = old.Clone,
+                        Clone = cloneData.Clone
+                    });
+                }
+                ActionQueue.instance.ReplaceInstancesForward(toReplace);
             }
 
             return true;
@@ -630,23 +656,8 @@ namespace MoveIt
 
             QTask postfix = MoveItTool.TaskManager.CreateTask(QTask.Threads.Main, () =>
             {
-                m_cloneData.Clear();
-
                 // Restore selection
                 selection = m_oldSelection;
-
-                //string msg = $"CAB-Undo Selections";
-                //msg += $"\n     Reverting to ({m_oldSelection.Count}): ";
-                //foreach (Instance i in m_oldSelection)
-                //{
-                //    msg += i.id.DebugEx() + ",  ";
-                //}
-                //msg += $"\n  Deleted objects ({selection.Count}): ";
-                //foreach (Instance i in selection)
-                //{
-                //    msg += i.id.DebugEx() + ",  ";
-                //}
-                //Log.Debug(msg);
 
                 UpdateArea(bounds);
                 MoveItTool.UpdatePillarMap();
@@ -664,12 +675,18 @@ namespace MoveIt
         public override void ReplaceInstances(List<CloneData> toReplace)
         {
             // Update this action's state instances with the updated instances
+            //StringBuilder sb = new StringBuilder("ReplaceInstances" + Environment.NewLine);
+            //sb.Append($"toReplace ({toReplace.Count}): ");
+            //foreach (CloneData data in toReplace) sb.Append($"{data.OriginalIId.Debug()}->{data.CloneIId.Debug()}, ");
+
+            //sb.Append(Environment.NewLine + $"Original states ({m_states.Count}): ");
+            //foreach (InstanceState s in m_states) sb.Append(s.instance.id.DebugEx() + ", ");
             foreach (InstanceState state in m_states)
             {
                 CloneData data = CloneData.GetFromOriginal(toReplace, state.instance);
                 if (data != null)
                 {
-                    Log.Debug($"CloneAction Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.1]");
+                    //sb.Append(Environment.NewLine + $"  CloneAction Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}");
                     state.ReplaceInstance(data.Clone);
                 }
             }
@@ -677,11 +694,14 @@ namespace MoveIt
             // Update the selected instances
             if (m_oldSelection != null)
             {
+                //sb.Append(Environment.NewLine + $"Old selection ({m_oldSelection.Count}): ");
+                //foreach (Instance i in m_oldSelection) sb.Append(i.id.DebugEx() + ", ");
+
                 foreach (CloneData data in toReplace)
                 {
                     if (m_oldSelection.Remove(data.Original))
                     {
-                        Log.Debug($"CloneAction Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.1]");
+                        //sb.Append(Environment.NewLine + $"  CloneAction Replacing: {data.OriginalIId.DebugEx()} -> {data.CloneIId.DebugEx()}");
                         m_oldSelection.Add(data.Clone);
                     }
                 }
@@ -692,23 +712,33 @@ namespace MoveIt
             {
                 List<CloneData> clonedOrigin = new List<CloneData>();
 
+                //sb.Append(Environment.NewLine + $"m_cloneData ({m_cloneData.Count}): ");
+                //foreach (CloneData data in m_cloneData) sb.Append($"{data.OriginalIId.Debug()}->{data.CloneIId.Debug()}, ");
+
                 foreach (CloneData data in m_cloneData)
                 {
-                    CloneData update = CloneData.GetFromOriginal(toReplace, data.Original);
-                    if (update != null)
+                    CloneData match = CloneData.GetFromOriginal(toReplace, data.Original);
+                    if (match != null)
                     {
-                        update.Clone = data.Clone;
+                        CloneData update = new CloneData()
+                        {
+                            Original = match.Clone,
+                            Clone = data.Clone
+                        };
                         clonedOrigin.Add(update);
-                        Log.Debug($"CloneAction Replacing: {data.OriginalIId.Debug()} -> {update.CloneIId.Debug()}", "[M80]");
+                        //sb.Append(Environment.NewLine + $"  CloneAction Replacing: {data.OriginalIId.Debug()}->{data.CloneIId.Debug()} to {update.OriginalIId.Debug()}->{update.CloneIId.Debug()}");
                     }
                     else
                     {
                         clonedOrigin.Add(data);
+                        //sb.Append(Environment.NewLine + $"  CloneAction Skipping: {data.OriginalIId.Debug()}->{data.CloneIId.Debug()}");
                     }
                 }
 
                 m_cloneData = clonedOrigin;
             }
+            //sb.AppendLine();
+            //Log.Debug(sb.ToString(), "[M80]");
         }
 
         /// <summary>

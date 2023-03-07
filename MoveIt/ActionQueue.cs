@@ -11,7 +11,7 @@ namespace MoveIt
         private int m_head = 0;
         private int m_tail = 0;
 
-        internal int CurrentIndex { get => m_current; }
+        internal static int CurrentIndex { get => instance.m_current; }
 
         public static ActionQueue instance;
 
@@ -140,6 +140,9 @@ namespace MoveIt
             while (action != m_head)
             {
                 action = (action + 1) % m_actions.Length;
+                //string msg = $"** ReplaceInstancesForward:{action}/{m_head}\ntoReplace ({toReplace.Count}): ";
+                //foreach (CloneData data in toReplace) msg += $"{data.OriginalIId.Debug()}->{data.CloneIId.Debug()}, ";
+                //Log.Debug(msg);
                 m_actions[action].ReplaceInstances(toReplace);
             }
         }
