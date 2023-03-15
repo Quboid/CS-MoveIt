@@ -3,7 +3,6 @@ using ColossalFramework.UI;
 using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 namespace MoveIt
@@ -550,7 +549,7 @@ namespace MoveIt
                 CloneData data = CloneData.GetFromOriginal(toReplace, state.instance);
                 if (data != null)
                 {
-                    Log.Debug($"Bdz Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.6]");
+                    //Log.Debug($"Bdz Replacing: {state.instance.id.Debug()}/{data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M78.6]");
                     state.ReplaceInstance(data.Clone);
                 }
             }
@@ -562,7 +561,7 @@ namespace MoveIt
                 {
                     if (m_oldSelection.Remove(data.Original))
                     {
-                        Log.Debug($"Bdz Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.2]");
+                        //Log.Debug($"Bdz Replacing: {data.OriginalIId.Debug()} -> {data.CloneIId.Debug()}", "[M79.2]");
                         m_oldSelection.Add(data.Clone);
                     }
                 }

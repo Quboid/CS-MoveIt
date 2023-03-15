@@ -274,7 +274,6 @@ namespace MoveIt
 
         public override void Move(Vector3 location, float angle)
         {
-            //Singleton<SimulationManager>.instance.AddAction(() => MoveProcess(location));
             MoveProcess(location);
         }
 

@@ -376,7 +376,7 @@ namespace MoveIt
         private void OnLeftDragStop()
         {
             //Log.Debug("OnLeftDragStop: " + ToolState, "[M36]");
-            if (TaskManager.Active) { return; }
+            //if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.MouseDragging && m_rightClickTime == 0)
             {
@@ -497,7 +497,7 @@ namespace MoveIt
         private void OnRightDragStop()
         {
             //Log.Debug("OnRightDragStop: " + ToolState, "[M40]");
-            if (TaskManager.Active) { return; }
+            //if (TaskManager.Active) { return; }
 
             if (ToolState == ToolStates.MouseDragging && m_leftClickTime == 0)
             {

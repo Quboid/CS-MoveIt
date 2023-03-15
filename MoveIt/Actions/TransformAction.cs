@@ -1,7 +1,6 @@
-﻿using ColossalFramework;
+﻿using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace MoveIt
@@ -86,6 +85,11 @@ namespace MoveIt
 
         public override void Do()
         {
+            QTaskManager.QueueOnSimulation(() => DoImplemenation());
+        }
+
+        private bool DoImplemenation()
+        {
             if (!PillarsProcessed) ProcessPillars(m_states, true);
 
             Bounds originalBounds = GetTotalBounds(false);
@@ -128,10 +132,16 @@ namespace MoveIt
             Bounds fullbounds = GetTotalBounds(false);
             UpdateArea(originalBounds, full);
             UpdateArea(fullbounds, full);
+            return true;
         }
 
         public override void Undo()
         {
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, UndoImplemenation, "Transform-Undo");
+        }
+
+        private bool UndoImplemenation()
+        { 
             PillarsProcessed = false;
 
             Bounds bounds = GetTotalBounds(false);
@@ -172,6 +182,8 @@ namespace MoveIt
 
             UpdateArea(bounds, true);
             UpdateArea(GetTotalBounds(false), true);
+
+            return true;
         }
 
         public void InitialiseDrag()

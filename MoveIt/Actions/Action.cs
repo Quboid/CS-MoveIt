@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using ColossalFramework;
+using QCommonLib.QTasks;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -192,30 +193,33 @@ namespace MoveIt
             {
                 if ((TypeMask & (TypeMasks.Building | TypeMasks.Network)) != TypeMasks.None)
                 {
-                    if (full)
+                    QTaskManager.QueueOnSimulation(() =>
                     {
-                        SimulationManager.instance.AddAction(() => { TerrainModify.UpdateArea(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z, true, true, false); });
-                    }
+                        if (full)
+                        {
+                            TerrainModify.UpdateArea(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z, true, true, false);
+                        }
 
-                    bounds.Expand(32f);
-                    MoveItTool.instance.areasToUpdate.Add(bounds);
-                    MoveItTool.instance.areaUpdateCountdown = 60;
+                        bounds.Expand(32f);
+                        MoveItTool.instance.areasToUpdate.Add(bounds);
+                        MoveItTool.instance.areaUpdateCountdown = 30;
 
-                    if (full)
-                    {
-                        SimulationManager.instance.AddAction(() => { Singleton<BuildingManager>.instance.ZonesUpdated(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z); });
-                        PropLayer.Manager.UpdateProps(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
-                        SimulationManager.instance.AddAction(() => { Singleton<TreeManager>.instance.UpdateTrees(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z); });
-                        bounds.Expand(64f);
-                        SimulationManager.instance.AddAction(() => { Singleton<ElectricityManager>.instance.UpdateGrid(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z); });
-                        SimulationManager.instance.AddAction(() => { Singleton<WaterManager>.instance.UpdateGrid(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z); });
-                    }
+                        if (full)
+                        {
+                            Singleton<BuildingManager>.instance.ZonesUpdated(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
+                            PropLayer.Manager.UpdateProps(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
+                            Singleton<TreeManager>.instance.UpdateTrees(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
+                            bounds.Expand(64f);
+                            Singleton<ElectricityManager>.instance.UpdateGrid(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
+                            Singleton<WaterManager>.instance.UpdateGrid(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
+                        }
+                    });
                 }
                 else
                 {
                     bounds.Expand(32f);
                     MoveItTool.instance.areasToQuickUpdate.Add(bounds);
-                    MoveItTool.instance.areaUpdateCountdown = 60;
+                    QTaskManager.QueueOnSimulation(() => MoveItTool.instance.areaUpdateCountdown = 30);
                 }
             }
             catch (IndexOutOfRangeException e)

@@ -481,10 +481,7 @@ namespace MoveIt
         {
             if (isValid)
             {
-                SimulationManager.instance.AddAction(() =>
-                {
-                    BuildingManager.instance.ReleaseBuilding(id.Building);
-                });
+                BuildingManager.instance.ReleaseBuilding(id.Building);
             }
         }
 
@@ -766,7 +763,7 @@ namespace MoveIt
 
             AddToGrid(building, ref data);
             data.CalculateBuilding(building);
-            Singleton<SimulationManager>.instance.AddAction(() => BuildingManager.instance.UpdateBuildingRenderer(building, true));
+            BuildingManager.instance.UpdateBuildingRenderer(building, true);
         }
 
         private static void AddToGrid(ushort building, ref Building data)

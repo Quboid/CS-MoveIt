@@ -2,6 +2,7 @@
 using ColossalFramework.Math;
 using ColossalFramework.Plugins;
 using EManagersLib.API;
+using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -125,7 +126,7 @@ namespace MoveIt
 
         public void UpdateProps(float minX, float minZ, float maxX, float maxZ)
         {
-            SimulationManager.instance.AddAction(() => { Singleton<PropManager>.instance.UpdateProps(minX, minZ, maxX, maxZ); });
+            Singleton<PropManager>.instance.UpdateProps(minX, minZ, maxX, maxZ);
         }
 
         public bool CreateProp(out uint clone, PropInfo info, Vector3 position, float angle, bool single)
@@ -159,7 +160,7 @@ namespace MoveIt
 
                 if (((PropInstance.Flags)prop.m_flags & PropInstance.Flags.Created) == PropInstance.Flags.Created)
                 {
-                    SimulationManager.instance.AddAction(() => { Singleton<PropManager>.instance.UpdateProp(i); });
+                    QTaskManager.QueueOnSimulation(() => { Singleton<PropManager>.instance.UpdateProp(i); });
                 }
             }
         }

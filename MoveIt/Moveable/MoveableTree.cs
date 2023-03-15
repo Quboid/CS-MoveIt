@@ -166,6 +166,7 @@ namespace MoveIt
             if (!isValid) return;
 
             uint tree = id.Tree;
+            NaturalResourceManager.instance.TreesModified(position);
             TreeManager.instance.MoveTree(tree, location);
             TreeManager.instance.UpdateTreeRenderer(tree, true);
         }

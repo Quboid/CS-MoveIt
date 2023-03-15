@@ -78,7 +78,7 @@ namespace MoveIt
         public int segmentUpdateCountdown = -1;
         public HashSet<ushort> segmentsToUpdate = new HashSet<ushort>();
 
-        public int areaUpdateCountdown = -1;
+        public int areaUpdateCountdown = -1; // Write to on Simulation thread only
         public HashSet<Bounds> areasToUpdate = new HashSet<Bounds>();
         public HashSet<Bounds> areasToQuickUpdate = new HashSet<Bounds>();
 
@@ -414,10 +414,8 @@ namespace MoveIt
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            if (!enabled)
-            {
-                return;
-            }
+            if (!enabled) return;
+            if (TaskManager.Active) return;
 
             if (ToolState == ToolStates.Default || ToolState == ToolStates.Aligning || ToolState == ToolStates.Picking || ToolState == ToolStates.ToolActive)
             {
@@ -636,6 +634,9 @@ namespace MoveIt
 
         public override void RenderGeometry(RenderManager.CameraInfo cameraInfo)
         {
+            if (!enabled) return;
+            if (TaskManager.Active) return;
+
             if (ToolState == ToolStates.Cloning || ToolState == ToolStates.RightDraggingClone)
             {
                 CloneActionBase action = ActionQueue.instance.current as CloneActionBase;
@@ -686,17 +687,14 @@ namespace MoveIt
                             }
                         case ToolAction.Do:
                             {
-                                TaskManager.AddSingleTask(QTask.Threads.Main, () => {
-                                    ActionQueue.instance.Do();
-                                    return true;
-                                }, "MIT-SimStep-01-Do", QBatch.Queues.Main);
-                                TaskManager.AddSingleTask(QTask.Threads.Main, () => {
-                                    if (ActionQueue.instance.current is CloneAction a)
-                                    {
+                                ActionQueue.instance.Do();
+                                if (ActionQueue.instance.current is CloneAction a)
+                                {
+                                    TaskManager.AddSingleTask(QTask.Threads.Main, () => {
                                         StartCloning();
-                                    }
-                                    return true;
-                                }, "MIT-SimStep-02-Do", QBatch.Queues.Final);
+                                        return true;
+                                    }, "MIT-SimStep-02-Do", QBatch.Queues.Final);
+                                }
                                 break;
                             }
                     }
@@ -721,7 +719,7 @@ namespace MoveIt
 
                     if (!inputHeld && areaUpdateCountdown >= 0)
                     {
-                        areaUpdateCountdown--;
+                        QTaskManager.QueueOnSimulation(() => areaUpdateCountdown--);
                     }
                 }
                 catch (Exception e)
@@ -751,32 +749,36 @@ namespace MoveIt
             //    AddDebugBox(b, new Color32(31, 31, 255, 31));
             //}
 
-            foreach (Bounds bounds in merged)
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () =>
             {
-                try
+                foreach (Bounds bounds in merged)
                 {
-                    if (full)
+                    try
                     {
-                        Bounds small = bounds;
-                        small.Expand(-16f);
-                        SimulationManager.instance.AddAction(() => { Singleton<VehicleManager>.instance.UpdateParkedVehicles(small.min.x, small.min.z, small.max.x, small.max.z); });
-                    }
-                    bounds.Expand(64f);
-                    SimulationManager.instance.AddAction(() => { TerrainModify.UpdateArea(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z, true, true, false); });
-                    UpdateRender(bounds);
+                        if (full)
+                        {
+                            Bounds small = bounds;
+                            small.Expand(-16f);
+                            Singleton<VehicleManager>.instance.UpdateParkedVehicles(small.min.x, small.min.z, small.max.x, small.max.z);
+                        }
+                        bounds.Expand(64f);
+                        TerrainModify.UpdateArea(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z, true, true, false);
+                        UpdateRender(bounds);
 
-                    if (full)
+                        if (full)
+                        {
+                            bounds.Expand(512f);
+                            Singleton<ElectricityManager>.instance.UpdateGrid(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
+                            Singleton<WaterManager>.instance.UpdateGrid(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
+                        }
+                    }
+                    catch (IndexOutOfRangeException)
                     {
-                        bounds.Expand(512f);
-                        Singleton<ElectricityManager>.instance.UpdateGrid(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
-                        Singleton<WaterManager>.instance.UpdateGrid(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z);
+                        Log.Error($"Failed to update bounds {bounds}", "[M61]");
                     }
                 }
-                catch (IndexOutOfRangeException)
-                {
-                    Log.Error($"Failed to update bounds {bounds}", "[M61]");
-                }
-            }
+                return true;
+            }, "MIT-UpdateAreas");
 
             areasToUpdate.Clear();
             areasToQuickUpdate.Clear();
