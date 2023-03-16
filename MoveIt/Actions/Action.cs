@@ -202,7 +202,6 @@ namespace MoveIt
 
                         bounds.Expand(32f);
                         MoveItTool.instance.areasToUpdate.Add(bounds);
-                        MoveItTool.instance.areaUpdateCountdown = 30;
 
                         if (full)
                         {
@@ -219,8 +218,8 @@ namespace MoveIt
                 {
                     bounds.Expand(32f);
                     MoveItTool.instance.areasToQuickUpdate.Add(bounds);
-                    QTaskManager.QueueOnSimulation(() => MoveItTool.instance.areaUpdateCountdown = 30);
                 }
+                MoveItTool.instance.areaUpdateCountdown = 30;
             }
             catch (IndexOutOfRangeException e)
             {

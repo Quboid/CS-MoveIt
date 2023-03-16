@@ -78,7 +78,7 @@ namespace MoveIt
         public int segmentUpdateCountdown = -1;
         public HashSet<ushort> segmentsToUpdate = new HashSet<ushort>();
 
-        public int areaUpdateCountdown = -1; // Write to on Simulation thread only
+        public int areaUpdateCountdown = -1;
         public HashSet<Bounds> areasToUpdate = new HashSet<Bounds>();
         public HashSet<Bounds> areasToQuickUpdate = new HashSet<Bounds>();
 
@@ -693,7 +693,7 @@ namespace MoveIt
                                     TaskManager.AddSingleTask(QTask.Threads.Main, () => {
                                         StartCloning();
                                         return true;
-                                    }, "MIT-SimStep-02-Do", QBatch.Queues.Final);
+                                    }, "MIT-SimStep", QBatch.Queues.Final);
                                 }
                                 break;
                             }
@@ -719,7 +719,7 @@ namespace MoveIt
 
                     if (!inputHeld && areaUpdateCountdown >= 0)
                     {
-                        QTaskManager.QueueOnSimulation(() => areaUpdateCountdown--);
+                        areaUpdateCountdown--;
                     }
                 }
                 catch (Exception e)
