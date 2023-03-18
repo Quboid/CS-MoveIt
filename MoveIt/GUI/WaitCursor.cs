@@ -66,7 +66,7 @@ namespace MoveIt
 
         private int GetPhase()
         {
-            float fraction = (float)timer.Seconds % 1;
+            float fraction = ((float)timer.Seconds) * 2 % 1;
 
             return Mathf.FloorToInt(fraction * 8);
         }
