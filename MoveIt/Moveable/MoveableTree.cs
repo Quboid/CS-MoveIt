@@ -321,7 +321,7 @@ namespace MoveIt
             Vector3 newPosition = matrix4x.MultiplyPoint(state.position - center);
             newPosition.y = ((MoveableTree)state.instance).GetTreeYPos(state, deltaPosition.y, newPosition, followTerrain, true);
 
-            TreeInstance.RenderInstance(cameraInfo, info, newPosition, scale, brightness, RenderManager.DefaultColorLocation);
+            TreeInstance.RenderInstance(cameraInfo, info, newPosition, scale, brightness, RenderManager.DefaultColorLocation, false);
         }
     }
 }

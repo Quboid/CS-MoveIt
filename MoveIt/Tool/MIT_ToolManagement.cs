@@ -1,18 +1,4 @@
-﻿using ColossalFramework;
-using ColossalFramework.Math;
-using ColossalFramework.IO;
-using ColossalFramework.Plugins;
-using ColossalFramework.UI;
-using MoveItIntegration;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Xml.Serialization;
-using UnityEngine;
-
-namespace MoveIt
+﻿namespace MoveIt
 {
     public partial class MoveItTool : ToolBase
     {
