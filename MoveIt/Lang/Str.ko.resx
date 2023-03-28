@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="baseUI_Bulldoze_Tooltip" xml:space="preserve">
+    <value>불도저</value>
+  </data>
+  <data name="baseUI_Clone_Tooltip" xml:space="preserve">
+    <value>복사 (같은 위치에 복제하려면 Alt 키와 함께 클릭하세요.)</value>
+  </data>
+  <data name="baseUI_FollowTerrain_Tooltip" xml:space="preserve">
+    <value>지형에 맞추기</value>
+  </data>
+  <data name="baseUI_Marquee_Tooltip" xml:space="preserve">
+    <value>사각 선택</value>
+  </data>
+  <data name="baseUI_MergeNodesTooltip" xml:space="preserve">
+    <value>Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="baseUI_MoveItButton_Tooltip" xml:space="preserve">
+    <value>무브 잇</value>
+  </data>
+  <data name="baseUI_Single_Tooltip" xml:space="preserve">
+    <value>단일 선택</value>
+  </data>
+  <data name="baseUI_ToggleGrid_Tooltip" xml:space="preserve">
+    <value>격자 전환</value>
+  </data>
+  <data name="baseUI_TogglePO_Tooltip" xml:space="preserve">
+    <value>Procedural Objects 키</value>
+  </data>
+  <data name="baseUI_ToggleSnapping_Tooltip" xml:space="preserve">
+    <value>스냅핑 전환</value>
+  </data>
+  <data name="baseUI_ToggleUnderground_Tooltip" xml:space="preserve">
+    <value>지하 시점 전환</value>
+  </data>
+  <data name="baseUI_Toolbox_Tooltip" xml:space="preserve">
+    <value>도구박스</value>
+  </data>
+  <data name="filter_Buildings" xml:space="preserve">
+    <value>건물</value>
+  </data>
+  <data name="filter_Decals" xml:space="preserve">
+    <value>데칼</value>
+  </data>
+  <data name="filter_Fences" xml:space="preserve">
+    <value>울타리</value>
+  </data>
+  <data name="filter_Nodes" xml:space="preserve">
+    <value>노드</value>
+  </data>
+  <data name="filter_Others" xml:space="preserve">
+    <value>기타</value>
+  </data>
+  <data name="filter_Paths" xml:space="preserve">
+    <value>인도</value>
+  </data>
+  <data name="filter_Picker" xml:space="preserve">
+    <value>Picker</value>
+  </data>
+  <data name="filter_Picker_Tooltip" xml:space="preserve">
+    <value>동일한 유형의 오브젝트 필터를 위한 개체를 선택</value>
+  </data>
+  <data name="filter_PO" xml:space="preserve">
+    <value>PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="filter_Powerlines" xml:space="preserve">
+    <value>송전선</value>
+  </data>
+  <data name="filter_Props" xml:space="preserve">
+    <value>프롭</value>
+  </data>
+  <data name="filter_Roads" xml:space="preserve">
+    <value>도로</value>
+  </data>
+  <data name="filter_Segments" xml:space="preserve">
+    <value>세그먼트</value>
+  </data>
+  <data name="filter_Surfaces" xml:space="preserve">
+    <value>지면</value>
+  </data>
+  <data name="filter_Tracks" xml:space="preserve">
+    <value>선로</value>
+    <comment>Train/metro/monorail tracks, not roads.</comment>
+  </data>
+  <data name="filter_Trees" xml:space="preserve">
+    <value>나무</value>
+  </data>
+  <data name="integration_NS2_Found" xml:space="preserve">
+    <value>Network Skins 2 발견, 통합 이용이 가능합니다!</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_NS2_Notfound" xml:space="preserve">
+    <value>Network Skins 2 발견 못함, 혹은 NS1과 NS2를 함께 구독 중임, 통합 이용이 불가능합니다.</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_PO_Found" xml:space="preserve">
+    <value>PO 버전 {0} 발견, 통합 이용이 가능합니다!</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="integration_PO_Notfound" xml:space="preserve">
+    <value>PO 발견 못함, 통합 이용이 불가능합니다.</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="integration_PO_WrongVersion" xml:space="preserve">
+    <value>PO 기능 통합 실패 - 현재 발견한 버전 {0} (1.7버전이 필요합니다.)</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="key_Bulldoze" xml:space="preserve">
+    <value>불도저</value>
+  </data>
+  <data name="key_Clone" xml:space="preserve">
+    <value>복사</value>
+  </data>
+  <data name="key_ConvertToPO" xml:space="preserve">
+    <value>선택한 개체를 PO로 변환</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_DeselectAll" xml:space="preserve">
+    <value>전체 선택 해제</value>
+  </data>
+  <data name="key_MoveDown" xml:space="preserve">
+    <value>아래로 이동</value>
+  </data>
+  <data name="key_MoveEast" xml:space="preserve">
+    <value>동쪽으로 이동</value>
+  </data>
+  <data name="key_MoveNorth" xml:space="preserve">
+    <value>북쪽으로 이동</value>
+  </data>
+  <data name="key_MoveSouth" xml:space="preserve">
+    <value>남쪽으로 이동</value>
+  </data>
+  <data name="key_MoveUp" xml:space="preserve">
+    <value>위로 이동</value>
+  </data>
+  <data name="key_MoveWest" xml:space="preserve">
+    <value>서쪽으로 이동</value>
+  </data>
+  <data name="key_QuickUndergroundView" xml:space="preserve">
+    <value>누른 채로 지하 뷰 보기</value>
+  </data>
+  <data name="key_Redo" xml:space="preserve">
+    <value>되돌리기</value>
+  </data>
+  <data name="key_RotateCCW" xml:space="preserve">
+    <value>반시계방향으로 회전</value>
+  </data>
+  <data name="key_RotateCW" xml:space="preserve">
+    <value>시계방향으로 회전</value>
+  </data>
+  <data name="key_ScaleIn" xml:space="preserve">
+    <value>축적 축소</value>
+  </data>
+  <data name="key_ScaleOut" xml:space="preserve">
+    <value>축적 확대</value>
+  </data>
+  <data name="key_ShowSelectors" xml:space="preserve">
+    <value>선택기 보이기/숨기기</value>
+  </data>
+  <data name="key_StepOver" xml:space="preserve">
+    <value>건너뛰기</value>
+  </data>
+  <data name="key_ToggleDebugPanel" xml:space="preserve">
+    <value>디버그 창 켜기</value>
+  </data>
+  <data name="key_ToggleGridView" xml:space="preserve">
+    <value>격자 전환</value>
+  </data>
+  <data name="key_ToggleNodeMerging" xml:space="preserve">
+    <value>Toggle Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="key_TogglePO" xml:space="preserve">
+    <value>PO모드 활성화/비활성화 키</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_ToggleTool" xml:space="preserve">
+    <value>도구창 켜기</value>
+  </data>
+  <data name="key_ToggleUndergroundView" xml:space="preserve">
+    <value>지하 시점 전환</value>
+  </data>
+  <data name="key_ToolFullSlope" xml:space="preserve">
+    <value>완만한 경사 (선택한 A 개체와 B 개체의 사이 높이로)</value>
+  </data>
+  <data name="key_ToolLineUpSpaced" xml:space="preserve">
+    <value>일렬 정렬 (간격)</value>
+  </data>
+  <data name="key_ToolLineUpUnspaced" xml:space="preserve">
+    <value>일렬 정렬 (간격없음)</value>
+  </data>
+  <data name="key_ToolMirrorObjects" xml:space="preserve">
+    <value>개체 반전</value>
+  </data>
+  <data name="key_ToolQuickSlopeNode" xml:space="preserve">
+    <value>빠른 경사 노드</value>
+  </data>
+  <data name="key_ToolResetObjects" xml:space="preserve">
+    <value>개체 초기화</value>
+  </data>
+  <data name="key_ToolRotateAtCentre" xml:space="preserve">
+    <value>중심으로 회전</value>
+  </data>
+  <data name="key_ToolRotateInPlace" xml:space="preserve">
+    <value>제자리에서 회전</value>
+  </data>
+  <data name="key_ToolRotateRandomly" xml:space="preserve">
+    <value>무작위로 회전</value>
+  </data>
+  <data name="key_ToolSetPosition" xml:space="preserve">
+    <value>좌표 위치 설정</value>
+  </data>
+  <data name="key_ToolSlopeObjects" xml:space="preserve">
+    <value>개체 간 완만한 경사</value>
+  </data>
+  <data name="key_ToolToObjectHeight" xml:space="preserve">
+    <value>개체 높이에 맞추기</value>
+  </data>
+  <data name="key_ToolToTerrainHeight" xml:space="preserve">
+    <value>지면 높이에 맞추기</value>
+  </data>
+  <data name="key_Undo" xml:space="preserve">
+    <value>실행 취소</value>
+  </data>
+  <data name="mod_description" xml:space="preserve">
+    <value>모든 사물 이동</value>
+  </data>
+  <data name="options_AdvancedPillarControl" xml:space="preserve">
+    <value>향상된 기둥 조작 사용</value>
+  </data>
+  <data name="options_AdvancedPillarControl_Tooltip" xml:space="preserve">
+    <value>기둥과 철탑을 미세하게 제어할 수 있습니다. - 게임은 그들의 위치를 재설정하지 않지만 Surface paint를 제거해야 하는 지형 글리치를 유발할 수 있습니다.</value>
+    <comment>Use the name for Surface Painter that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="options_AltForPillars" xml:space="preserve">
+    <value>오직 Alt 키를 꾹 누르는 것으로만 철탑과 기둥을 선택하기</value>
+  </data>
+  <data name="options_AutoCloseToolbox" xml:space="preserve">
+    <value>도구박스 메뉴 자동 종료</value>
+  </data>
+  <data name="options_AutoCloseToolbox_Tooltip" xml:space="preserve">
+    <value>도구를 선택한 후 도구 상자 메뉴를 닫으려면 이 항목을 선택하십시오.</value>
+  </data>
+  <data name="options_Beg" xml:space="preserve">
+    <value>Move It과 다른 모드의 개발을 지원해 주세요.</value>
+  </data>
+  <data name="options_DisableDebugLogging" xml:space="preserve">
+    <value>디버그 메시지 로깅 사용 안함</value>
+  </data>
+  <data name="options_DisableDebugLogging_Tooltip" xml:space="preserve">
+    <value>이 옵션이 활성화된 경우, 디버그 메시지는 더 이상 기록되지 않습니다.</value>
+  </data>
+  <data name="options_ExtraOptions" xml:space="preserve">
+    <value>추가 옵션</value>
+  </data>
+  <data name="options_fixTreeSnapping" xml:space="preserve">
+    <value>Tree Snapping 픽스</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_fixTreeSnappingTooltip" xml:space="preserve">
+    <value>만약 Tree Snapping이 나무 높이 내림을 유발한다면, 도시를 불러온 직후 이것을 클릭하세요.</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_HidePODeletionWarning" xml:space="preserve">
+    <value>PO 삭제 경고 숨기기</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="options_Options" xml:space="preserve">
+    <value>옵션</value>
+  </data>
+  <data name="options_Patreon" xml:space="preserve">
+    <value>Patreon</value>
+  </data>
+  <data name="options_PatreonTooltip" xml:space="preserve">
+    <value>Patreon으로 후원</value>
+  </data>
+  <data name="options_Paypal" xml:space="preserve">
+    <value>Paypal</value>
+  </data>
+  <data name="options_PaypalTooltip" xml:space="preserve">
+    <value>Paypal로 후원</value>
+  </data>
+  <data name="options_PODeleteWarning" xml:space="preserve">
+    <value>참고: 삭제된 PO는 되돌릴 수 없습니다. 이는 무브 잇의 PO 개체를 삭제할 경우, 즉시 영구적으로 제거됨을 의미합니다.</value>
+    <comment>Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="options_PreferFastmove" xml:space="preserve">
+    <value>낮은 디테일의 빠른 이동 선호 (일시적으로 전환하려면 Shift 키를 누르고 있으십시오.)</value>
+  </data>
+  <data name="options_PreferFastmove_Tooltip" xml:space="preserve">
+    <value>게임 프레임이 낮을 때 개체 이동을 도와줍니다. (무브 잇 이용 시 버벅거림 완화)</value>
+  </data>
+  <data name="options_ProceduralObjects" xml:space="preserve">
+    <value>Procedural Objects</value>
+  </data>
+  <data name="options_RemoveGhostNodes" xml:space="preserve">
+    <value>세그먼트 없는 유령 노드 삭제</value>
+  </data>
+  <data name="options_RemoveGhostNodes_Tooltip" xml:space="preserve">
+    <value>게임 내 유령 노드(세그먼트가 연결되지 않은 노드)를 제거하려면 이 버튼을 사용하십시오. 참고:  이렇게 하면 무브 잇의 되돌리기 기록이 삭제됩니다!</value>
+  </data>
+  <data name="options_ResetButtonPosition" xml:space="preserve">
+    <value>무브 잇 버튼 위치 초기화</value>
+  </data>
+  <data name="options_RightClickCancel" xml:space="preserve">
+    <value>마우스 오른쪽 클릭으로 복사 취소</value>
+  </data>
+  <data name="options_RightClickCancel_Tooltip" xml:space="preserve">
+    <value>이 옵션이 활성화되었을 경우, 오른쪽 클릭은 45도 회전 대신 복사를 취소하게 됩니다.</value>
+  </data>
+  <data name="options_ShortcutsGeneral" xml:space="preserve">
+    <value>일반 단축키</value>
+  </data>
+  <data name="options_ShortcutsToolbox" xml:space="preserve">
+    <value>도구박스 단축키</value>
+  </data>
+  <data name="options_ShowDebugPanel" xml:space="preserve">
+    <value>무브 잇의 디버그 창 표시</value>
+  </data>
+  <data name="options_superSelect" xml:space="preserve">
+    <value>Move It이 모든 것을 선택할 수 있게 합니다. 유의하며 사용하세요!</value>
+  </data>
+  <data name="options_superSelect_Tooltip" xml:space="preserve">
+    <value>이것은 Move It이 모든 것을 선택할 수 있게 합니다. 당신이 무엇을 하고 있는지 정확히 알지 못하는 한 이것을 사용하지 마세요.
+
+이것은 매우 강력하며 당신의 도시를 파괴할 것입니다!</value>
+  </data>
+  <data name="options_UseCompass" xml:space="preserve">
+    <value>나침반 방위 이동 사용</value>
+  </data>
+  <data name="options_UseCompass_Tooltip" xml:space="preserve">
+    <value>이 옵션이 활성화될 경우, 키보드의 방향키를 누르면 해당하는 방향의 방위로 이동합니다. 방향키를 위로 누르면 북쪽으로, 아래로 누르면 남쪽으로 이동합니다.</value>
+  </data>
+  <data name="options_UseUUI" xml:space="preserve">
+    <value>UnifiedUI 사용</value>
+    <comment>Do not translate 'UnifiedUI'</comment>
+  </data>
+  <data name="setpos_A_Tooltip" xml:space="preserve">
+    <value>각도</value>
+  </data>
+  <data name="setpos_Go" xml:space="preserve">
+    <value>이동</value>
+  </data>
+  <data name="setpos_H_Tooltip" xml:space="preserve">
+    <value>높이</value>
+  </data>
+  <data name="setpos_Title" xml:space="preserve">
+    <value>위치</value>
+  </data>
+  <data name="toolbox_ConvertToPO" xml:space="preserve">
+    <value>PO로 변환</value>
+    <comment>Do not translate 'PO'. Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ExportSelection" xml:space="preserve">
+    <value>내보내기 선택</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_HeightTools_Tooltip" xml:space="preserve">
+    <value>높이 도구</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ImportSelection" xml:space="preserve">
+    <value>가져오기 선택</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_LineUpObjects" xml:space="preserve">
+    <value>개체를 일렬로 정렬</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_MirrorObjects" xml:space="preserve">
+    <value>개체 반전</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_OtherTools_Tooltip" xml:space="preserve">
+    <value>기타 도구</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ResetObjects" xml:space="preserve">
+    <value>개체 초기화</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateAtCentre" xml:space="preserve">
+    <value>중심으로 회전</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateInPlace" xml:space="preserve">
+    <value>제자리에서 회전</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateRandomly" xml:space="preserve">
+    <value>무작위로 회전</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotationTools_Tooltip" xml:space="preserve">
+    <value>회전 도구</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SetPosition" xml:space="preserve">
+    <value>위치 설정</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SlopeObjects" xml:space="preserve">
+    <value>개체 간 완만한 경사</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToObjectHeight" xml:space="preserve">
+    <value>선택한 개체 높이로 맞추기</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToTerrainHeight" xml:space="preserve">
+    <value>지면 높이로 맞추기</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="whatsNew" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="xml_Asc" xml:space="preserve">
+    <value>오름차순</value>
+    <comment>Shortened version of "Ascending" (alternatively "Up"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Date" xml:space="preserve">
+    <value>날짜</value>
+  </data>
+  <data name="xml_DeleteConfirmMessage" xml:space="preserve">
+    <value>영구적으로 '{0}' 개의 파일을 삭제하시겠습니까?</value>
+    <comment>The select file's name is inserted where {0} is.</comment>
+  </data>
+  <data name="xml_DeleteConfirmTitle" xml:space="preserve">
+    <value>파일 삭제</value>
+  </data>
+  <data name="xml_DeleteLabel" xml:space="preserve">
+    <value>저장된 선택 삭제</value>
+  </data>
+  <data name="xml_Desc" xml:space="preserve">
+    <value>내림차순</value>
+    <comment>Shortened version of "Descending" (alternatively "Down"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Export" xml:space="preserve">
+    <value>내보내기</value>
+  </data>
+  <data name="xml_Import" xml:space="preserve">
+    <value>가져오기</value>
+  </data>
+  <data name="xml_Name" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="xml_OpenFolder" xml:space="preserve">
+    <value>폴더 열기</value>
+  </data>
+  <data name="xml_OverwriteMessage" xml:space="preserve">
+    <value>'{0}' 개의 파일이 이미 존재합니다.
+덮어쓰시겠습니까?</value>
+    <comment>The select file's name is inserted where {0} is. Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="xml_OverwriteTitle" xml:space="preserve">
+    <value>파일 덮어쓰기</value>
+  </data>
+  <data name="xml_Restore" xml:space="preserve">
+    <value>복원</value>
+  </data>
+  <data name="xml_Restore_Tooltip" xml:space="preserve">
+    <value>내보낸 위치로 선택한 것을 가져오기</value>
+  </data>
+  <data name="xml_SelectionInvalidMessage" xml:space="preserve">
+    <value>그 선택은 유효하지 않거나 불가능합니다.</value>
+  </data>
+  <data name="xml_SelectionInvalidTitle" xml:space="preserve">
+    <value>선택 무효</value>
+  </data>
+  <data name="xml_Size" xml:space="preserve">
+    <value>크기</value>
+  </data>
+</root>
