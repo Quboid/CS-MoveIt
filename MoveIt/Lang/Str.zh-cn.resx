@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="baseUI_Bulldoze_Tooltip" xml:space="preserve">
+    <value>推土机</value>
+  </data>
+  <data name="baseUI_Clone_Tooltip" xml:space="preserve">
+    <value>复制（单击+Alt即可原地复制）</value>
+  </data>
+  <data name="baseUI_FollowTerrain_Tooltip" xml:space="preserve">
+    <value>跟随地形</value>
+  </data>
+  <data name="baseUI_Marquee_Tooltip" xml:space="preserve">
+    <value>选区选择</value>
+  </data>
+  <data name="baseUI_MergeNodesTooltip" xml:space="preserve">
+    <value>Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="baseUI_MoveItButton_Tooltip" xml:space="preserve">
+    <value>Move It</value>
+  </data>
+  <data name="baseUI_Single_Tooltip" xml:space="preserve">
+    <value>单个选择</value>
+  </data>
+  <data name="baseUI_ToggleGrid_Tooltip" xml:space="preserve">
+    <value>网格开关</value>
+  </data>
+  <data name="baseUI_TogglePO_Tooltip" xml:space="preserve">
+    <value>魔物面板开关</value>
+  </data>
+  <data name="baseUI_ToggleSnapping_Tooltip" xml:space="preserve">
+    <value>吸附模式开关</value>
+  </data>
+  <data name="baseUI_ToggleUnderground_Tooltip" xml:space="preserve">
+    <value>地下视图开关</value>
+  </data>
+  <data name="baseUI_Toolbox_Tooltip" xml:space="preserve">
+    <value>工具箱</value>
+  </data>
+  <data name="filter_Buildings" xml:space="preserve">
+    <value>建筑</value>
+  </data>
+  <data name="filter_Decals" xml:space="preserve">
+    <value>贴花</value>
+  </data>
+  <data name="filter_Fences" xml:space="preserve">
+    <value>围栏</value>
+  </data>
+  <data name="filter_Nodes" xml:space="preserve">
+    <value>节点</value>
+  </data>
+  <data name="filter_Others" xml:space="preserve">
+    <value>其它</value>
+  </data>
+  <data name="filter_Paths" xml:space="preserve">
+    <value>小径</value>
+  </data>
+  <data name="filter_Picker" xml:space="preserve">
+    <value>拾取器</value>
+  </data>
+  <data name="filter_Picker_Tooltip" xml:space="preserve">
+    <value>选择一个物体对象以筛选相同类型的物体对象</value>
+  </data>
+  <data name="filter_PO" xml:space="preserve">
+    <value>魔物</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="filter_Powerlines" xml:space="preserve">
+    <value>电线</value>
+  </data>
+  <data name="filter_Props" xml:space="preserve">
+    <value>摆件</value>
+  </data>
+  <data name="filter_Roads" xml:space="preserve">
+    <value>道路</value>
+  </data>
+  <data name="filter_Segments" xml:space="preserve">
+    <value>分段</value>
+  </data>
+  <data name="filter_Surfaces" xml:space="preserve">
+    <value>地皮</value>
+  </data>
+  <data name="filter_Tracks" xml:space="preserve">
+    <value>轨道</value>
+    <comment>Train/metro/monorail tracks, not roads.</comment>
+  </data>
+  <data name="filter_Trees" xml:space="preserve">
+    <value>树木</value>
+  </data>
+  <data name="integration_NS2_Found" xml:space="preserve">
+    <value>已找到Network Skins 2，已启用整合功能！</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_NS2_Notfound" xml:space="preserve">
+    <value>找不到Network Skins 2，或者同时启用了NS1与NS2，整合功能已禁用。</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_PO_Found" xml:space="preserve">
+    <value>已找到PO（魔物） {0} 版本，已启用整合功能！</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="integration_PO_Notfound" xml:space="preserve">
+    <value>找不到PO（魔物），整合功能已禁用。</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="integration_PO_WrongVersion" xml:space="preserve">
+    <value>PO（魔物）整合失败 - 找到 {0} 版本（需要版本：1.7）</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="key_Bulldoze" xml:space="preserve">
+    <value>推土机</value>
+  </data>
+  <data name="key_Clone" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="key_ConvertToPO" xml:space="preserve">
+    <value>将选中对象转换为魔物</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_DeselectAll" xml:space="preserve">
+    <value>全部取消选择</value>
+  </data>
+  <data name="key_MoveDown" xml:space="preserve">
+    <value>向下移动</value>
+  </data>
+  <data name="key_MoveEast" xml:space="preserve">
+    <value>向东移动</value>
+  </data>
+  <data name="key_MoveNorth" xml:space="preserve">
+    <value>向北移动</value>
+  </data>
+  <data name="key_MoveSouth" xml:space="preserve">
+    <value>向南移动</value>
+  </data>
+  <data name="key_MoveUp" xml:space="preserve">
+    <value>向上移动</value>
+  </data>
+  <data name="key_MoveWest" xml:space="preserve">
+    <value>向西移动</value>
+  </data>
+  <data name="key_QuickUndergroundView" xml:space="preserve">
+    <value>保留地下视图</value>
+  </data>
+  <data name="key_Redo" xml:space="preserve">
+    <value>重做</value>
+  </data>
+  <data name="key_RotateCCW" xml:space="preserve">
+    <value>逆时针旋转</value>
+  </data>
+  <data name="key_RotateCW" xml:space="preserve">
+    <value>顺时针旋转</value>
+  </data>
+  <data name="key_ScaleIn" xml:space="preserve">
+    <value>向内缩放</value>
+  </data>
+  <data name="key_ScaleOut" xml:space="preserve">
+    <value>向外缩放</value>
+  </data>
+  <data name="key_ShowSelectors" xml:space="preserve">
+    <value>显示/隐藏选择器</value>
+  </data>
+  <data name="key_StepOver" xml:space="preserve">
+    <value>逐层选择</value>
+  </data>
+  <data name="key_ToggleDebugPanel" xml:space="preserve">
+    <value>调试控制面板开关</value>
+  </data>
+  <data name="key_ToggleGridView" xml:space="preserve">
+    <value>网格视图开关</value>
+  </data>
+  <data name="key_ToggleNodeMerging" xml:space="preserve">
+    <value>Toggle Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="key_TogglePO" xml:space="preserve">
+    <value>PO 为激活/不激活开关</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_ToggleTool" xml:space="preserve">
+    <value>工具开关</value>
+  </data>
+  <data name="key_ToggleUndergroundView" xml:space="preserve">
+    <value>地下视角开关</value>
+  </data>
+  <data name="key_ToolFullSlope" xml:space="preserve">
+    <value>全斜面</value>
+  </data>
+  <data name="key_ToolLineUpSpaced" xml:space="preserve">
+    <value>排列（有间隔）</value>
+  </data>
+  <data name="key_ToolLineUpUnspaced" xml:space="preserve">
+    <value>排列（无间隔）</value>
+  </data>
+  <data name="key_ToolMirrorObjects" xml:space="preserve">
+    <value>将对象镜像</value>
+  </data>
+  <data name="key_ToolQuickSlopeNode" xml:space="preserve">
+    <value>快速倾斜节点</value>
+  </data>
+  <data name="key_ToolResetObjects" xml:space="preserve">
+    <value>重置对象</value>
+  </data>
+  <data name="key_ToolRotateAtCentre" xml:space="preserve">
+    <value>中心旋转</value>
+  </data>
+  <data name="key_ToolRotateInPlace" xml:space="preserve">
+    <value>原地旋转</value>
+  </data>
+  <data name="key_ToolRotateRandomly" xml:space="preserve">
+    <value>随机旋转</value>
+  </data>
+  <data name="key_ToolSetPosition" xml:space="preserve">
+    <value>设置位置</value>
+  </data>
+  <data name="key_ToolSlopeObjects" xml:space="preserve">
+    <value>将对象倾斜</value>
+  </data>
+  <data name="key_ToolToObjectHeight" xml:space="preserve">
+    <value>对齐至对象高度</value>
+  </data>
+  <data name="key_ToolToTerrainHeight" xml:space="preserve">
+    <value>对齐至地形高度</value>
+  </data>
+  <data name="key_Undo" xml:space="preserve">
+    <value>撤销</value>
+  </data>
+  <data name="mod_description" xml:space="preserve">
+    <value>移动一切物品</value>
+  </data>
+  <data name="options_AdvancedPillarControl" xml:space="preserve">
+    <value>使用高级桥墩控制</value>
+  </data>
+  <data name="options_AdvancedPillarControl_Tooltip" xml:space="preserve">
+    <value>允许更好地控制桥墩与桥塔 - 游戏将不会重置它们的位置，但是可能会造成需要用Surface Painter来移除的地形故障。</value>
+    <comment>Use the name for Surface Painter that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="options_AltForPillars" xml:space="preserve">
+    <value>按住Alt来只选择桥塔和桥墩类型</value>
+  </data>
+  <data name="options_AutoCloseToolbox" xml:space="preserve">
+    <value>自动关闭工具箱菜单</value>
+  </data>
+  <data name="options_AutoCloseToolbox_Tooltip" xml:space="preserve">
+    <value>选择工具后，选中此项以关闭工具箱菜单。</value>
+  </data>
+  <data name="options_Beg" xml:space="preserve">
+    <value>请支持Move It以及我的其他模组的的开发。</value>
+  </data>
+  <data name="options_DisableDebugLogging" xml:space="preserve">
+    <value>禁用调试消息记录</value>
+  </data>
+  <data name="options_DisableDebugLogging_Tooltip" xml:space="preserve">
+    <value>如果选中此项，调试信息将不会被记录。</value>
+  </data>
+  <data name="options_ExtraOptions" xml:space="preserve">
+    <value>附加选项</value>
+  </data>
+  <data name="options_fixTreeSnapping" xml:space="preserve">
+    <value>修复树木吸附（Tree Snapping）模组</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_fixTreeSnappingTooltip" xml:space="preserve">
+    <value>如果Tree Snapping模组导致树木高度被关闭，可以在载入城市后直接点击这个按钮。</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_HidePODeletionWarning" xml:space="preserve">
+    <value>隐藏魔物删除警告</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="options_Options" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="options_Patreon" xml:space="preserve">
+    <value>Patreon捐赠</value>
+  </data>
+  <data name="options_PatreonTooltip" xml:space="preserve">
+    <value>在Patreon上支持我</value>
+  </data>
+  <data name="options_Paypal" xml:space="preserve">
+    <value>Paypal</value>
+  </data>
+  <data name="options_PaypalTooltip" xml:space="preserve">
+    <value>在Paypal上支持我</value>
+  </data>
+  <data name="options_PODeleteWarning" xml:space="preserve">
+    <value>请注意：您不能撤回已经删除的魔物对象。这意味着如果您用Move It删除
+了魔物对象，它们将【永远】地消失。</value>
+    <comment>Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="options_PreferFastmove" xml:space="preserve">
+    <value>更好的快速、低细节移动(按住Shift键以暂时切换)</value>
+  </data>
+  <data name="options_PreferFastmove_Tooltip" xml:space="preserve">
+    <value>在您的帧速较低时帮助您移动调整对象。</value>
+  </data>
+  <data name="options_ProceduralObjects" xml:space="preserve">
+    <value>Procedural Objects（魔物）</value>
+  </data>
+  <data name="options_RemoveGhostNodes" xml:space="preserve">
+    <value>移除幽灵节点</value>
+  </data>
+  <data name="options_RemoveGhostNodes_Tooltip" xml:space="preserve">
+    <value>在游戏中使用此按钮来移除幽灵节点（即没有和路段连接的节点）。注意：此行为会清除掉Move It的撤销历史！</value>
+  </data>
+  <data name="options_ResetButtonPosition" xml:space="preserve">
+    <value>重置按钮位置</value>
+  </data>
+  <data name="options_RightClickCancel" xml:space="preserve">
+    <value>右键单击取消克隆操作</value>
+  </data>
+  <data name="options_RightClickCancel_Tooltip" xml:space="preserve">
+    <value>如果选中，右键单击将取消克隆而不是旋转45°。</value>
+  </data>
+  <data name="options_ShortcutsGeneral" xml:space="preserve">
+    <value>通用快捷键</value>
+  </data>
+  <data name="options_ShortcutsToolbox" xml:space="preserve">
+    <value>工具箱快捷键</value>
+  </data>
+  <data name="options_ShowDebugPanel" xml:space="preserve">
+    <value>显示Move It调试面板</value>
+  </data>
+  <data name="options_superSelect" xml:space="preserve">
+    <value>允许Move It来选择一切物品。慎用!</value>
+  </data>
+  <data name="options_superSelect_Tooltip" xml:space="preserve">
+    <value>这将让Move It选择所有物品。除非你确实知道你正在做什么，否则千万不要使用此功能。
+
+此功能非常强大，以至于能让你的城市直接被毁坏!</value>
+  </data>
+  <data name="options_UseCompass" xml:space="preserve">
+    <value>使用指南针式运动</value>
+  </data>
+  <data name="options_UseCompass_Tooltip" xml:space="preserve">
+    <value>如果选中，上键将是向北方向移动。下键是南方向，左键是西方向，右键是东方向。</value>
+  </data>
+  <data name="options_UseUUI" xml:space="preserve">
+    <value>将图标加入UnifiedUI中</value>
+    <comment>Do not translate 'UnifiedUI'</comment>
+  </data>
+  <data name="setpos_A_Tooltip" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="setpos_Go" xml:space="preserve">
+    <value>转至</value>
+  </data>
+  <data name="setpos_H_Tooltip" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="setpos_Title" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="toolbox_ConvertToPO" xml:space="preserve">
+    <value>转换为魔物</value>
+    <comment>Do not translate 'PO'. Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ExportSelection" xml:space="preserve">
+    <value>导出选择</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_HeightTools_Tooltip" xml:space="preserve">
+    <value>高度工具</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ImportSelection" xml:space="preserve">
+    <value>导入选择</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_LineUpObjects" xml:space="preserve">
+    <value>将对象排列</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_MirrorObjects" xml:space="preserve">
+    <value>将对象镜像</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_OtherTools_Tooltip" xml:space="preserve">
+    <value>其他工具</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ResetObjects" xml:space="preserve">
+    <value>重置对象</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateAtCentre" xml:space="preserve">
+    <value>中心旋转</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateInPlace" xml:space="preserve">
+    <value>就地旋转</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateRandomly" xml:space="preserve">
+    <value>随机旋转</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotationTools_Tooltip" xml:space="preserve">
+    <value>旋转工具</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SetPosition" xml:space="preserve">
+    <value>设置位置</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SlopeObjects" xml:space="preserve">
+    <value>对象坡度平滑</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToObjectHeight" xml:space="preserve">
+    <value>至对象高度</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToTerrainHeight" xml:space="preserve">
+    <value>至地形高度</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="whatsNew" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="xml_Asc" xml:space="preserve">
+    <value>升序</value>
+    <comment>Shortened version of "Ascending" (alternatively "Up"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="xml_DeleteConfirmMessage" xml:space="preserve">
+    <value>你想要永远删除文件 '{0}' 吗？</value>
+    <comment>The select file's name is inserted where {0} is.</comment>
+  </data>
+  <data name="xml_DeleteConfirmTitle" xml:space="preserve">
+    <value>删除文件</value>
+  </data>
+  <data name="xml_DeleteLabel" xml:space="preserve">
+    <value>删除已保存的选择</value>
+  </data>
+  <data name="xml_Desc" xml:space="preserve">
+    <value>降序</value>
+    <comment>Shortened version of "Descending" (alternatively "Down"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Export" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="xml_Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="xml_Name" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="xml_OpenFolder" xml:space="preserve">
+    <value>打开文件夹</value>
+  </data>
+  <data name="xml_OverwriteMessage" xml:space="preserve">
+    <value>文件 '{0}' 已经存在。
+您想要覆盖它吗？</value>
+    <comment>The select file's name is inserted where {0} is. Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="xml_OverwriteTitle" xml:space="preserve">
+    <value>覆盖文件</value>
+  </data>
+  <data name="xml_Restore" xml:space="preserve">
+    <value>还原</value>
+  </data>
+  <data name="xml_Restore_Tooltip" xml:space="preserve">
+    <value>将选择内容导入到导出位置</value>
+  </data>
+  <data name="xml_SelectionInvalidMessage" xml:space="preserve">
+    <value>选择区域为空或无效。</value>
+  </data>
+  <data name="xml_SelectionInvalidTitle" xml:space="preserve">
+    <value>选择无效</value>
+  </data>
+  <data name="xml_Size" xml:space="preserve">
+    <value>大小</value>
+  </data>
+</root>
