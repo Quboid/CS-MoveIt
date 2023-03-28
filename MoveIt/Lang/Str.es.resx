@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="baseUI_Bulldoze_Tooltip" xml:space="preserve">
+    <value>Demoler</value>
+  </data>
+  <data name="baseUI_Clone_Tooltip" xml:space="preserve">
+    <value>Copiar (Alt+Clic para duplicar en el sitio)</value>
+  </data>
+  <data name="baseUI_FollowTerrain_Tooltip" xml:space="preserve">
+    <value>Seguir el terreno</value>
+  </data>
+  <data name="baseUI_Marquee_Tooltip" xml:space="preserve">
+    <value>Selección rectangular</value>
+  </data>
+  <data name="baseUI_MergeNodesTooltip" xml:space="preserve">
+    <value>Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="baseUI_MoveItButton_Tooltip" xml:space="preserve">
+    <value>Move It</value>
+  </data>
+  <data name="baseUI_Single_Tooltip" xml:space="preserve">
+    <value>Selección única</value>
+  </data>
+  <data name="baseUI_ToggleGrid_Tooltip" xml:space="preserve">
+    <value>Alternar cuadrícula</value>
+  </data>
+  <data name="baseUI_TogglePO_Tooltip" xml:space="preserve">
+    <value>Alternar Procedural Objects</value>
+  </data>
+  <data name="baseUI_ToggleSnapping_Tooltip" xml:space="preserve">
+    <value>Alternar snapping</value>
+  </data>
+  <data name="baseUI_ToggleUnderground_Tooltip" xml:space="preserve">
+    <value>Alternar la vista subterránea</value>
+  </data>
+  <data name="baseUI_Toolbox_Tooltip" xml:space="preserve">
+    <value>Herramientas</value>
+  </data>
+  <data name="filter_Buildings" xml:space="preserve">
+    <value>Edificios</value>
+  </data>
+  <data name="filter_Decals" xml:space="preserve">
+    <value>Decals</value>
+  </data>
+  <data name="filter_Fences" xml:space="preserve">
+    <value>Vallas</value>
+  </data>
+  <data name="filter_Nodes" xml:space="preserve">
+    <value>Nodos</value>
+  </data>
+  <data name="filter_Others" xml:space="preserve">
+    <value>Otros</value>
+  </data>
+  <data name="filter_Paths" xml:space="preserve">
+    <value>Caminos</value>
+  </data>
+  <data name="filter_Picker" xml:space="preserve">
+    <value>Pipeta</value>
+  </data>
+  <data name="filter_Picker_Tooltip" xml:space="preserve">
+    <value>Elegir un objeto para filtrar objetos del mismo tipo</value>
+  </data>
+  <data name="filter_PO" xml:space="preserve">
+    <value>PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="filter_Powerlines" xml:space="preserve">
+    <value>Tendido eléctrico</value>
+  </data>
+  <data name="filter_Props" xml:space="preserve">
+    <value>Props</value>
+  </data>
+  <data name="filter_Roads" xml:space="preserve">
+    <value>Carreteras</value>
+  </data>
+  <data name="filter_Segments" xml:space="preserve">
+    <value>Segmentos</value>
+  </data>
+  <data name="filter_Surfaces" xml:space="preserve">
+    <value>Superficies</value>
+  </data>
+  <data name="filter_Tracks" xml:space="preserve">
+    <value>Raíles</value>
+    <comment>Train/metro/monorail tracks, not roads.</comment>
+  </data>
+  <data name="filter_Trees" xml:space="preserve">
+    <value>Árboles</value>
+  </data>
+  <data name="integration_NS2_Found" xml:space="preserve">
+    <value>Network Skins 2 encontrado, ¡integración activa!</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_NS2_Notfound" xml:space="preserve">
+    <value>Network Skins 2 no encontrado, o NS1 y NS2 activados al mismo tiempo, integración desactivada.</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_PO_Found" xml:space="preserve">
+    <value>PO versión {0} encontrado, ¡integración activa!</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="integration_PO_Notfound" xml:space="preserve">
+    <value>PO no encontrado, integración desactivada.</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="integration_PO_WrongVersion" xml:space="preserve">
+    <value>Error al integrar PO - se encontró la versión {0} (requerida: 1.7)</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="key_Bulldoze" xml:space="preserve">
+    <value>Demoler</value>
+  </data>
+  <data name="key_Clone" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="key_ConvertToPO" xml:space="preserve">
+    <value>Convertir selección a PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_DeselectAll" xml:space="preserve">
+    <value>Deseleccionar todo</value>
+  </data>
+  <data name="key_MoveDown" xml:space="preserve">
+    <value>Mover hacia abajo</value>
+  </data>
+  <data name="key_MoveEast" xml:space="preserve">
+    <value>Mover hacia el este</value>
+  </data>
+  <data name="key_MoveNorth" xml:space="preserve">
+    <value>Mover hacia el norte</value>
+  </data>
+  <data name="key_MoveSouth" xml:space="preserve">
+    <value>Mover hacia el sur</value>
+  </data>
+  <data name="key_MoveUp" xml:space="preserve">
+    <value>Mover hacia arriba</value>
+  </data>
+  <data name="key_MoveWest" xml:space="preserve">
+    <value>Mover hacia el oeste</value>
+  </data>
+  <data name="key_QuickUndergroundView" xml:space="preserve">
+    <value>Mantén para ver el subsuelo</value>
+  </data>
+  <data name="key_Redo" xml:space="preserve">
+    <value>Rehacer</value>
+  </data>
+  <data name="key_RotateCCW" xml:space="preserve">
+    <value>Rotar en sentido antihorario</value>
+  </data>
+  <data name="key_RotateCW" xml:space="preserve">
+    <value>Rotar en sentido horario</value>
+  </data>
+  <data name="key_ScaleIn" xml:space="preserve">
+    <value>Escalar hacia dentro</value>
+  </data>
+  <data name="key_ScaleOut" xml:space="preserve">
+    <value>Escalar hacia fuera</value>
+  </data>
+  <data name="key_ShowSelectors" xml:space="preserve">
+    <value>Mostrar / Ocultar Selectores</value>
+  </data>
+  <data name="key_StepOver" xml:space="preserve">
+    <value>Alternar entre objetos superpuestos</value>
+  </data>
+  <data name="key_ToggleDebugPanel" xml:space="preserve">
+    <value>Activar el panel de depuración</value>
+  </data>
+  <data name="key_ToggleGridView" xml:space="preserve">
+    <value>Mostrar/ocultar la cuadrícula</value>
+  </data>
+  <data name="key_ToggleNodeMerging" xml:space="preserve">
+    <value>Toggle Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="key_TogglePO" xml:space="preserve">
+    <value>PO Activado/desactivado</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_ToggleTool" xml:space="preserve">
+    <value>Alternar herramienta</value>
+  </data>
+  <data name="key_ToggleUndergroundView" xml:space="preserve">
+    <value>Alternar vista subterránea</value>
+  </data>
+  <data name="key_ToolFullSlope" xml:space="preserve">
+    <value>Crear pendiente</value>
+  </data>
+  <data name="key_ToolLineUpSpaced" xml:space="preserve">
+    <value>Alinear (con espacios)</value>
+  </data>
+  <data name="key_ToolLineUpUnspaced" xml:space="preserve">
+    <value>Alinear (sin espacios)</value>
+  </data>
+  <data name="key_ToolMirrorObjects" xml:space="preserve">
+    <value>Reflejar objetos</value>
+  </data>
+  <data name="key_ToolQuickSlopeNode" xml:space="preserve">
+    <value>Crear pendiente directamente</value>
+  </data>
+  <data name="key_ToolResetObjects" xml:space="preserve">
+    <value>Restablecer objetos</value>
+  </data>
+  <data name="key_ToolRotateAtCentre" xml:space="preserve">
+    <value>Rotar desde el centro</value>
+  </data>
+  <data name="key_ToolRotateInPlace" xml:space="preserve">
+    <value>Rotar en su sitio</value>
+  </data>
+  <data name="key_ToolRotateRandomly" xml:space="preserve">
+    <value>Rotar aleatoriamente</value>
+  </data>
+  <data name="key_ToolSetPosition" xml:space="preserve">
+    <value>Definir posición</value>
+  </data>
+  <data name="key_ToolSlopeObjects" xml:space="preserve">
+    <value>Seguir la pendiente</value>
+  </data>
+  <data name="key_ToolToObjectHeight" xml:space="preserve">
+    <value>Alinear a la altura del objeto</value>
+  </data>
+  <data name="key_ToolToTerrainHeight" xml:space="preserve">
+    <value>Alinear a la altura del terreno</value>
+  </data>
+  <data name="key_Undo" xml:space="preserve">
+    <value>Deshacer</value>
+  </data>
+  <data name="mod_description" xml:space="preserve">
+    <value>Mover objetos</value>
+  </data>
+  <data name="options_AdvancedPillarControl" xml:space="preserve">
+    <value>Usar control avanzado de pilares</value>
+  </data>
+  <data name="options_AdvancedPillarControl_Tooltip" xml:space="preserve">
+    <value>Permite un control preciso con los pilares - el juego no restablecerá su posición, pero puede causar errores en el terreno que tendrás que corregir con Surface Painter.</value>
+    <comment>Use the name for Surface Painter that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="options_AltForPillars" xml:space="preserve">
+    <value>Selecciona los pilares manteniendo solo Alt</value>
+  </data>
+  <data name="options_AutoCloseToolbox" xml:space="preserve">
+    <value>Cerrar automáticamente el menú de herramientas</value>
+  </data>
+  <data name="options_AutoCloseToolbox_Tooltip" xml:space="preserve">
+    <value>Marca esto para cerrar el menú de herramientas tras seleccionar una.</value>
+  </data>
+  <data name="options_Beg" xml:space="preserve">
+    <value>Por favor, apoya el desarrollo de Move It y mis otros mods.</value>
+  </data>
+  <data name="options_DisableDebugLogging" xml:space="preserve">
+    <value>Desactivar el registro de mensajes de depuración</value>
+  </data>
+  <data name="options_DisableDebugLogging_Tooltip" xml:space="preserve">
+    <value>Si está marcado, los mensajes de depuración no se registrarán.</value>
+  </data>
+  <data name="options_ExtraOptions" xml:space="preserve">
+    <value>Opciones extra</value>
+  </data>
+  <data name="options_fixTreeSnapping" xml:space="preserve">
+    <value>Arreglar Tree Snapping</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_fixTreeSnappingTooltip" xml:space="preserve">
+    <value>Si "Tree Snapping" hace que la altura de los árboles sea incorrecta, haz click aquí justo después de cargar tu ciudad.</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_HidePODeletionWarning" xml:space="preserve">
+    <value>Ocultar el aviso de eliminación de PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="options_Options" xml:space="preserve">
+    <value>Opciones</value>
+  </data>
+  <data name="options_Patreon" xml:space="preserve">
+    <value>Patreon</value>
+  </data>
+  <data name="options_PatreonTooltip" xml:space="preserve">
+    <value>Apóyame en Patreon</value>
+  </data>
+  <data name="options_Paypal" xml:space="preserve">
+    <value>Paypal</value>
+  </data>
+  <data name="options_PaypalTooltip" xml:space="preserve">
+    <value>Apóyame en Paypal</value>
+  </data>
+  <data name="options_PODeleteWarning" xml:space="preserve">
+    <value>Por favor, ten en cuenta: no puedes usar "deshacer" al borrar PO. Esto significa que si eliminas
+un PO con Move It, desaparecerán PERMANENTEMENTE.</value>
+    <comment>Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="options_PreferFastmove" xml:space="preserve">
+    <value>Prefiero movimientos rápidos con poca precisión (mantén Shift para cambiar temporalmente)</value>
+  </data>
+  <data name="options_PreferFastmove_Tooltip" xml:space="preserve">
+    <value>Ayuda a colocar objetos cuando los FPS son bajos.</value>
+  </data>
+  <data name="options_ProceduralObjects" xml:space="preserve">
+    <value>Procedural Objects</value>
+  </data>
+  <data name="options_RemoveGhostNodes" xml:space="preserve">
+    <value>Eliminar nodos fantasma</value>
+  </data>
+  <data name="options_RemoveGhostNodes_Tooltip" xml:space="preserve">
+    <value>Usa este botón en la partida para borrar nodos fantasma (nodos sin segmentos unidos). Cuidado: ¡Esto borrará el historial del comando deshacer!</value>
+  </data>
+  <data name="options_ResetButtonPosition" xml:space="preserve">
+    <value>Restablecer la posición del botón</value>
+  </data>
+  <data name="options_RightClickCancel" xml:space="preserve">
+    <value>Clic derecho cancela la clonación</value>
+  </data>
+  <data name="options_RightClickCancel_Tooltip" xml:space="preserve">
+    <value>Si está marcado, el clic derecho cancelará la clonación en lugar de rotar 45°.</value>
+  </data>
+  <data name="options_ShortcutsGeneral" xml:space="preserve">
+    <value>Atajos generales</value>
+  </data>
+  <data name="options_ShortcutsToolbox" xml:space="preserve">
+    <value>Atajos del menú de herramientas</value>
+  </data>
+  <data name="options_ShowDebugPanel" xml:space="preserve">
+    <value>Mostrar el panel de depuración</value>
+  </data>
+  <data name="options_superSelect" xml:space="preserve">
+    <value>Permitir a Move It! seleccionar todo. ¡Usar con cuidado!</value>
+  </data>
+  <data name="options_superSelect_Tooltip" xml:space="preserve">
+    <value>Esto permite a Move It! seleccionar todo. No utilices esto excepto que sepas lo que estas haciendo.
+Esto es extramadamente poderoso y puede arruinar tu ciudad!</value>
+  </data>
+  <data name="options_UseCompass" xml:space="preserve">
+    <value>Usar movimientos cardinales</value>
+  </data>
+  <data name="options_UseCompass_Tooltip" xml:space="preserve">
+    <value>Si está marcado, la tecla Arriba moverá hacia el Norte, Abajo hacia el Sur, Izquierda hacia el Oeste, Derecha hacia el Este.</value>
+  </data>
+  <data name="options_UseUUI" xml:space="preserve">
+    <value>Usar UnifiedUI</value>
+    <comment>Do not translate 'UnifiedUI'</comment>
+  </data>
+  <data name="setpos_A_Tooltip" xml:space="preserve">
+    <value>Ángulo</value>
+  </data>
+  <data name="setpos_Go" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="setpos_H_Tooltip" xml:space="preserve">
+    <value>Altura</value>
+  </data>
+  <data name="setpos_Title" xml:space="preserve">
+    <value>Posición</value>
+  </data>
+  <data name="toolbox_ConvertToPO" xml:space="preserve">
+    <value>Convertir en PO</value>
+    <comment>Do not translate 'PO'. Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ExportSelection" xml:space="preserve">
+    <value>Exportar selección</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_HeightTools_Tooltip" xml:space="preserve">
+    <value>Herramientas de altura</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ImportSelection" xml:space="preserve">
+    <value>Importar selección</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_LineUpObjects" xml:space="preserve">
+    <value>Alinear objetos</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_MirrorObjects" xml:space="preserve">
+    <value>Reflejar objetos</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_OtherTools_Tooltip" xml:space="preserve">
+    <value>Otras Herramientas</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ResetObjects" xml:space="preserve">
+    <value>Restablecer objetos</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateAtCentre" xml:space="preserve">
+    <value>Rotar desde el centro</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateInPlace" xml:space="preserve">
+    <value>Rotar en su sitio</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateRandomly" xml:space="preserve">
+    <value>Rotar aleatoriamente</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotationTools_Tooltip" xml:space="preserve">
+    <value>Herramientas de rotación</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SetPosition" xml:space="preserve">
+    <value>Definir posición</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SlopeObjects" xml:space="preserve">
+    <value>Seguir la pendiente</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToObjectHeight" xml:space="preserve">
+    <value>A la altura del objeto</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToTerrainHeight" xml:space="preserve">
+    <value>A la altura del terreno</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="whatsNew" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="xml_Asc" xml:space="preserve">
+    <value>Asc</value>
+    <comment>Shortened version of "Ascending" (alternatively "Up"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Date" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="xml_DeleteConfirmMessage" xml:space="preserve">
+    <value>Quieres eliminar {0} permanentemente?</value>
+    <comment>The select file's name is inserted where {0} is.</comment>
+  </data>
+  <data name="xml_DeleteConfirmTitle" xml:space="preserve">
+    <value>Borrar archivo</value>
+  </data>
+  <data name="xml_DeleteLabel" xml:space="preserve">
+    <value>Borrar la selección guardada</value>
+  </data>
+  <data name="xml_Desc" xml:space="preserve">
+    <value>Desc</value>
+    <comment>Shortened version of "Descending" (alternatively "Down"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Export" xml:space="preserve">
+    <value>Exportar</value>
+  </data>
+  <data name="xml_Import" xml:space="preserve">
+    <value>Importar</value>
+  </data>
+  <data name="xml_Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="xml_OpenFolder" xml:space="preserve">
+    <value>Abrir carpeta</value>
+  </data>
+  <data name="xml_OverwriteMessage" xml:space="preserve">
+    <value>El archivo {0} ya existe.
+¿Quieres sobrescribirlo?</value>
+    <comment>The select file's name is inserted where {0} is. Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="xml_OverwriteTitle" xml:space="preserve">
+    <value>Sobrescribir archivo</value>
+  </data>
+  <data name="xml_Restore" xml:space="preserve">
+    <value>Restaurar</value>
+  </data>
+  <data name="xml_Restore_Tooltip" xml:space="preserve">
+    <value>Importa la selección a la posición donde fue exportada</value>
+  </data>
+  <data name="xml_SelectionInvalidMessage" xml:space="preserve">
+    <value>La selección está vacía o es inválida.</value>
+  </data>
+  <data name="xml_SelectionInvalidTitle" xml:space="preserve">
+    <value>Selección inválida</value>
+  </data>
+  <data name="xml_Size" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
+</root>
