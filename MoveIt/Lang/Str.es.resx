@@ -129,6 +129,10 @@
   <data name="baseUI_Marquee_Tooltip" xml:space="preserve">
     <value>Selección rectangular</value>
   </data>
+  <data name="baseUI_MergeNodesTooltip" xml:space="preserve">
+    <value>Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
   <data name="baseUI_MoveItButton_Tooltip" xml:space="preserve">
     <value>Move It</value>
   </data>
@@ -280,6 +284,10 @@
   </data>
   <data name="key_ToggleGridView" xml:space="preserve">
     <value>Mostrar/ocultar la cuadrícula</value>
+  </data>
+  <data name="key_ToggleNodeMerging" xml:space="preserve">
+    <value>Toggle Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
   </data>
   <data name="key_TogglePO" xml:space="preserve">
     <value>PO Activado/desactivado</value>
