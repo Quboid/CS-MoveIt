@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="baseUI_Bulldoze_Tooltip" xml:space="preserve">
+    <value>รื้อถอน</value>
+  </data>
+  <data name="baseUI_Clone_Tooltip" xml:space="preserve">
+    <value>คัดลอก (กดปุ่ม Alt + คลิกเพื่อทำการคัดลอกในตำแหน่งเดียวกัน)</value>
+  </data>
+  <data name="baseUI_FollowTerrain_Tooltip" xml:space="preserve">
+    <value>บังคับวัตถุให้เป็นไปตามภูมิประเทศ</value>
+  </data>
+  <data name="baseUI_Marquee_Tooltip" xml:space="preserve">
+    <value>การคลุมและเลือกวัตถุ</value>
+  </data>
+  <data name="baseUI_MergeNodesTooltip" xml:space="preserve">
+    <value>Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="baseUI_MoveItButton_Tooltip" xml:space="preserve">
+    <value>Move It</value>
+  </data>
+  <data name="baseUI_Single_Tooltip" xml:space="preserve">
+    <value>เลือกแบบเดี่ยว</value>
+  </data>
+  <data name="baseUI_ToggleGrid_Tooltip" xml:space="preserve">
+    <value>แสดงกริด</value>
+  </data>
+  <data name="baseUI_TogglePO_Tooltip" xml:space="preserve">
+    <value>แสดงวัตถุที่เป็น Procedural</value>
+  </data>
+  <data name="baseUI_ToggleSnapping_Tooltip" xml:space="preserve">
+    <value>เปิดการยืดติด</value>
+  </data>
+  <data name="baseUI_ToggleUnderground_Tooltip" xml:space="preserve">
+    <value>แสดงในมุมมองใต้ดิน</value>
+  </data>
+  <data name="baseUI_Toolbox_Tooltip" xml:space="preserve">
+    <value>กล่องเครื่องมือ</value>
+  </data>
+  <data name="filter_Buildings" xml:space="preserve">
+    <value>อาคาร/สิ่งปลูกสร้าง</value>
+  </data>
+  <data name="filter_Decals" xml:space="preserve">
+    <value>ดีคอล</value>
+  </data>
+  <data name="filter_Fences" xml:space="preserve">
+    <value>รั้ว</value>
+  </data>
+  <data name="filter_Nodes" xml:space="preserve">
+    <value>โหนด</value>
+  </data>
+  <data name="filter_Others" xml:space="preserve">
+    <value>อื่น ๆ</value>
+  </data>
+  <data name="filter_Paths" xml:space="preserve">
+    <value>เส้นทาง</value>
+  </data>
+  <data name="filter_Picker" xml:space="preserve">
+    <value>Picker</value>
+  </data>
+  <data name="filter_Picker_Tooltip" xml:space="preserve">
+    <value>เลือกวัตถุเพื่อทำการกรองเฉพาะวัตถุที่อยู่ประเภทเดียวกัน</value>
+  </data>
+  <data name="filter_PO" xml:space="preserve">
+    <value>PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="filter_Powerlines" xml:space="preserve">
+    <value>สายไฟฟ้า</value>
+  </data>
+  <data name="filter_Props" xml:space="preserve">
+    <value>วัตถุตกแต่ง</value>
+  </data>
+  <data name="filter_Roads" xml:space="preserve">
+    <value>ถนน</value>
+  </data>
+  <data name="filter_Segments" xml:space="preserve">
+    <value>ส่วน</value>
+  </data>
+  <data name="filter_Surfaces" xml:space="preserve">
+    <value>พื้นผิว</value>
+  </data>
+  <data name="filter_Tracks" xml:space="preserve">
+    <value>ราง</value>
+    <comment>Train/metro/monorail tracks, not roads.</comment>
+  </data>
+  <data name="filter_Trees" xml:space="preserve">
+    <value>ต้นไม้</value>
+  </data>
+  <data name="integration_NS2_Found" xml:space="preserve">
+    <value>พบ Network Skins 2, การทำงานร่วมกันได้เปิดการใช้งาน!</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_NS2_Notfound" xml:space="preserve">
+    <value>ไม่พบ Network Skins 2 และ/หรือทั้ง NS1 และ NS2 ได้ติดตั้งไว้พร้อมกัน, การทำงานร่วมกันได้ปิดการใช้งาน.</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_PO_Found" xml:space="preserve">
+    <value>พบ PO เวอร์ชัน {0}, การทำงานร่วมกันได้เปิดการใช้งาน!</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="integration_PO_Notfound" xml:space="preserve">
+    <value>ไม่พบ PO, การทำงานร่วมกันได้ปิดการใช้งาน</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="integration_PO_WrongVersion" xml:space="preserve">
+    <value>การทำงานร่วมกันกับ PO มีความผิดพลาด - พบเวอร์ชัน {0} (จำเป็นต้องเป็น: 1.7)</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="key_Bulldoze" xml:space="preserve">
+    <value>รื้อถอน</value>
+  </data>
+  <data name="key_Clone" xml:space="preserve">
+    <value>คัดลอก</value>
+  </data>
+  <data name="key_ConvertToPO" xml:space="preserve">
+    <value>แปลงสิ่งที่เลือกไว้ไปเป็นแบบ PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_DeselectAll" xml:space="preserve">
+    <value>ยกเลิกการเลือกทั้งหมด</value>
+  </data>
+  <data name="key_MoveDown" xml:space="preserve">
+    <value>เลื่อนลง</value>
+  </data>
+  <data name="key_MoveEast" xml:space="preserve">
+    <value>เลื่อนไปทางทิศตะวันออก</value>
+  </data>
+  <data name="key_MoveNorth" xml:space="preserve">
+    <value>เลื่อนไปทางทิศเหนือ</value>
+  </data>
+  <data name="key_MoveSouth" xml:space="preserve">
+    <value>เลื่อนไปทางทิศใต้</value>
+  </data>
+  <data name="key_MoveUp" xml:space="preserve">
+    <value>เลื่อนขึ้น</value>
+  </data>
+  <data name="key_MoveWest" xml:space="preserve">
+    <value>เลื่อนไปทางทิศตะวันตก</value>
+  </data>
+  <data name="key_QuickUndergroundView" xml:space="preserve">
+    <value>กดค้างเพื่อแสดงมุมมองใต้ดิน</value>
+  </data>
+  <data name="key_Redo" xml:space="preserve">
+    <value>ทำซ้ำ</value>
+  </data>
+  <data name="key_RotateCCW" xml:space="preserve">
+    <value>หมุนทวนเข็มนาฬิกา</value>
+  </data>
+  <data name="key_RotateCW" xml:space="preserve">
+    <value>หมุนตามเข็มนาฬิกา</value>
+  </data>
+  <data name="key_ScaleIn" xml:space="preserve">
+    <value>ขยายเข้าด้านใน</value>
+  </data>
+  <data name="key_ScaleOut" xml:space="preserve">
+    <value>ขยายออกด้านนอก</value>
+  </data>
+  <data name="key_ShowSelectors" xml:space="preserve">
+    <value>แสดง/ซ่อนการเลือก</value>
+  </data>
+  <data name="key_StepOver" xml:space="preserve">
+    <value>ก้าวข้ามวัตถุที่ตำแหน่งเมาส์ปัจจุบัน</value>
+  </data>
+  <data name="key_ToggleDebugPanel" xml:space="preserve">
+    <value>แสดงแผงข้อบกพร่อง</value>
+  </data>
+  <data name="key_ToggleGridView" xml:space="preserve">
+    <value>แสดงกริด</value>
+  </data>
+  <data name="key_ToggleNodeMerging" xml:space="preserve">
+    <value>Toggle Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="key_TogglePO" xml:space="preserve">
+    <value>สลับการเปิด/ปิดการใช้งาน PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_ToggleTool" xml:space="preserve">
+    <value>เปิด/ปิดเครื่องมือ</value>
+  </data>
+  <data name="key_ToggleUndergroundView" xml:space="preserve">
+    <value>แสดงในมุมมองใต้ดิน</value>
+  </data>
+  <data name="key_ToolFullSlope" xml:space="preserve">
+    <value>ลาดเอียงเต็มรูปแบบ</value>
+  </data>
+  <data name="key_ToolLineUpSpaced" xml:space="preserve">
+    <value>เรียงวัตถุเป็นเส้นตรง (มีเว้นเป็นช่องว่าง)</value>
+  </data>
+  <data name="key_ToolLineUpUnspaced" xml:space="preserve">
+    <value>เรียงวัตถุเป็นเส้นตรง (ไม่เว้นเป็นช่องว่าง)</value>
+  </data>
+  <data name="key_ToolMirrorObjects" xml:space="preserve">
+    <value>คัดลอกแบบกลับด้าน หรือสะท้อน</value>
+  </data>
+  <data name="key_ToolQuickSlopeNode" xml:space="preserve">
+    <value>ปรับโหนดให้ลาดเอียงแบบด่วน</value>
+  </data>
+  <data name="key_ToolResetObjects" xml:space="preserve">
+    <value>คืนค่าวัตถุใด ๆ</value>
+  </data>
+  <data name="key_ToolRotateAtCentre" xml:space="preserve">
+    <value>หมุน ณ จุดศูนย์กลาง</value>
+  </data>
+  <data name="key_ToolRotateInPlace" xml:space="preserve">
+    <value>หมุน ณ พื้นที่</value>
+  </data>
+  <data name="key_ToolRotateRandomly" xml:space="preserve">
+    <value>หมุนแบบสุ่ม</value>
+  </data>
+  <data name="key_ToolSetPosition" xml:space="preserve">
+    <value>ตั้งตำแหน่ง</value>
+  </data>
+  <data name="key_ToolSlopeObjects" xml:space="preserve">
+    <value>ปรับวัตถุให้ลาดเอียง</value>
+  </data>
+  <data name="key_ToolToObjectHeight" xml:space="preserve">
+    <value>ปรับตำแหน่งให้เท่ากับระดับของวัตถุ</value>
+  </data>
+  <data name="key_ToolToTerrainHeight" xml:space="preserve">
+    <value>ปรับตำแหน่งให้เท่ากับระดับภูมิประเทศ</value>
+  </data>
+  <data name="key_Undo" xml:space="preserve">
+    <value>เลิกทำ</value>
+  </data>
+  <data name="mod_description" xml:space="preserve">
+    <value>ย้ายสิ่งต่าง ๆ</value>
+  </data>
+  <data name="options_AdvancedPillarControl" xml:space="preserve">
+    <value>ใช้การควบคุมเสาแบบขั้นสูง</value>
+  </data>
+  <data name="options_AdvancedPillarControl_Tooltip" xml:space="preserve">
+    <value>อนุญาตให้มีการควบคุมเสาและเสาไฟแบบละเอียด - เกมจะไม่รีเซ็ตตำแหน่ง แต่อาจทำให้เกิดความผิดพลาดของภูมิประเทศ ที่จำเป็นต้องใช้ Surface Painter ในการลบออก</value>
+    <comment>Use the name for Surface Painter that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="options_AltForPillars" xml:space="preserve">
+    <value>เลือกเสาไฟ และเสา โดยการกดปุ่ม Alt บนแป้นพิมพ์ค้างไว้เท่านั้น</value>
+  </data>
+  <data name="options_AutoCloseToolbox" xml:space="preserve">
+    <value>ปิดเมนูเครื่องมือโดยอัตโนมัติ</value>
+  </data>
+  <data name="options_AutoCloseToolbox_Tooltip" xml:space="preserve">
+    <value>เลือกตัวเลือกนี้ เพื่อปิดเมนูกล่องเครื่องมือหลังจากเลือกเครื่องมือแล้ว</value>
+  </data>
+  <data name="options_Beg" xml:space="preserve">
+    <value>โปรดสนับสนุนการพัฒนาม็อด Move It และม็อดอื่นๆ ของเรา</value>
+  </data>
+  <data name="options_DisableDebugLogging" xml:space="preserve">
+    <value>ปิดใช้งานบันทึกข้อความข้อบกพร่อง</value>
+  </data>
+  <data name="options_DisableDebugLogging_Tooltip" xml:space="preserve">
+    <value>หากเลือกไว้ ข้อความข้อบกพร่องจะไม่มีการบันทึกไว้</value>
+  </data>
+  <data name="options_ExtraOptions" xml:space="preserve">
+    <value>เครื่องมือเพิ่มเติม</value>
+  </data>
+  <data name="options_fixTreeSnapping" xml:space="preserve">
+    <value>ซ่อมแซม Tree Snapping</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_fixTreeSnappingTooltip" xml:space="preserve">
+    <value>ถ้า Tree Snapping ทำให้ระดับความสูงของต้นไม้นั้นถูกปิดใช้งาน คลิกตรงนี้หลังจากโหลดเมืองของคุณแล้ว</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_HidePODeletionWarning" xml:space="preserve">
+    <value>ซ่อนการแจ้งเตือนการลบวัตถุที่เป็น PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="options_Options" xml:space="preserve">
+    <value>ตัวเลือก</value>
+  </data>
+  <data name="options_Patreon" xml:space="preserve">
+    <value>Patreon</value>
+  </data>
+  <data name="options_PatreonTooltip" xml:space="preserve">
+    <value>สนับสนุนเรา บน Patreon</value>
+  </data>
+  <data name="options_Paypal" xml:space="preserve">
+    <value>Paypal</value>
+  </data>
+  <data name="options_PaypalTooltip" xml:space="preserve">
+    <value>สนับสนุนเรา บน Paypal</value>
+  </data>
+  <data name="options_PODeleteWarning" xml:space="preserve">
+    <value>โปรดทราบ: คุณไม่สามารถย้อนการกระทำของการรื้อถอนใด ๆ ที่เป็นวัตถุแบบ PO นั่นหมายความว่า ถ้าคุณลบวัตถุที่เป็น PO โดยการใช้ Move It จะทำให้หายไปทันทีและเป็นอย่างถาวร</value>
+    <comment>Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="options_PreferFastmove" xml:space="preserve">
+    <value>ต้องการความรวดเร็ว และแสดงผลการเคลื่อนไหวขณะย้ายแบบความละเอียดต่ำ (กดปุ่ม Shift บนแป้นพิมพ์ค้างไว้ เพื่อทำการสลับชั่วคราว)</value>
+  </data>
+  <data name="options_PreferFastmove_Tooltip" xml:space="preserve">
+    <value>ช่วยให้คุณในการระบุตำแหน่งวัตถุ เมื่อเฟรมเรตของคุณแย่</value>
+  </data>
+  <data name="options_ProceduralObjects" xml:space="preserve">
+    <value>Procedural Objects</value>
+  </data>
+  <data name="options_RemoveGhostNodes" xml:space="preserve">
+    <value>ลบโหนดที่ล่องหน</value>
+  </data>
+  <data name="options_RemoveGhostNodes_Tooltip" xml:space="preserve">
+    <value>ใช้ปุ่มนี้เมื่ออยู่ในเกม เพื่อลบโหนดที่ล่องหน (โหนดที่ไม่มีส่วนนั้นติดมา). หมายเหตุ: สิ่งนี้จะมีการล้างบันทึกการย้อนกลับของ Move It ออกไป!</value>
+  </data>
+  <data name="options_ResetButtonPosition" xml:space="preserve">
+    <value>รีเซ็ตตำแหน่งปุ่ม</value>
+  </data>
+  <data name="options_RightClickCancel" xml:space="preserve">
+    <value>คลิกขวายกเลิกการโคลน</value>
+  </data>
+  <data name="options_RightClickCancel_Tooltip" xml:space="preserve">
+    <value>หากมีการเลือกไว้ การคลิกขวาจะยกเลิกการโคลนแทนที่จะหมุน 45 องศา</value>
+  </data>
+  <data name="options_ShortcutsGeneral" xml:space="preserve">
+    <value>ปุ่มทางลัดทั่วไป</value>
+  </data>
+  <data name="options_ShortcutsToolbox" xml:space="preserve">
+    <value>ปุ่มทางลัดกล่องเครื่องมือ</value>
+  </data>
+  <data name="options_ShowDebugPanel" xml:space="preserve">
+    <value>แสดงแผงข้อบกพร่องของ Move It</value>
+  </data>
+  <data name="options_superSelect" xml:space="preserve">
+    <value>อนุญาตให้ Move It สามารภเลือกได้ทุกสิ่งทุกอย่าง (โปรดใช้ด้วยความระมัดระวัง)</value>
+  </data>
+  <data name="options_superSelect_Tooltip" xml:space="preserve">
+    <value>สิ่งนี้จะทำให้ Move It สามารถเลือกทุกสิ่งทุกอย่างได้ กรุณาอย่าใช้ตัวเลือกนี้ เว้นแต่คุณรู้ว่าคุณกำลังจะทำอะไร
+
+นี่เป็นตัวเลือกที่ทรงพลังมาก และนั่นจะทำให้เมืองของคุณพังได้</value>
+  </data>
+  <data name="options_UseCompass" xml:space="preserve">
+    <value>ใช้เข็มทิศในการเคลื่อนย้าย</value>
+  </data>
+  <data name="options_UseCompass_Tooltip" xml:space="preserve">
+    <value>หากมีการเลือกตัวเลือกนี้ ปุ่ม Up จะเคลื่อนย้ายไปทางทิศเหนือ, ปุ่ม Down ไปทางทิศใต้, ปุ่ม Left ไปทางทิศตะวันตก และปุ่ม Right ไปทางทิศตะวันออก</value>
+  </data>
+  <data name="options_UseUUI" xml:space="preserve">
+    <value>ใช้ UnifiedUI</value>
+    <comment>Do not translate 'UnifiedUI'</comment>
+  </data>
+  <data name="setpos_A_Tooltip" xml:space="preserve">
+    <value>มุม</value>
+  </data>
+  <data name="setpos_Go" xml:space="preserve">
+    <value>ไป</value>
+  </data>
+  <data name="setpos_H_Tooltip" xml:space="preserve">
+    <value>ความสูง</value>
+  </data>
+  <data name="setpos_Title" xml:space="preserve">
+    <value>ตำแหน่ง</value>
+  </data>
+  <data name="toolbox_ConvertToPO" xml:space="preserve">
+    <value>แปลงเป็นวัตถุแบบ PO</value>
+    <comment>Do not translate 'PO'. Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ExportSelection" xml:space="preserve">
+    <value>ส่งออกสิ่งที่เลือกไว้</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_HeightTools_Tooltip" xml:space="preserve">
+    <value>เครื่องมือปรับความสูง</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ImportSelection" xml:space="preserve">
+    <value>นำเข้าสิ่งที่เลือก</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_LineUpObjects" xml:space="preserve">
+    <value>เรียงวัตถุให้เป็นเส้นตรง</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_MirrorObjects" xml:space="preserve">
+    <value>คัดลอกวัตถุแบบกลับด้าน หรือสะท้อน</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_OtherTools_Tooltip" xml:space="preserve">
+    <value>เครื่องมืออื่น ๆ</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ResetObjects" xml:space="preserve">
+    <value>คืนค่าวัตถุ</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateAtCentre" xml:space="preserve">
+    <value>หมุน ณ จุดศูนย์กลาง</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateInPlace" xml:space="preserve">
+    <value>หมุน ณ พื้นที่</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateRandomly" xml:space="preserve">
+    <value>หมุนแบบสุ่ม</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotationTools_Tooltip" xml:space="preserve">
+    <value>เครื่องมือการหมุน</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SetPosition" xml:space="preserve">
+    <value>ตั้งตำแหน่ง</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SlopeObjects" xml:space="preserve">
+    <value>ปรับวัตถุให้ลาดเอียง</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToObjectHeight" xml:space="preserve">
+    <value>ให้เท่ากับระดับของวัตถุ</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToTerrainHeight" xml:space="preserve">
+    <value>ให้เท่ากับระดับภูมิประเทศ</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="whatsNew" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="xml_Asc" xml:space="preserve">
+    <value>ขึ้น</value>
+    <comment>Shortened version of "Ascending" (alternatively "Up"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Date" xml:space="preserve">
+    <value>วัน</value>
+  </data>
+  <data name="xml_DeleteConfirmMessage" xml:space="preserve">
+    <value>คุณต้องการลบไฟล์ '{0}' โดยถาวรหรือไม่?</value>
+    <comment>The select file's name is inserted where {0} is.</comment>
+  </data>
+  <data name="xml_DeleteConfirmTitle" xml:space="preserve">
+    <value>ลบไฟล์</value>
+  </data>
+  <data name="xml_DeleteLabel" xml:space="preserve">
+    <value>ลบสิ่งที่บันทึกการเลือก</value>
+  </data>
+  <data name="xml_Desc" xml:space="preserve">
+    <value>ลง</value>
+    <comment>Shortened version of "Descending" (alternatively "Down"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Export" xml:space="preserve">
+    <value>ส่งออก</value>
+  </data>
+  <data name="xml_Import" xml:space="preserve">
+    <value>นำเข้า</value>
+  </data>
+  <data name="xml_Name" xml:space="preserve">
+    <value>ชื่อ</value>
+  </data>
+  <data name="xml_OpenFolder" xml:space="preserve">
+    <value>เปิดโฟลเดอร์</value>
+  </data>
+  <data name="xml_OverwriteMessage" xml:space="preserve">
+    <value>ไฟล์ '{0}' มีอยู่แล้ว
+คุณต้องการเขียนทับไฟล์นี้หรือไม่?</value>
+    <comment>The select file's name is inserted where {0} is. Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="xml_OverwriteTitle" xml:space="preserve">
+    <value>เขียนทับไฟล์</value>
+  </data>
+  <data name="xml_Restore" xml:space="preserve">
+    <value>คืนค่า</value>
+  </data>
+  <data name="xml_Restore_Tooltip" xml:space="preserve">
+    <value>นำเข้าส่วนที่เลือกไปยังตำแหน่งเดิมที่เคยส่งออกไป</value>
+  </data>
+  <data name="xml_SelectionInvalidMessage" xml:space="preserve">
+    <value>สิ่งที่เลือกไว้ว่างเปล่า หรือไม่ถูกต้อง</value>
+  </data>
+  <data name="xml_SelectionInvalidTitle" xml:space="preserve">
+    <value>การเลือกที่ไม่ถูกต้อง</value>
+  </data>
+  <data name="xml_Size" xml:space="preserve">
+    <value>ขนาด</value>
+  </data>
+</root>
