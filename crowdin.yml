@@ -1,3 +1,3 @@
 files:
-  - source: /MoveIt/Localization/Str.resx
-    translation: /MoveIt/Localization/Str.%two_letters_code%.resx
+  - source: /MoveIt/Lang/Str.resx
+    translation: /MoveIt/Lang/Str.%two_letters_code%.resx
