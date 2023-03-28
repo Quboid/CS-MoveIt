@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="baseUI_Bulldoze_Tooltip" xml:space="preserve">
+    <value>ブルドーザー</value>
+  </data>
+  <data name="baseUI_Clone_Tooltip" xml:space="preserve">
+    <value>コピー (Alt+クリックで複製)</value>
+  </data>
+  <data name="baseUI_FollowTerrain_Tooltip" xml:space="preserve">
+    <value>地形に追従する</value>
+  </data>
+  <data name="baseUI_Marquee_Tooltip" xml:space="preserve">
+    <value>連続選択</value>
+  </data>
+  <data name="baseUI_MergeNodesTooltip" xml:space="preserve">
+    <value>Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="baseUI_MoveItButton_Tooltip" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="baseUI_Single_Tooltip" xml:space="preserve">
+    <value>単一選択</value>
+  </data>
+  <data name="baseUI_ToggleGrid_Tooltip" xml:space="preserve">
+    <value>グリッドの切り替え</value>
+  </data>
+  <data name="baseUI_TogglePO_Tooltip" xml:space="preserve">
+    <value>Procedual Objectsの切り替え</value>
+  </data>
+  <data name="baseUI_ToggleSnapping_Tooltip" xml:space="preserve">
+    <value>スナップの切り替え</value>
+  </data>
+  <data name="baseUI_ToggleUnderground_Tooltip" xml:space="preserve">
+    <value>地下表示の切り替え</value>
+  </data>
+  <data name="baseUI_Toolbox_Tooltip" xml:space="preserve">
+    <value>ツールボックス</value>
+  </data>
+  <data name="filter_Buildings" xml:space="preserve">
+    <value>建物</value>
+  </data>
+  <data name="filter_Decals" xml:space="preserve">
+    <value>デカール</value>
+  </data>
+  <data name="filter_Fences" xml:space="preserve">
+    <value>フェンス</value>
+  </data>
+  <data name="filter_Nodes" xml:space="preserve">
+    <value>ノード</value>
+  </data>
+  <data name="filter_Others" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="filter_Paths" xml:space="preserve">
+    <value>パス</value>
+  </data>
+  <data name="filter_Picker" xml:space="preserve">
+    <value>スポイト</value>
+  </data>
+  <data name="filter_Picker_Tooltip" xml:space="preserve">
+    <value>同じ種類のオブジェクトに対してフィルタリングするオブジェクトを選択</value>
+  </data>
+  <data name="filter_PO" xml:space="preserve">
+    <value>PO</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="filter_Powerlines" xml:space="preserve">
+    <value>送電線</value>
+  </data>
+  <data name="filter_Props" xml:space="preserve">
+    <value>Prop</value>
+  </data>
+  <data name="filter_Roads" xml:space="preserve">
+    <value>道路</value>
+  </data>
+  <data name="filter_Segments" xml:space="preserve">
+    <value>セグメント</value>
+  </data>
+  <data name="filter_Surfaces" xml:space="preserve">
+    <value>サーフェス</value>
+  </data>
+  <data name="filter_Tracks" xml:space="preserve">
+    <value>線路</value>
+    <comment>Train/metro/monorail tracks, not roads.</comment>
+  </data>
+  <data name="filter_Trees" xml:space="preserve">
+    <value>樹木</value>
+  </data>
+  <data name="integration_NS2_Found" xml:space="preserve">
+    <value>Network Skins 2が見つかったため、Move Itと統合しました。</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_NS2_Notfound" xml:space="preserve">
+    <value>Network Skins 2が見つからないか、NS1とNS2の両方がサブスクライブされています。Move Itと統合できません。</value>
+    <comment>Use the name for Network Skins that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="integration_PO_Found" xml:space="preserve">
+    <value>POのバージョン{0} が見つかりました。Move Itと統合します。</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="integration_PO_Notfound" xml:space="preserve">
+    <value>POが見つかりませんでした。Move Itと統合されません。</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="integration_PO_WrongVersion" xml:space="preserve">
+    <value>PO の統合に失敗しました - 見つかったバージョン {0} (必須: 1.7)</value>
+    <comment>Do not translate 'PO'. {0} denotes where the PO version number is inserted.</comment>
+  </data>
+  <data name="key_Bulldoze" xml:space="preserve">
+    <value>ブルドーザー</value>
+  </data>
+  <data name="key_Clone" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="key_ConvertToPO" xml:space="preserve">
+    <value>選択したオブジェクトをPO に変換</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_DeselectAll" xml:space="preserve">
+    <value>すべて選択解除</value>
+  </data>
+  <data name="key_MoveDown" xml:space="preserve">
+    <value>下に移動</value>
+  </data>
+  <data name="key_MoveEast" xml:space="preserve">
+    <value>東に移動</value>
+  </data>
+  <data name="key_MoveNorth" xml:space="preserve">
+    <value>北に移動</value>
+  </data>
+  <data name="key_MoveSouth" xml:space="preserve">
+    <value>南へ移動</value>
+  </data>
+  <data name="key_MoveUp" xml:space="preserve">
+    <value>上に移動</value>
+  </data>
+  <data name="key_MoveWest" xml:space="preserve">
+    <value>西に移動</value>
+  </data>
+  <data name="key_QuickUndergroundView" xml:space="preserve">
+    <value>長押しで地下表示</value>
+  </data>
+  <data name="key_Redo" xml:space="preserve">
+    <value>やり直し</value>
+  </data>
+  <data name="key_RotateCCW" xml:space="preserve">
+    <value>反時計回りに回転します。</value>
+  </data>
+  <data name="key_RotateCW" xml:space="preserve">
+    <value>時計回りに回転</value>
+  </data>
+  <data name="key_ScaleIn" xml:space="preserve">
+    <value>内側に拡大縮小</value>
+  </data>
+  <data name="key_ScaleOut" xml:space="preserve">
+    <value>外側に拡大縮小</value>
+  </data>
+  <data name="key_ShowSelectors" xml:space="preserve">
+    <value>セレクターの表示/非表示</value>
+  </data>
+  <data name="key_StepOver" xml:space="preserve">
+    <value>ステップ実行</value>
+  </data>
+  <data name="key_ToggleDebugPanel" xml:space="preserve">
+    <value>デバッグパネルの切り替え</value>
+  </data>
+  <data name="key_ToggleGridView" xml:space="preserve">
+    <value>グリッド表示の切り替え</value>
+  </data>
+  <data name="key_ToggleNodeMerging" xml:space="preserve">
+    <value>Toggle Autoconnect Cloned Nodes</value>
+    <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
+  </data>
+  <data name="key_TogglePO" xml:space="preserve">
+    <value>POのアクティブ/非アクティブの切り替え</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="key_ToggleTool" xml:space="preserve">
+    <value>ツールの切り替え</value>
+  </data>
+  <data name="key_ToggleUndergroundView" xml:space="preserve">
+    <value>地下表示の切り替え</value>
+  </data>
+  <data name="key_ToolFullSlope" xml:space="preserve">
+    <value>スロープ状に並べる</value>
+  </data>
+  <data name="key_ToolLineUpSpaced" xml:space="preserve">
+    <value>整列(間隔を空ける)</value>
+  </data>
+  <data name="key_ToolLineUpUnspaced" xml:space="preserve">
+    <value>整列(間隔を空けない)</value>
+  </data>
+  <data name="key_ToolMirrorObjects" xml:space="preserve">
+    <value>オブジェクトを反転</value>
+  </data>
+  <data name="key_ToolQuickSlopeNode" xml:space="preserve">
+    <value>１つのノードをスロープ状に並べる</value>
+  </data>
+  <data name="key_ToolResetObjects" xml:space="preserve">
+    <value>オブジェクトをリセット</value>
+  </data>
+  <data name="key_ToolRotateAtCentre" xml:space="preserve">
+    <value>中心を基準に回転</value>
+  </data>
+  <data name="key_ToolRotateInPlace" xml:space="preserve">
+    <value>その場で回転</value>
+  </data>
+  <data name="key_ToolRotateRandomly" xml:space="preserve">
+    <value>ランダムに回転</value>
+  </data>
+  <data name="key_ToolSetPosition" xml:space="preserve">
+    <value>座標を指定</value>
+  </data>
+  <data name="key_ToolSlopeObjects" xml:space="preserve">
+    <value>オブジェクトをスロープ状に並べる</value>
+  </data>
+  <data name="key_ToolToObjectHeight" xml:space="preserve">
+    <value>オブジェクトの高さに合わせる</value>
+  </data>
+  <data name="key_ToolToTerrainHeight" xml:space="preserve">
+    <value>地形の高さに合わせる</value>
+  </data>
+  <data name="key_Undo" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="mod_description" xml:space="preserve">
+    <value>いろいろなものを移動させます</value>
+  </data>
+  <data name="options_AdvancedPillarControl" xml:space="preserve">
+    <value>高度な柱の制御を使用する</value>
+  </data>
+  <data name="options_AdvancedPillarControl_Tooltip" xml:space="preserve">
+    <value>柱やパイロンを細かく制御できるようになり、ゲームによる位置の初期化を防ぎます。しかし、Surface Painterとの相性問題により、Surface Painterのアンインストールが必要になる場合があります。</value>
+    <comment>Use the name for Surface Painter that appears in the Content Manager in your language.</comment>
+  </data>
+  <data name="options_AltForPillars" xml:space="preserve">
+    <value>Altキーを押してる間のみパイロンと橋脚を選択します</value>
+  </data>
+  <data name="options_AutoCloseToolbox" xml:space="preserve">
+    <value>ツールボックスメニューを自動で閉じる</value>
+  </data>
+  <data name="options_AutoCloseToolbox_Tooltip" xml:space="preserve">
+    <value>チェックを入れると、ツールを選択後にツールボックスのメニューを閉じます。</value>
+  </data>
+  <data name="options_Beg" xml:space="preserve">
+    <value>Move Itと私の他のMODの開発を支援してください。</value>
+  </data>
+  <data name="options_DisableDebugLogging" xml:space="preserve">
+    <value>デバッグメッセージのログを無効にする</value>
+  </data>
+  <data name="options_DisableDebugLogging_Tooltip" xml:space="preserve">
+    <value>チェックを入れた場合、デバッグメッセージは記録されません。</value>
+  </data>
+  <data name="options_ExtraOptions" xml:space="preserve">
+    <value>追加のオプション</value>
+  </data>
+  <data name="options_fixTreeSnapping" xml:space="preserve">
+    <value>Tree Snappingを修正</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_fixTreeSnappingTooltip" xml:space="preserve">
+    <value>Tree Snappingが樹木の高さの変更を無効にしてしまう場合は、都市のロード直後にこのボタンを押してください。</value>
+    <comment>Don't translate "Tree Snapping"</comment>
+  </data>
+  <data name="options_HidePODeletionWarning" xml:space="preserve">
+    <value>PO削除時の警告を非表示にする</value>
+    <comment>Do not translate 'PO'.</comment>
+  </data>
+  <data name="options_Options" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="options_Patreon" xml:space="preserve">
+    <value>Patreon</value>
+  </data>
+  <data name="options_PatreonTooltip" xml:space="preserve">
+    <value>Patreonで支援</value>
+  </data>
+  <data name="options_Paypal" xml:space="preserve">
+    <value>Paypal</value>
+  </data>
+  <data name="options_PaypalTooltip" xml:space="preserve">
+    <value>Paypalで支援</value>
+  </data>
+  <data name="options_PODeleteWarning" xml:space="preserve">
+    <value>注意: Bulldozed POを元に戻すことはできません。つまり、Move Itを使用して
+POオブジェクトを削除すると、完全に消去されます。</value>
+    <comment>Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="options_PreferFastmove" xml:space="preserve">
+    <value>詳細描画を省き、移動を高速にします(Shiftキー押下中は一時的に切り替え可能)</value>
+  </data>
+  <data name="options_PreferFastmove_Tooltip" xml:space="preserve">
+    <value>フレームレートが低い場合にオブジェクトを配置するのに役立ちます。</value>
+  </data>
+  <data name="options_ProceduralObjects" xml:space="preserve">
+    <value>Procedural Objects</value>
+  </data>
+  <data name="options_RemoveGhostNodes" xml:space="preserve">
+    <value>ゴーストノードの削除</value>
+  </data>
+  <data name="options_RemoveGhostNodes_Tooltip" xml:space="preserve">
+    <value>ゲーム内でゴーストノード(セグメントが接続されていないノード) を削除するときにこのボタンを使用します。注意: これは「元に戻す」の履歴を消去します。復元できません。</value>
+  </data>
+  <data name="options_ResetButtonPosition" xml:space="preserve">
+    <value>ボタンの位置をリセット</value>
+  </data>
+  <data name="options_RightClickCancel" xml:space="preserve">
+    <value>右クリックで複製を解除</value>
+  </data>
+  <data name="options_RightClickCancel_Tooltip" xml:space="preserve">
+    <value>チェックされている場合、右クリックでコピーを解除します。(デフォルトでは45°回転する)</value>
+  </data>
+  <data name="options_ShortcutsGeneral" xml:space="preserve">
+    <value>一般的なショートカット</value>
+  </data>
+  <data name="options_ShortcutsToolbox" xml:space="preserve">
+    <value>ツールボックスのショートカット</value>
+  </data>
+  <data name="options_ShowDebugPanel" xml:space="preserve">
+    <value>デバッグ画面を表示</value>
+  </data>
+  <data name="options_superSelect" xml:space="preserve">
+    <value>Move Itで全てが選択可能です。 使用時は要注意！</value>
+  </data>
+  <data name="options_superSelect_Tooltip" xml:space="preserve">
+    <value>有効にすると、Move Itで「何もかも全て」が選択可能です。 何をするか分からない場合は、機能を使用しないで下さい。
+
+警告: 非常に強力な機能で、都市を簡単に破壊できます！</value>
+  </data>
+  <data name="options_UseCompass" xml:space="preserve">
+    <value>方角を合わせる</value>
+  </data>
+  <data name="options_UseCompass_Tooltip" xml:space="preserve">
+    <value>チェックされている場合、Upキーで北に、Downキーで南に、左キーで西に、右キーで東に移動します。</value>
+  </data>
+  <data name="options_UseUUI" xml:space="preserve">
+    <value>UnifiedUI を使用する</value>
+    <comment>Do not translate 'UnifiedUI'</comment>
+  </data>
+  <data name="setpos_A_Tooltip" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="setpos_Go" xml:space="preserve">
+    <value>実行</value>
+  </data>
+  <data name="setpos_H_Tooltip" xml:space="preserve">
+    <value>高さ</value>
+  </data>
+  <data name="setpos_Title" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="toolbox_ConvertToPO" xml:space="preserve">
+    <value>POに変換</value>
+    <comment>Do not translate 'PO'. Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ExportSelection" xml:space="preserve">
+    <value>選択したものをエクスポート</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_HeightTools_Tooltip" xml:space="preserve">
+    <value>高さツール</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ImportSelection" xml:space="preserve">
+    <value>選択したものをインポート</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_LineUpObjects" xml:space="preserve">
+    <value>オブジェクトを整列</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_MirrorObjects" xml:space="preserve">
+    <value>オブジェクトを反転</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_OtherTools_Tooltip" xml:space="preserve">
+    <value>その他のツール</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ResetObjects" xml:space="preserve">
+    <value>オブジェクトをリセット</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateAtCentre" xml:space="preserve">
+    <value>中心を基準に回転</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateInPlace" xml:space="preserve">
+    <value>その場で回転</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotateRandomly" xml:space="preserve">
+    <value>ランダムに回転</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_RotationTools_Tooltip" xml:space="preserve">
+    <value>回転ツール</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SetPosition" xml:space="preserve">
+    <value>座標を指定</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_SlopeObjects" xml:space="preserve">
+    <value>スロープ状に並べる</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToObjectHeight" xml:space="preserve">
+    <value>オブジェクトの高さに合わせる</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="toolbox_ToTerrainHeight" xml:space="preserve">
+    <value>地形の高さに合わせる</value>
+    <comment>Length needs to be short, not much longer than "Rotate At Centre".</comment>
+  </data>
+  <data name="whatsNew" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="xml_Asc" xml:space="preserve">
+    <value>昇順</value>
+    <comment>Shortened version of "Ascending" (alternatively "Up"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Date" xml:space="preserve">
+    <value>日付</value>
+  </data>
+  <data name="xml_DeleteConfirmMessage" xml:space="preserve">
+    <value>ファイル '{0}' を完全に削除しますか？</value>
+    <comment>The select file's name is inserted where {0} is.</comment>
+  </data>
+  <data name="xml_DeleteConfirmTitle" xml:space="preserve">
+    <value>ファイルを削除</value>
+  </data>
+  <data name="xml_DeleteLabel" xml:space="preserve">
+    <value>保存済み選択項目を削除</value>
+  </data>
+  <data name="xml_Desc" xml:space="preserve">
+    <value>降順</value>
+    <comment>Shortened version of "Descending" (alternatively "Down"). Maximum 6 characters.</comment>
+  </data>
+  <data name="xml_Export" xml:space="preserve">
+    <value>エクスポート</value>
+  </data>
+  <data name="xml_Import" xml:space="preserve">
+    <value>インポート</value>
+  </data>
+  <data name="xml_Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="xml_OpenFolder" xml:space="preserve">
+    <value>フォルダを開く</value>
+  </data>
+  <data name="xml_OverwriteMessage" xml:space="preserve">
+    <value>ファイル '{0}' はすでに存在します。
+上書きしますか?</value>
+    <comment>The select file's name is inserted where {0} is. Try to keep each line length approximately the same length as in English, even if this requires a different number of lines.</comment>
+  </data>
+  <data name="xml_OverwriteTitle" xml:space="preserve">
+    <value>ファイルを上書き</value>
+  </data>
+  <data name="xml_Restore" xml:space="preserve">
+    <value>復元する</value>
+  </data>
+  <data name="xml_Restore_Tooltip" xml:space="preserve">
+    <value>エクスポートされた元の位置に選択したものをインポートします</value>
+  </data>
+  <data name="xml_SelectionInvalidMessage" xml:space="preserve">
+    <value>何も選択されていないか、無効です。</value>
+  </data>
+  <data name="xml_SelectionInvalidTitle" xml:space="preserve">
+    <value>選択が無効です</value>
+  </data>
+  <data name="xml_Size" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+</root>
