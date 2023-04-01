@@ -1,4 +1,5 @@
 using ColossalFramework;
+using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,11 @@ namespace MoveIt
 
         public override void Do()
         {
+            QTaskManager.QueueOnSimulation(() => DoImplemenation());
+        }
+
+        private bool DoImplemenation()
+        {
             float angleDelta;
             float heightDelta;
             float distance;
@@ -63,10 +69,10 @@ namespace MoveIt
 
             if (mode == Modes.Quick)
             {
-                if (selection.Count != 1) return;
+                if (selection.Count != 1) return true;
                 Instance instance = selection.First();
 
-                if (!instance.isValid || !(instance is MoveableNode nodeInstance)) return;
+                if (!instance.isValid || !(instance is MoveableNode nodeInstance)) return true;
 
                 NetNode node = nodeBuffer[nodeInstance.id.NetNode];
 
@@ -76,7 +82,7 @@ namespace MoveIt
                     ushort segId;
                     if ((segId = node.GetSegment(i)) > 0)
                     {
-                        if (c > 1) return; // More than 2 segments found
+                        if (c > 1) return true; // More than 2 segments found
 
                         NetSegment segment = segmentBuffer[segId];
                         InstanceID instanceID = default;
@@ -95,7 +101,7 @@ namespace MoveIt
             }
             else if (mode == Modes.Auto)
             {
-                if (selection.Count < 2) return;
+                if (selection.Count < 2) return true;
                 GetExtremeObjects(out keyInstance[0], out keyInstance[1]);
             }
 
@@ -112,9 +118,16 @@ namespace MoveIt
 
                 state.instance.SetHeight(Mathf.Clamp(PointA.position.y + heightOffset, 0f, 1000f));
             }
+
+            return true;
         }
 
         public override void Undo()
+        {
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, UndoImplemenation, "AlignSlope-Undo");
+        }
+
+        private bool UndoImplemenation()
         {
             foreach (InstanceState state in m_states)
             {
@@ -122,6 +135,8 @@ namespace MoveIt
             }
 
             UpdateArea(GetTotalBounds(false));
+
+            return true;
         }
 
         public override void ReplaceInstances(List<CloneData> toReplace)

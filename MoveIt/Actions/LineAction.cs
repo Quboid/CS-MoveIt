@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,11 @@ namespace MoveIt
         {
             if (selection.Count < 3) return;
 
+            QTaskManager.QueueOnSimulation(() => DoImplemenation());
+        }
+
+        private bool DoImplemenation()
+        {
             Dictionary<InstanceState, float> distances = new Dictionary<InstanceState, float>();
             Bounds originalBounds = GetTotalBounds(false);
             Matrix4x4 matrix4x = default;
@@ -114,9 +120,16 @@ namespace MoveIt
 
             UpdateArea(originalBounds, true);
             UpdateArea(GetTotalBounds(false), true);
+
+            return true;
         }
 
         public override void Undo()
+        {
+            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, UndoImplemenation, "LineAction-Undo");
+        }
+
+        private bool UndoImplemenation()
         {
             foreach (InstanceState state in m_states)
             {
@@ -124,6 +137,8 @@ namespace MoveIt
             }
 
             UpdateArea(GetTotalBounds(false));
+
+            return true;
         }
 
         public override void ReplaceInstances(List<CloneData> toReplace)

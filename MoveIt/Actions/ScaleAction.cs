@@ -9,6 +9,11 @@ namespace MoveIt
 
         public override void Do()
         {
+            QTaskManager.QueueOnSimulation(() => DoImplemenation());
+        }
+
+        private bool DoImplemenation()
+        {
             Bounds originalBounds = GetTotalBounds(false);
 
             Matrix4x4 matrix4x = default;
@@ -50,6 +55,8 @@ namespace MoveIt
             UpdateArea(originalBounds, full);
             Bounds fullbounds = GetTotalBounds(false);
             UpdateArea(fullbounds, full);
+
+            return true;
         }
     }
 }
