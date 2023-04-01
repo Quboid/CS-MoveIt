@@ -58,7 +58,7 @@ namespace MoveIt
 
             //if (active) Log.Debug($"Active phase:{GetPhase()} [{(float)timer.Seconds % 1}, {timer.MS - activationMS}]");
 
-            if (active && (timer.MS - activationMS) > 100)
+            if (active && (timer.MS - activationMS) > 250)
             {
                 MoveItTool.instance.SetCursor(cursors[GetPhase()]);
             }

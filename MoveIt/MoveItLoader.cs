@@ -3,6 +3,7 @@ using ColossalFramework.Globalization;
 using ColossalFramework.Plugins;
 using ICities;
 using MoveIt.Lang;
+using QCommonLib.Lang;
 using QCommonLib.QTasks;
 using System;
 using System.Collections.Generic;
@@ -126,6 +127,7 @@ namespace MoveIt
         {
             Log.Debug($"Move It Locale changed {Str.Culture?.Name}->{ModInfo.Culture.Name} ({SingletonLite<LocaleManager>.instance.language})", "[M55]");
             Str.Culture = ModInfo.Culture;
+            QStr.Culture = ModInfo.Culture;
         }
     }
 
