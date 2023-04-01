@@ -130,7 +130,7 @@
     <value>การคลุมและเลือกวัตถุ</value>
   </data>
   <data name="baseUI_MergeNodesTooltip" xml:space="preserve">
-    <value>Autoconnect Cloned Nodes</value>
+    <value>เชื่อมต่อกับโหนดที่ทำซ้ำโดยอัตโนมัติ</value>
     <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
   </data>
   <data name="baseUI_MoveItButton_Tooltip" xml:space="preserve">
@@ -286,7 +286,7 @@
     <value>แสดงกริด</value>
   </data>
   <data name="key_ToggleNodeMerging" xml:space="preserve">
-    <value>Toggle Autoconnect Cloned Nodes</value>
+    <value>เปิดให้มีการเชื่อมต่อกับโหนดที่ทำซ้ำโดยอัตโนมัติ</value>
     <comment>Should copied/imported nodes that overlap existing ones merge into the existing node?</comment>
   </data>
   <data name="key_TogglePO" xml:space="preserve">
