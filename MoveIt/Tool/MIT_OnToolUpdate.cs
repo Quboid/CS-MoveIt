@@ -337,6 +337,11 @@ namespace MoveIt
                                 }
                                 newAngle += m_startAngle;
 
+                                if (MergeNodes)
+                                {
+                                    action.m_snapNode = GetMergingNodes(action, action.moveDelta, newAngle, action.center);
+                                }
+
                                 if (action.angleDelta != newAngle)
                                 {
                                     action.angleDelta = newAngle;
