@@ -1,2 +1,3 @@
-Font: Corbel, 22px, Bold & Italic
+Font: Corbel, 22px, Bold & Italic, Colour: 125, 196, 30
 Shadow: 0,2; Width: 2,2; Opacity: 220
+Radius: 3, Angle: -80, Opacity: 0.85 - run twice

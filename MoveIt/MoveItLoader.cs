@@ -31,6 +31,12 @@ namespace MoveIt
 
         public static void InstallMod()
         {
+            Log.IsDebug = true;
+            TaskManagerObject = new GameObject("MIT_TaskManager");
+            TaskManagerObject.AddComponent<QTaskManager>();
+            MoveItTool.TaskManager = TaskManagerObject.GetComponent<QTaskManager>();
+            MoveItTool.TaskManager.Log = Log.instance;
+
             if (MoveItTool.instance == null)
             {
                 // Creating the instance
@@ -43,7 +49,6 @@ namespace MoveIt
                 Log.Error($"InstallMod with existing instance!", "[M53]");
             }
 
-            Log.IsDebug = true;
             Directory.CreateDirectory(MoveItTool.saveFolder);
 
             MoveItTool.stepOver = new StepOver();
@@ -51,11 +56,6 @@ namespace MoveIt
             MoveToToolObject = new GameObject("MIT_MoveToPanel");
             MoveToToolObject.AddComponent<MoveToPanel>();
             MoveItTool.m_moveToPanel = MoveToToolObject.GetComponent<MoveToPanel>();
-
-            TaskManagerObject = new GameObject("MIT_TaskManager");
-            TaskManagerObject.AddComponent<QTaskManager>();
-            MoveItTool.TaskManager = TaskManagerObject.GetComponent<QTaskManager>();
-            MoveItTool.TaskManager.Log = Log.instance;
 
             UIFilters.FilterCBs.Clear();
             UIFilters.NetworkCBs.Clear();

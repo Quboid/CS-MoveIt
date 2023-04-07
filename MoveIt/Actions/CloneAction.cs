@@ -16,6 +16,7 @@ namespace MoveIt
             m_oldSelection = selection;
             m_states.Clear();
 
+            Dictionary<string, uint> stateDict = new Dictionary<string, uint>();
             foreach (InstanceState state in states)
             {
                 if (state.instance != null && state.Info.Prefab != null)
@@ -26,8 +27,22 @@ namespace MoveIt
                     }
 
                     m_states.Add(state);
+                    if (stateDict.ContainsKey(state.prefabName))
+                    {
+                        stateDict[state.prefabName]++;
+                    }
+                    else
+                    {
+                        stateDict.Add(state.prefabName, 1);
+                    }
                 }
             }
+            string stateMsg = string.Empty;
+            foreach (var kvp in stateDict)
+            {
+                stateMsg += $"\n  {kvp.Key}:{kvp.Value}, ";
+            }
+            Log.Debug($"Imported states: {m_states.Count}{stateMsg}", "[M83]");
 
             if (includesPO && !MoveItTool.PO.Active)
             {
@@ -415,22 +430,29 @@ namespace MoveIt
             {
                 if (state is NodeState)
                 {
-                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
-
-                    if (clone == null)
+                    try
                     {
-                        Log.Info($"Failed to clone node {state}", "[M23]");
-                        return true;
+                        Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
+
+                        if (clone == null)
+                        {
+                            Log.Info($"Failed to clone node {state}", "[M23]");
+                            return true;
+                        }
+
+                        m_cloneData.Add(new CloneData()
+                        {
+                            Original = state.instance,
+                            Clone = clone,
+                            CloneState = state
+                        });
+
+                        m_mapNodes.Add(state.instance.id.NetNode, clone.id.NetNode);
                     }
-
-                    m_cloneData.Add(new CloneData()
+                    catch (Exception e)
                     {
-                        Original = state.instance,
-                        Clone = clone,
-                        CloneState = state
-                    });
-
-                    m_mapNodes.Add(state.instance.id.NetNode, clone.id.NetNode);
+                        Log.Error(e, "[M82.1]");
+                    }
                 }
             }
 
@@ -444,27 +466,34 @@ namespace MoveIt
             {
                 if (state is BuildingState)
                 {
-                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
-
-                    if (clone == null)
+                    try
                     {
-                        Log.Info($"Failed to clone building {state}", "[M24]");
-                        return true;
-                    }
+                        Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
 
-                    m_cloneData.Add(new CloneData()
-                    {
-                        Original = state.instance,
-                        Clone = clone,
-                        CloneState = state
-                    });
-
-                    foreach (Instance inst in clone.subInstances)
-                    {
-                        if (inst is MoveableNode mn)
+                        if (clone == null)
                         {
-                            m_attachedNodes.Add(mn.id.NetNode);
+                            Log.Info($"Failed to clone building {state}", "[M24]");
+                            return true;
                         }
+
+                        m_cloneData.Add(new CloneData()
+                        {
+                            Original = state.instance,
+                            Clone = clone,
+                            CloneState = state
+                        });
+
+                        foreach (Instance inst in clone.subInstances)
+                        {
+                            if (inst is MoveableNode mn)
+                            {
+                                m_attachedNodes.Add(mn.id.NetNode);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e, "[M82.2]");
                     }
                 }
             }
@@ -479,36 +508,43 @@ namespace MoveIt
             {
                 if (!(state is NodeState || state is BuildingState || state is ProcState))
                 {
-                    Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
-
-                    if (clone == null)
+                    try
                     {
-                        Log.Info($"Failed to clone {state}", "[M25]");
-                        return true;
-                    }
+                        Instance clone = state.instance.Clone(state, ref matrix4x, moveDelta.y, angleDelta, center, followTerrain, m_mapNodes, this);
 
-                    m_cloneData.Add(new CloneData()
-                    {
-                        Original = state.instance,
-                        Clone = clone,
-                        CloneState = state
-                    });
-
-                    if (state is SegmentState segmentState)
-                    {
-                        MoveItTool.NS.SetSegmentModifiers(clone.id.NetSegment, segmentState);
-                        if (segmentState.LaneIDs != null)
+                        if (clone == null)
                         {
-                            // old version does not store lane ids
-                            var clonedLaneIds = MoveableSegment.GetLaneIds(clone.id.NetSegment);
-                            DebugUtils.AssertEq(clonedLaneIds.Count, segmentState.LaneIDs.Count, "clonedLaneIds.Count, segmentState.LaneIDs.Count");
-                            for (int i = 0; i < clonedLaneIds.Count; ++i)
+                            Log.Info($"Failed to clone {state}", "[M25]");
+                            return true;
+                        }
+
+                        m_cloneData.Add(new CloneData()
+                        {
+                            Original = state.instance,
+                            Clone = clone,
+                            CloneState = state
+                        });
+
+                        if (state is SegmentState segmentState)
+                        {
+                            MoveItTool.NS.SetSegmentModifiers(clone.id.NetSegment, segmentState);
+                            if (segmentState.LaneIDs != null)
                             {
-                                var origLaneIId = new InstanceID { NetLane = segmentState.LaneIDs[i] };
-                                var cloneLaneIId = new InstanceID { NetLane = clonedLaneIds[i] };
-                                m_mapLanes.Add(origLaneIId, cloneLaneIId);
+                                // old version does not store lane ids
+                                var clonedLaneIds = MoveableSegment.GetLaneIds(clone.id.NetSegment);
+                                DebugUtils.AssertEq(clonedLaneIds.Count, segmentState.LaneIDs.Count, "clonedLaneIds.Count, segmentState.LaneIDs.Count");
+                                for (int i = 0; i < clonedLaneIds.Count; ++i)
+                                {
+                                    var origLaneIId = new InstanceID { NetLane = segmentState.LaneIDs[i] };
+                                    var cloneLaneIId = new InstanceID { NetLane = clonedLaneIds[i] };
+                                    m_mapLanes.Add(origLaneIId, cloneLaneIId);
+                                }
                             }
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e, "[M82.3]");
                     }
                 }
             }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
-// Error code M81
+// Error code M83
 
 namespace MoveIt
 {

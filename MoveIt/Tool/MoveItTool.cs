@@ -749,7 +749,7 @@ namespace MoveIt
             //    AddDebugBox(b, new Color32(31, 31, 255, 31));
             //}
 
-            MoveItTool.TaskManager.AddSingleTask(QTask.Threads.Simulation, () =>
+            TaskManager.AddSingleTask(QTask.Threads.Simulation, () =>
             {
                 foreach (Bounds bounds in merged)
                 {
