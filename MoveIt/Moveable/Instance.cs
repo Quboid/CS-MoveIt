@@ -41,9 +41,63 @@ namespace MoveIt
             set
             {
                 InstanceID instanceID = InstanceID.Empty;
-                instanceID.RawData = value;
+                try
+                {
+                    instanceID.RawData = value;
 
-                instance = instanceID;
+                    if (GetType() == typeof(BuildingState))
+                    {
+                        instance = new MoveableBuilding(instanceID);
+                    }
+                    else if (GetType() == typeof(PropState))
+                    {
+                        instance = new MoveableProp(instanceID);
+                    }
+                    else if (GetType() == typeof(TreeState))
+                    {
+                        instance = new MoveableTree(instanceID);
+                    }
+                    else if (GetType() == typeof(NodeState))
+                    {
+                        instance = new MoveableNode(instanceID);
+                    }
+                    else if (GetType() == typeof(SegmentState))
+                    {
+                        instance = new MoveableSegment(instanceID);
+                    }
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    if (GetType() == typeof(BuildingState))
+                    {
+                        instanceID.Building = 1;
+                        instance = new MoveableBuilding(instanceID);
+                    }
+                    else if (GetType() == typeof(PropState))
+                    {
+                        instanceID.Prop = 1;
+                        instance = new MoveableProp(instanceID);
+                    }
+                    else if (GetType() == typeof(TreeState))
+                    {
+                        instanceID.Tree = 1;
+                        instance = new MoveableTree(instanceID);
+                    }
+                    else if (GetType() == typeof(NodeState))
+                    {
+                        instanceID.NetNode = 1;
+                        instance = new MoveableNode(instanceID);
+                    }
+                    else if (GetType() == typeof(SegmentState))
+                    {
+                        instanceID.NetSegment = 1;
+                        instance = new MoveableSegment(instanceID);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Info(ex);
+                }
             }
         }
 
@@ -63,40 +117,48 @@ namespace MoveIt
 
             set
             {
-                m_loadedName = value;
-
-                switch (instance.id.Type)
+                try
                 {
-                    case InstanceType.Building:
-                        {
-                            Info.Prefab = PrefabCollection<BuildingInfo>.FindLoaded(value);
-                            break;
-                        }
-                    case InstanceType.Prop:
-                        {
-                            Info.Prefab = PrefabCollection<PropInfo>.FindLoaded(value);
-                            break;
-                        }
-                    case InstanceType.Tree:
-                        {
-                            Info.Prefab = PrefabCollection<TreeInfo>.FindLoaded(value);
-                            break;
-                        }
-                    case InstanceType.NetNode:
-                    case InstanceType.NetSegment:
-                        {
-                            Info.Prefab = PrefabCollection<NetInfo>.FindLoaded(value);
-                            break;
-                        }
-                    case InstanceType.NetLane:
-                        {
-                            Info.Prefab = PrefabCollection<BuildingInfo>.FindLoaded(value);
-                            if (Info.Prefab == null)
+                    //Log.Info($"BBB01 {instance.id.Type} <{instance.GetType()}>");
+                    m_loadedName = value;
+
+                    switch (instance.id.Type)
+                    {
+                        case InstanceType.Building:
+                            {
+                                Info.Prefab = PrefabCollection<BuildingInfo>.FindLoaded(value);
+                                break;
+                            }
+                        case InstanceType.Prop:
                             {
                                 Info.Prefab = PrefabCollection<PropInfo>.FindLoaded(value);
+                                break;
                             }
-                            break;
-                        }
+                        case InstanceType.Tree:
+                            {
+                                Info.Prefab = PrefabCollection<TreeInfo>.FindLoaded(value);
+                                break;
+                            }
+                        case InstanceType.NetNode:
+                        case InstanceType.NetSegment:
+                            {
+                                Info.Prefab = PrefabCollection<NetInfo>.FindLoaded(value);
+                                break;
+                            }
+                        case InstanceType.NetLane:
+                            {
+                                Info.Prefab = PrefabCollection<BuildingInfo>.FindLoaded(value);
+                                if (Info.Prefab == null)
+                                {
+                                    Info.Prefab = PrefabCollection<PropInfo>.FindLoaded(value);
+                                }
+                                break;
+                            }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
                 }
             }
         }
@@ -211,29 +273,31 @@ namespace MoveIt
 
     public abstract class Instance
     {
-        protected static NetManager netManager;
-        protected static Building[] buildingBuffer;
-        protected static NetSegment[] segmentBuffer;
-        protected static NetNode[] nodeBuffer;
-        protected static NetLane[] laneBuffer;
+        protected static NetManager netManager = Singleton<NetManager>.instance;
+        protected static Building[] buildingBuffer = Singleton<BuildingManager>.instance.m_buildings.m_buffer;
+        protected static NetSegment[] segmentBuffer = Singleton<NetManager>.instance.m_segments.m_buffer;
+        protected static NetNode[] nodeBuffer = Singleton<NetManager>.instance.m_nodes.m_buffer;
+        protected static NetLane[] laneBuffer = Singleton<NetManager>.instance.m_lanes.m_buffer;
 
         public List<Instance> subInstances = new List<Instance>();
         internal bool isHidden = false;
 
         public Instance(InstanceID instanceID)
         {
-            id = instanceID;
-            netManager = Singleton<NetManager>.instance;
-            buildingBuffer = Singleton<BuildingManager>.instance.m_buildings.m_buffer;
-            segmentBuffer = Singleton<NetManager>.instance.m_segments.m_buffer;
-            nodeBuffer = Singleton<NetManager>.instance.m_nodes.m_buffer;
-            laneBuffer = Singleton<NetManager>.instance.m_lanes.m_buffer;
+            try
+            {
+                id = instanceID;
+            }
+            catch (Exception ex)
+            {
+                Log.Debug($"Instance constructor failed:\n{ex}");
+            }
         }
 
         public InstanceID id
         {
             get;
-            protected set;
+            set;
         }
 
         public abstract HashSet<ushort> segmentList

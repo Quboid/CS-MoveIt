@@ -328,7 +328,22 @@ namespace MoveIt
                     }
                 }
                 selectionState.states = newStates.ToArray();
-                Log.Info($"Cleaned import (state count:{startCount}->{newStates.Count})", "[M03]");
+                Log.Info($"Cleaned import data (state count:{startCount}->{newStates.Count} ({selectionState.states.Length}))", "[M03]");
+
+                // Reset prop and tree ids
+                //ushort propId = 1;
+                //uint treeId = 1;
+                //foreach (InstanceState state in selectionState.states)
+                //{
+                //    if (state is PropState)
+                //    {
+                //        state.id = propId++;
+                //    }
+                //    if (state is TreeState)
+                //    {
+                //        state.id = treeId++;
+                //    }
+                //}
 
                 if (missingPrefabs.Count > 0)
                 {
