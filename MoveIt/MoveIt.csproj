@@ -294,19 +294,20 @@
   <Import Project="..\..\..\QCommon\Repo\QCommon\QCommon\Shared\QCommon Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\"
-rmdir /s /q "%25ModDir%25"
+    <PostBuildEvent>
+      set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\MoveIt\"
+      rmdir /s /q "%25ModDir%25"
 
-mkdir "%25ModDir%25"
-xcopy /y /e "$(TargetDir)*" "%25ModDir%25"
+      mkdir "%25ModDir%25"
+      xcopy /y /e "$(TargetDir)*" "%25ModDir%25"
 
-set "UNITY_PATH=$(MSBuildExtensionsPath64)\..\Unity"
-IF not EXIST "%25UNITY_PATH%25 " set "UNITY_PATH=$(SolutionDir)Unity"
-set "MONODIR=%25UNITY_PATH%25\Editor\Data\MonoBleedingEdge\"
-echo MONODIR is %25MONODIR%25
-"%25MONODIR%25\bin\mono.exe" "%25MONODIR%25\lib\mono\4.5\pdb2mdb.exe" "$(TargetPath)"
-IF EXIST "$(TargetPath).mdb" xcopy /y "$(TargetPath).mdb" "%25ModDir%25"
-del "%25ModDir%25*.pdb"</PostBuildEvent>
+      set "UNITY_PATH=$(MSBuildExtensionsPath64)\..\Unity"
+      IF not EXIST "%25UNITY_PATH%25 " set "UNITY_PATH=$(SolutionDir)Unity"
+      set "MONODIR=%25UNITY_PATH%25\Editor\Data\MonoBleedingEdge\"
+      echo MONODIR is %25MONODIR%25
+      "%25MONODIR%25\bin\mono.exe" "%25MONODIR%25\lib\mono\4.5\pdb2mdb.exe" "$(TargetPath)"
+      IF EXIST "$(TargetPath).mdb" xcopy /y "$(TargetPath).mdb" "%25ModDir%25"
+      del "%25ModDir%25*.pdb"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

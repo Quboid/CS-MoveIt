@@ -293,9 +293,11 @@ namespace MoveIt
         {
             if (!PluginManager.instance.GetPluginsInfo().Any(mod => (
                     mod.publishedFileID.AsUInt64 == 1094334744uL || 
+                    mod.publishedFileID.AsUInt64 == 3071492847uL ||
                     mod.name.Contains("ProceduralObjects") || 
                     mod.name.Contains("Procedural Objects") ||
-                    mod.name.Contains("1094334744")
+                    mod.name.Contains("1094334744") ||
+                    mod.name.Contains("3071492847")
             ) && mod.isEnabled))
             {
                 return false;

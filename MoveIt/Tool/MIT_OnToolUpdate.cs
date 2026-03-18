@@ -288,10 +288,17 @@ namespace MoveIt
                                 if (MergeNodes)
                                 {
                                     action.m_snapNode = GetMergingNodes(action, newMove, action.angleDelta, action.center);
-                                    if (snapping && action.m_snapNode != null)
+                                    if (snapping)
                                     {
-                                        newMove += action.m_snapNode.ParentNetNode.m_position - action.m_snapNode.adjustedState.position;
-                                        GetMergingNodes(action, newMove, action.angleDelta, action.center); // Recalculate node merges after snapping
+                                        if (action.m_snapNode != null)
+                                        {
+                                            newMove += action.m_snapNode.ParentNetNode.m_position - action.m_snapNode.adjustedState.position;
+                                            GetMergingNodes(action, newMove, action.angleDelta, action.center); // Recalculate node merges after snapping
+                                        }
+                                        else
+                                        {
+                                            newMove = GetSnapDelta(newMove, action.angleDelta, action.center, out bool autoCurve);
+                                        }
                                     }
                                 }
                                 else if (snapping)
@@ -334,6 +341,11 @@ namespace MoveIt
                                     newAngle = quarterPI * Mathf.Round(newAngle / quarterPI);
                                 }
                                 newAngle += m_startAngle;
+
+                                if (MergeNodes)
+                                {
+                                    action.m_snapNode = GetMergingNodes(action, action.moveDelta, newAngle, action.center);
+                                }
 
                                 if (action.angleDelta != newAngle)
                                 {
