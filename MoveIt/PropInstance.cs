@@ -1,5 +1,4 @@
 ﻿using ColossalFramework;
-using EManagersLib.API;
 using UnityEngine;
 
 namespace MoveIt
@@ -83,65 +82,65 @@ namespace MoveIt
         }
     }
 
-    // Extended Managers Library support
-    class EPropWrapper : IProp
-    {
-        private readonly uint index;
-        public uint Index => index;
+    // Extended Managers Library support DEPRECATED
+    //class EPropWrapper : IProp
+    //{
+    //    private readonly uint index;
+    //    public uint Index => index;
 
-        public EPropWrapper(uint i)
-        {
-            index = i;
-        }
+    //    public EPropWrapper(uint i)
+    //    {
+    //        index = i;
+    //    }
 
-        public void MoveProp(Vector3 position)
-        {
-            PropAPI.Wrapper.MoveProp(index, position);
-        }
+    //    public void MoveProp(Vector3 position)
+    //    {
+    //        PropAPI.Wrapper.MoveProp(index, position);
+    //    }
 
-        public void UpdatePropRenderer(bool updateGroup)
-        {
-            PropAPI.Wrapper.UpdatePropRenderer(index, updateGroup);
-        }
+    //    public void UpdatePropRenderer(bool updateGroup)
+    //    {
+    //        PropAPI.Wrapper.UpdatePropRenderer(index, updateGroup);
+    //    }
 
-        public void ReleaseProp()
-        {
-            PropAPI.Wrapper.ReleaseProp(index);
-        }
+    //    public void ReleaseProp()
+    //    {
+    //        PropAPI.Wrapper.ReleaseProp(index);
+    //    }
 
-        public Vector3 Position
-        {
-            get => PropAPI.Wrapper.GetPosition(index);
-            set => PropAPI.Wrapper.SetPosition(index, value);
-        }
+    //    public Vector3 Position
+    //    {
+    //        get => PropAPI.Wrapper.GetPosition(index);
+    //        set => PropAPI.Wrapper.SetPosition(index, value);
+    //    }
 
-        public float Angle
-        {
-            get => PropAPI.Wrapper.GetAngle(index);
-            set => PropAPI.Wrapper.SetAngle(index, value);
-        }
+    //    public float Angle
+    //    {
+    //        get => PropAPI.Wrapper.GetAngle(index);
+    //        set => PropAPI.Wrapper.SetAngle(index, value);
+    //    }
 
-        public bool FixedHeight
-        {
-            get => PropAPI.Wrapper.GetFixedHeight(index);
-            set => PropAPI.Wrapper.SetFixedHeight(index, value);
-        }
+    //    public bool FixedHeight
+    //    {
+    //        get => PropAPI.Wrapper.GetFixedHeight(index);
+    //        set => PropAPI.Wrapper.SetFixedHeight(index, value);
+    //    }
 
-        public bool Single
-        {
-            get => PropAPI.Wrapper.GetSingle(index);
-            set => PropAPI.Wrapper.SetSingle(index, value);
-        }
+    //    public bool Single
+    //    {
+    //        get => PropAPI.Wrapper.GetSingle(index);
+    //        set => PropAPI.Wrapper.SetSingle(index, value);
+    //    }
 
-        public ushort m_flags
-        {
-            get => PropAPI.Wrapper.GetFlags(index);
-            set => PropAPI.Wrapper.SetFlags(index, value);
-        }
+    //    public ushort m_flags
+    //    {
+    //        get => PropAPI.Wrapper.GetFlags(index);
+    //        set => PropAPI.Wrapper.SetFlags(index, value);
+    //    }
 
-        public PropInfo Info
-        {
-            get => PropAPI.Wrapper.GetInfo(index);
-        }
-    }
+    //    public PropInfo Info
+    //    {
+    //        get => PropAPI.Wrapper.GetInfo(index);
+    //    }
+    //}
 }

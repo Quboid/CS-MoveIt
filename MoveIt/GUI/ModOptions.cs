@@ -160,10 +160,11 @@ namespace MoveIt.GUI
                 });
                 checkBox.name = "MoveIt_DebugPanel";
 
-                group.AddSpace(5);
-                UILabel emlLabel = panel.AddUIComponent<UILabel>();
-                emlLabel.name = "emlLabel";
-                emlLabel.text = PropLayer.getVersionText();
+                // EML Support is DEPRECATED
+                //group.AddSpace(5);
+                //UILabel emlLabel = panel.AddUIComponent<UILabel>();
+                //emlLabel.name = "emlLabel";
+                //emlLabel.text = PropLayer.getVersionText();
 
                 UILabel nsLabel = panel.AddUIComponent<UILabel>();
                 nsLabel.name = "nsLabel";

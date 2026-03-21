@@ -594,11 +594,11 @@ namespace MoveIt
             // Flip the segment geometry unless the segment is one of inverted
             if ((segmentBuffer[segment].m_flags & NetSegment.Flags.Invert) == NetSegment.Flags.Invert)
             {
-                RenderSegment.Invoke(null, new object[] { Info.Prefab as NetInfo, NetSegment.Flags.All, bezier.a, bezier.d, startDirection, -endDirection, smoothStart, smoothEnd });
+                RenderSegment.Invoke(null, new object[] { Info.Prefab as NetInfo, NetSegment.Flags.All, NetSegment.Flags2.All, bezier.a, bezier.d, startDirection, -endDirection, smoothStart, smoothEnd });
             }
             else
             {
-                RenderSegment.Invoke(null, new object[] { Info.Prefab as NetInfo, NetSegment.Flags.All, bezier.d, bezier.a, endDirection, -startDirection, smoothStart, smoothEnd });
+                RenderSegment.Invoke(null, new object[] { Info.Prefab as NetInfo, NetSegment.Flags.All, NetSegment.Flags2.All, bezier.d, bezier.a, endDirection, -startDirection, smoothStart, smoothEnd });
             }
         }
 

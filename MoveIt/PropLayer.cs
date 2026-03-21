@@ -1,10 +1,9 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
-using ColossalFramework.Plugins;
-using EManagersLib.API;
+//using ColossalFramework.Plugins;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+//using System.Reflection;
 using UnityEngine;
 
 namespace MoveIt
@@ -17,44 +16,48 @@ namespace MoveIt
 
         public static void Initialise()
         {
-            EML = isEMLInstalled();
-            Log.Debug($"Move It EML: {EML}");
+            Manager = new PropsManager();
+            return;
 
-            if (EML)
-            {
-                Manager = new EPropsManager();
-            }
-            else
-            {
-                Manager = new PropsManager();
-            }
+            // Deprecated EML support
+            //EML = isEMLInstalled();
+            //Log.Debug($"Move It EML: {EML}");
+
+            //if (EML)
+            //{
+            //    Manager = new EPropsManager();
+            //}
+            //else
+            //{
+            //    Manager = new PropsManager();
+            //}
         }
 
-        internal static bool isEMLInstalled()
-        {
-            foreach (PluginManager.PluginInfo pluginInfo in Singleton<PluginManager>.instance.GetPluginsInfo())
-            {
-                foreach (Assembly assembly in pluginInfo.GetAssemblies())
-                {
-                    if (assembly.GetName().Name.ToLower().Equals("emanagerslib"))
-                    {
-                        return pluginInfo.isEnabled;
-                    }
-                }
-            }
+        //internal static bool isEMLInstalled()
+        //{
+        //    foreach (PluginManager.PluginInfo pluginInfo in Singleton<PluginManager>.instance.GetPluginsInfo())
+        //    {
+        //        foreach (Assembly assembly in pluginInfo.GetAssemblies())
+        //        {
+        //            if (assembly.GetName().Name.ToLower().Equals("emanagerslib"))
+        //            {
+        //                return pluginInfo.isEnabled;
+        //            }
+        //        }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
-        internal static string getVersionText()
-        {
-            if (isEMLInstalled())
-            {
-                return "Extended Managers Library: Found";
-            }
+        //internal static string getVersionText()
+        //{
+        //    if (isEMLInstalled())
+        //    {
+        //        return "Extended Managers Library: Found";
+        //    }
 
-            return "Extended Managers Library: Not Found";
-        }
+        //    return "Extended Managers Library: Not Found";
+        //}
     }
 
     public interface IPropsWrapper
@@ -226,129 +229,129 @@ namespace MoveIt
         public bool GetSnappingState() => false;
     }
 
-    // Extended Managers Library support
-    class EPropsManager : IPropsWrapper
-    {
-        public EPropsManager()
-        {
-            PropAPI.Initialize();
-        }
+    // Extended Managers Library support DEPRECATED
+    //class EPropsManager : IPropsWrapper
+    //{
+    //    public EPropsManager()
+    //    {
+    //        PropAPI.Initialize();
+    //    }
 
-        public IInfo GetInfo(uint id)
-        {
-            return new Info_Prefab(PropAPI.Wrapper.GetInfo(id));
-        }
+    //    public IInfo GetInfo(uint id)
+    //    {
+    //        return new Info_Prefab(PropAPI.Wrapper.GetInfo(id));
+    //    }
 
-        public IInfo GetInfo(InstanceID id)
-        {
-            return new Info_Prefab(PropAPI.Wrapper.GetInfo(id.GetProp32()));
-        }
+    //    public IInfo GetInfo(InstanceID id)
+    //    {
+    //        return new Info_Prefab(PropAPI.Wrapper.GetInfo(id.GetProp32()));
+    //    }
 
-        public IProp Buffer(uint id)
-        {
-            return new EPropWrapper(id);
-        }
+    //    public IProp Buffer(uint id)
+    //    {
+    //        return new EPropWrapper(id);
+    //    }
 
-        public IProp Buffer(InstanceID id)
-        {
-            return new EPropWrapper(id.GetProp32());
-        }
+    //    public IProp Buffer(InstanceID id)
+    //    {
+    //        return new EPropWrapper(id.GetProp32());
+    //    }
 
-        public uint GetId(InstanceID id)
-        {
-            return id.GetProp32();
-        }
+    //    public uint GetId(InstanceID id)
+    //    {
+    //        return id.GetProp32();
+    //    }
 
-        public float GetScale(InstanceID id, IProp prop)
-        {
-            return PropAPI.Wrapper.GetScale(id);
-        }
+    //    public float GetScale(InstanceID id, IProp prop)
+    //    {
+    //        return PropAPI.Wrapper.GetScale(id);
+    //    }
 
-        public InstanceID SetProp(InstanceID id, uint i)
-        {
-            id.SetProp32(i);
-            return id;
-        }
+    //    public InstanceID SetProp(InstanceID id, uint i)
+    //    {
+    //        id.SetProp32(i);
+    //        return id;
+    //    }
 
-        public void UpdateProps(float minX, float minZ, float maxX, float maxZ)
-        {
-            PropAPI.Wrapper.UpdateProps(minX, minZ, maxX, maxZ);
-        }
+    //    public void UpdateProps(float minX, float minZ, float maxX, float maxZ)
+    //    {
+    //        PropAPI.Wrapper.UpdateProps(minX, minZ, maxX, maxZ);
+    //    }
 
-        public bool CreateProp(out uint clone, PropInfo info, Vector3 position, float angle, bool single)
-        {
-            return PropAPI.Wrapper.CreateProp(out clone, info, position, angle, single);
-        }
+    //    public bool CreateProp(out uint clone, PropInfo info, Vector3 position, float angle, bool single)
+    //    {
+    //        return PropAPI.Wrapper.CreateProp(out clone, info, position, angle, single);
+    //    }
 
-        public bool GetFixedHeight(InstanceID id) => PropAPI.Wrapper.GetFixedHeight(id);
+    //    public bool GetFixedHeight(InstanceID id) => PropAPI.Wrapper.GetFixedHeight(id);
 
-        public void SetFixedHeight(InstanceID id, bool fixedHeight)
-        {
-            PropAPI.Wrapper.SetFixedHeight(id, fixedHeight);
-        }
+    //    public void SetFixedHeight(InstanceID id, bool fixedHeight)
+    //    {
+    //        PropAPI.Wrapper.SetFixedHeight(id, fixedHeight);
+    //    }
 
-        public InstanceID StepOver(uint id)
-        {
-            InstanceID instance = default;
-            instance.SetProp32(id);
-            return instance;
-        }
+    //    public InstanceID StepOver(uint id)
+    //    {
+    //        InstanceID instance = default;
+    //        instance.SetProp32(id);
+    //        return instance;
+    //    }
 
-        public void TouchProps()
-        {
-            // Adjusted to accomodate new buffer size and validity of prop
-            int bufferLen = PropAPI.PropBufferLen;
+    //    public void TouchProps()
+    //    {
+    //        // Adjusted to accomodate new buffer size and validity of prop
+    //        int bufferLen = PropAPI.PropBufferLen;
 
-            for (uint i = 0; i < bufferLen; i++)
-            {
-                if (PropAPI.Wrapper.IsValid(i))
-                {
-                    PropAPI.Wrapper.UpdateProp(i);
-                }
-            }
-        }
+    //        for (uint i = 0; i < bufferLen; i++)
+    //        {
+    //            if (PropAPI.Wrapper.IsValid(i))
+    //            {
+    //                PropAPI.Wrapper.UpdateProp(i);
+    //            }
+    //        }
+    //    }
 
-        public void RaycastHoverInstance(ref int i, ref int j, ref StepOver stepOver, ref Segment3 ray, ref float smallestDist, ref InstanceID id, ItemClass.Layer itemLayers)
-        {
-            foreach (uint propID in PropAPI.Wrapper.GetPropGridEnumerable(i, j))
-            {
-                if (stepOver.isValidP(propID) && IsPropValid(propID, itemLayers) && Filters.Filter(PropAPI.Wrapper.GetInfo(propID)))
-                {
-                    if (PropAPI.Wrapper.RayCast(propID, ray, out float t, out float targetSqr) && t < smallestDist)
-                    {
-                        id.SetProp32(propID);
-                        smallestDist = t;
-                    }
-                }
-            }
-        }
+    //    public void RaycastHoverInstance(ref int i, ref int j, ref StepOver stepOver, ref Segment3 ray, ref float smallestDist, ref InstanceID id, ItemClass.Layer itemLayers)
+    //    {
+    //        foreach (uint propID in PropAPI.Wrapper.GetPropGridEnumerable(i, j))
+    //        {
+    //            if (stepOver.isValidP(propID) && IsPropValid(propID, itemLayers) && Filters.Filter(PropAPI.Wrapper.GetInfo(propID)))
+    //            {
+    //                if (PropAPI.Wrapper.RayCast(propID, ray, out float t, out float targetSqr) && t < smallestDist)
+    //                {
+    //                    id.SetProp32(propID);
+    //                    smallestDist = t;
+    //                }
+    //            }
+    //        }
+    //    }
 
-        public void GetMarqueeList(ref int i, ref int j, ref InstanceID id, ref Quad3 m_selection, ref HashSet<Instance> list, ItemClass.Layer itemLayers)
-        {
-            foreach (uint propID in PropAPI.Wrapper.GetPropGridEnumerable(i, j))
-            {
-                if (IsPropValid(propID, itemLayers) && Filters.Filter(PropAPI.Wrapper.GetInfo(propID)))
-                {
-                    if (MoveItTool.instance.PointInRectangle(m_selection, PropAPI.Wrapper.GetPosition(propID)))
-                    {
-                        id.SetProp32(propID);
-                        list.Add(id);
-                    }
-                }
-            }
-        }
+    //    public void GetMarqueeList(ref int i, ref int j, ref InstanceID id, ref Quad3 m_selection, ref HashSet<Instance> list, ItemClass.Layer itemLayers)
+    //    {
+    //        foreach (uint propID in PropAPI.Wrapper.GetPropGridEnumerable(i, j))
+    //        {
+    //            if (IsPropValid(propID, itemLayers) && Filters.Filter(PropAPI.Wrapper.GetInfo(propID)))
+    //            {
+    //                if (MoveItTool.instance.PointInRectangle(m_selection, PropAPI.Wrapper.GetPosition(propID)))
+    //                {
+    //                    id.SetProp32(propID);
+    //                    list.Add(id);
+    //                }
+    //            }
+    //        }
+    //    }
 
-        private bool IsPropValid(uint propID, ItemClass.Layer itemLayers)
-        {
-            if (MoveItTool.superSelect) return true;
-            if (((PropInstance.Flags)Buffer(propID).m_flags & PropInstance.Flags.Created) == PropInstance.Flags.Created)
-            {
-                return (PropAPI.Wrapper.GetInfo(propID).m_class.m_layer & itemLayers) != ItemClass.Layer.None;
-            }
+    //    private bool IsPropValid(uint propID, ItemClass.Layer itemLayers)
+    //    {
+    //        if (MoveItTool.superSelect) return true;
+    //        if (((PropInstance.Flags)Buffer(propID).m_flags & PropInstance.Flags.Created) == PropInstance.Flags.Created)
+    //        {
+    //            return (PropAPI.Wrapper.GetInfo(propID).m_class.m_layer & itemLayers) != ItemClass.Layer.None;
+    //        }
 
-            return false;
-        }
+    //        return false;
+    //    }
 
-        public bool GetSnappingState() => PropAPI.Wrapper.IsSnappingEnabled;
-    }
+    //    public bool GetSnappingState() => PropAPI.Wrapper.IsSnappingEnabled;
+    //}
 }
